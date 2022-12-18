@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-export * from "./FilesApi";
-export * from "./FoldersApi";
-export * from "./JobsApi";
-export * from "./UploadsApi";
+export * from "./FileApi";
+export * from "./FolderApi";
+export * from "./JobApi";
+export * from "./UploadApi";

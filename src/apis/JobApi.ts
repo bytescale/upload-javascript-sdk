@@ -63,7 +63,7 @@ export interface ListRecentJobsRequest {
 /**
  *
  */
-export class JobsApi extends runtime.BaseAPI {
+export class JobApi extends runtime.BaseAPI {
   /**
    * Cancels an in-progress job.  This endpoint requires a `secret_*` API key.
    */

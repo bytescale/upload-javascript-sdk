@@ -31,7 +31,7 @@ export interface DeleteFolderBatchRequest {
    * @type {Array<DeleteFolderRequest>}
    * @memberof DeleteFolderBatchRequest
    */
-  folders?: Array<DeleteFolderRequest>;
+  folders: Array<DeleteFolderRequest>;
 }
 
 export function DeleteFolderBatchRequestFromJSON(json: any): DeleteFolderBatchRequest {
@@ -39,7 +39,7 @@ export function DeleteFolderBatchRequestFromJSON(json: any): DeleteFolderBatchRe
     return json;
   }
   return {
-    folders: !exists(json, "folders") ? undefined : (json["folders"] as Array<any>).map(DeleteFolderRequestFromJSON)
+    folders: (json["folders"] as Array<any>).map(DeleteFolderRequestFromJSON)
   };
 }
 
@@ -51,6 +51,6 @@ export function DeleteFolderBatchRequestToJSON(value?: DeleteFolderBatchRequest 
     return null;
   }
   return {
-    folders: value.folders === undefined ? undefined : (value.folders as Array<any>).map(DeleteFolderRequestToJSON)
+    folders: (value.folders as Array<any>).map(DeleteFolderRequestToJSON)
   };
 }

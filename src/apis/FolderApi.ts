@@ -94,7 +94,7 @@ export interface PutFolderOperationRequest {
 /**
  *
  */
-export class FoldersApi extends runtime.BaseAPI {
+export class FolderApi extends runtime.BaseAPI {
   /**
    * Asynchronously deletes a folder.
    */

@@ -1,8 +1,8 @@
 .openapi-generator-ignore
-apis/FilesApi.ts
-apis/FoldersApi.ts
-apis/JobsApi.ts
-apis/UploadsApi.ts
+apis/FileApi.ts
+apis/FolderApi.ts
+apis/JobApi.ts
+apis/UploadApi.ts
 apis/index.ts
 index.ts
 models/AccountJobStatus.ts

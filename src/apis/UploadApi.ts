@@ -81,7 +81,7 @@ export interface ListUploadPartsRequest {
 /**
  *
  */
-export class UploadsApi extends runtime.BaseAPI {
+export class UploadApi extends runtime.BaseAPI {
   /**
    * Begins a new multipart file upload process.  See also: basic file uploads.
    */

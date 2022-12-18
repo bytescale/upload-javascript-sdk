@@ -20,28 +20,26 @@ Alternative versions:
 
 ## Installation
 
-For browsers:
-
 ```bash
 npm install upload-js-full
 ```
 
-For Node.js:
+Additional step for Node.js:
 
 ```bash
-npm install upload-js-full node-fetch
+npm install node-fetch
 ```
 
 ## Basic Usage
 
 ```javascript
-import { FoldersApi } from "upload-js-full";
+import { FolderApi } from "upload-js-full";
 
-const foldersApi = new FoldersApi(new Configuration({
+const folderApi = new FolderApi(new Configuration({
   fetchApi: require("node-fetch") // Node.js only.
 }));
 
-const folders = await foldersApi.listFolderChildren({
+const folders = await folderApi.listFolderChildren({
   accountId: "YOUR_ACCOUNT_ID",
   folderPath: "/"
 });

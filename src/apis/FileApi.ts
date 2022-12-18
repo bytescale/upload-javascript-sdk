@@ -81,7 +81,7 @@ export interface ProcessFileRequest {
 /**
  *
  */
-export class FilesApi extends runtime.BaseAPI {
+export class FileApi extends runtime.BaseAPI {
   /**
    * Synchronously deletes a single file.
    */
