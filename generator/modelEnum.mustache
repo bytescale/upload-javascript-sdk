@@ -1,0 +1,9 @@
+{{>modelEnumInterfaces}}
+
+export function {{classname}}FromJSON(json: any): {{classname}} {
+    return json as {{classname}};
+}
+
+export function {{classname}}ToJSON(value?: {{classname}} | null): any {
+    return value as any;
+}

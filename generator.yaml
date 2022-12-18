@@ -1,0 +1,14 @@
+generatorName: typescript-fetch
+outputDir: src
+inputSpec: ../upload/api/src/common/routing/generated/openapi-spec-v3-sdk.json
+templateDir: generator
+files:
+  modelEnum.mustache:
+    templateType: Model
+    destinationFilename: .ts
+  modelGeneric.mustache:
+    templateType: Model
+    destinationFilename: .ts
+  apis.mustache:
+    templateType: API
+    destinationFilename: .ts
