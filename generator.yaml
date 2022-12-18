@@ -14,3 +14,6 @@ files:
   apis.mustache:
     templateType: API
     destinationFilename: .ts
+  runtime.mustache:
+    templateType: SupportingFiles
+    destinationFilename: runtime.ts
