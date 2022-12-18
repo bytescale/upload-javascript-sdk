@@ -2,23 +2,21 @@
 
 ---
 
-Documentation: **[Upload JavaScript SDK Docs](https://upload.io/docs/upload-sdk/javascript)**
+Full Documentation: **[Upload JavaScript SDK Docs](https://upload.io/docs/upload-sdk/javascript)**
 
 ---
 
 This version:
 
 - [`upload-js-full`](https://github.com/upload-io/upload-js-full)
-  - Functionality: Methods for all [Upload API](https://upload.io/docs/upload-api) endpoints.
-  - Size: 15KB
-  - Environments: Browser + Node.js.
+  - Includes support for all [Upload API](https://upload.io/docs/upload-api) endpoints.
+  - Node.js + Browsers
 
 Alternative versions:
 
 - [`upload-js`](https://github.com/upload-io/upload-js)
-  - Functionality: File upload methods only.
-  - Size: 6KB
-  - Environments: Browser only.
+  - Includes support for file uploads only.
+  - Browsers only.
 
 ## Installation
 
@@ -34,7 +32,7 @@ For Node.js:
 npm install upload-js-full node-fetch
 ```
 
-## Usage
+## Basic Usage
 
 ```javascript
 import { FoldersApi } from "upload-js-full";
