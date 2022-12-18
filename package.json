@@ -1,7 +1,7 @@
 {
-  "name": "@upload-io/upload-js-full",
-  "version": "2.10.0",
-  "description": "Upload API Client (Upload.js Edition)",
+  "name": "upload-js-full",
+  "version": "0.1.1",
+  "description": "Upload JavaScript SDK",
   "author": "Upload <hello@upload.io> (https://upload.io)",
   "license": "MIT",
   "main": "dist/main.js",
