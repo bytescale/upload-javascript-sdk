@@ -24,24 +24,6 @@ import type {
   // @ts-ignore
   FileDetails
 } from "../models";
-import {
-  // @ts-ignore
-  AsyncResponseFromJSON,
-  // @ts-ignore
-  AsyncResponseToJSON,
-  // @ts-ignore
-  DeleteFileBatchRequestFromJSON,
-  // @ts-ignore
-  DeleteFileBatchRequestToJSON,
-  // @ts-ignore
-  ErrorResponseFromJSON,
-  // @ts-ignore
-  ErrorResponseToJSON,
-  // @ts-ignore
-  FileDetailsFromJSON,
-  // @ts-ignore
-  FileDetailsToJSON
-} from "../models";
 
 export interface DeleteFileRequest {
   accountId: string;
@@ -181,12 +163,12 @@ export class FileApi extends runtime.BaseAPI {
         method: "DELETE",
         headers: headerParameters,
         query: queryParameters,
-        body: DeleteFileBatchRequestToJSON(requestParameters.deleteFileBatchRequest)
+        body: requestParameters.deleteFileBatchRequest
       },
       initOverrides
     );
 
-    return new runtime.JSONApiResponse(response, jsonValue => AsyncResponseFromJSON(jsonValue));
+    return new runtime.JSONApiResponse(response);
   }
 
   /**
@@ -317,7 +299,7 @@ export class FileApi extends runtime.BaseAPI {
       initOverrides
     );
 
-    return new runtime.JSONApiResponse(response, jsonValue => FileDetailsFromJSON(jsonValue));
+    return new runtime.JSONApiResponse(response);
   }
 
   /**

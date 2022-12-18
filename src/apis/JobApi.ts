@@ -24,24 +24,6 @@ import type {
   // @ts-ignore
   ListRecentJobsResponse
 } from "../models";
-import {
-  // @ts-ignore
-  AccountJobTypeFromJSON,
-  // @ts-ignore
-  AccountJobTypeToJSON,
-  // @ts-ignore
-  ErrorResponseFromJSON,
-  // @ts-ignore
-  ErrorResponseToJSON,
-  // @ts-ignore
-  JobSummaryFromJSON,
-  // @ts-ignore
-  JobSummaryToJSON,
-  // @ts-ignore
-  ListRecentJobsResponseFromJSON,
-  // @ts-ignore
-  ListRecentJobsResponseToJSON
-} from "../models";
 
 export interface CancelJobRequest {
   accountId: string;
@@ -175,7 +157,7 @@ export class JobApi extends runtime.BaseAPI {
       initOverrides
     );
 
-    return new runtime.JSONApiResponse(response, jsonValue => JobSummaryFromJSON(jsonValue));
+    return new runtime.JSONApiResponse(response);
   }
 
   /**
@@ -235,7 +217,7 @@ export class JobApi extends runtime.BaseAPI {
       initOverrides
     );
 
-    return new runtime.JSONApiResponse(response, jsonValue => ListRecentJobsResponseFromJSON(jsonValue));
+    return new runtime.JSONApiResponse(response);
   }
 
   /**

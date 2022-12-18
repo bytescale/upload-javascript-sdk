@@ -30,36 +30,6 @@ import type {
   // @ts-ignore
   PutFolderRequest
 } from "../models";
-import {
-  // @ts-ignore
-  AsyncResponseFromJSON,
-  // @ts-ignore
-  AsyncResponseToJSON,
-  // @ts-ignore
-  DeleteFolderBatchRequestFromJSON,
-  // @ts-ignore
-  DeleteFolderBatchRequestToJSON,
-  // @ts-ignore
-  DeleteFolderRequestFromJSON,
-  // @ts-ignore
-  DeleteFolderRequestToJSON,
-  // @ts-ignore
-  ErrorResponseFromJSON,
-  // @ts-ignore
-  ErrorResponseToJSON,
-  // @ts-ignore
-  FolderDetailsFromJSON,
-  // @ts-ignore
-  FolderDetailsToJSON,
-  // @ts-ignore
-  ListFolderChildrenResponseFromJSON,
-  // @ts-ignore
-  ListFolderChildrenResponseToJSON,
-  // @ts-ignore
-  PutFolderRequestFromJSON,
-  // @ts-ignore
-  PutFolderRequestToJSON
-} from "../models";
 
 export interface DeleteFolderOperationRequest {
   accountId: string;
@@ -135,12 +105,12 @@ export class FolderApi extends runtime.BaseAPI {
         method: "DELETE",
         headers: headerParameters,
         query: queryParameters,
-        body: DeleteFolderRequestToJSON(requestParameters.deleteFolderRequest)
+        body: requestParameters.deleteFolderRequest
       },
       initOverrides
     );
 
-    return new runtime.JSONApiResponse(response, jsonValue => AsyncResponseFromJSON(jsonValue));
+    return new runtime.JSONApiResponse(response);
   }
 
   /**
@@ -197,12 +167,12 @@ export class FolderApi extends runtime.BaseAPI {
         method: "DELETE",
         headers: headerParameters,
         query: queryParameters,
-        body: DeleteFolderBatchRequestToJSON(requestParameters.deleteFolderBatchRequest)
+        body: requestParameters.deleteFolderBatchRequest
       },
       initOverrides
     );
 
-    return new runtime.JSONApiResponse(response, jsonValue => AsyncResponseFromJSON(jsonValue));
+    return new runtime.JSONApiResponse(response);
   }
 
   /**
@@ -262,7 +232,7 @@ export class FolderApi extends runtime.BaseAPI {
       initOverrides
     );
 
-    return new runtime.JSONApiResponse(response, jsonValue => FolderDetailsFromJSON(jsonValue));
+    return new runtime.JSONApiResponse(response);
   }
 
   /**
@@ -342,7 +312,7 @@ export class FolderApi extends runtime.BaseAPI {
       initOverrides
     );
 
-    return new runtime.JSONApiResponse(response, jsonValue => ListFolderChildrenResponseFromJSON(jsonValue));
+    return new runtime.JSONApiResponse(response);
   }
 
   /**
@@ -396,12 +366,12 @@ export class FolderApi extends runtime.BaseAPI {
         method: "PUT",
         headers: headerParameters,
         query: queryParameters,
-        body: PutFolderRequestToJSON(requestParameters.putFolderRequest)
+        body: requestParameters.putFolderRequest
       },
       initOverrides
     );
 
-    return new runtime.JSONApiResponse(response, jsonValue => FolderDetailsFromJSON(jsonValue));
+    return new runtime.JSONApiResponse(response);
   }
 
   /**

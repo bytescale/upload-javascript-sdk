@@ -33,20 +33,25 @@ npm install node-fetch
 ## Basic Usage
 
 ```javascript
-import { FolderApi } from "upload-js-full";
+import Upload from "upload-js-full";
+import fetch from "node-fetch"; // Node.js only.
 
-const folderApi = new FolderApi(new Configuration({
-  fetchApi: require("node-fetch"), // Node.js only.
-  apiKey: "YOUR_UPLOAD_API_KEY"
-}));
+const folderApi = new Upload.FolderApi(
+  new Upload.Configuration({
+    fetchApi: fetch,
+    apiKey: "YOUR_UPLOAD_API_KEY" // e.g. "secret_xxxxx"
+  })
+);
 
-const folders = await folderApi.listFolderChildren({
-  accountId: "YOUR_UPLOAD_ACCOUNT_ID",
-  folderPath: "/"
-});
-
-// Result: { children: [ {...} ] }
-console.log(folders);
+folderApi
+  .listFolderChildren({
+    accountId: "YOUR_UPLOAD_ACCOUNT_ID", // e.g. "W142hJk"
+    folderPath: "/"
+  })
+  .then(
+    folders => console.log(folders),
+    error   => console.error(error)
+  );
 ```
 
 ## Documentation

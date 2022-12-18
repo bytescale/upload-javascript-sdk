@@ -28,32 +28,6 @@ import type {
   // @ts-ignore
   UploadPartList
 } from "../models";
-import {
-  // @ts-ignore
-  BeginMultipartUploadRequestFromJSON,
-  // @ts-ignore
-  BeginMultipartUploadRequestToJSON,
-  // @ts-ignore
-  BeginMultipartUploadResponseFromJSON,
-  // @ts-ignore
-  BeginMultipartUploadResponseToJSON,
-  // @ts-ignore
-  CompleteUploadPartRequestFromJSON,
-  // @ts-ignore
-  CompleteUploadPartRequestToJSON,
-  // @ts-ignore
-  ErrorResponseFromJSON,
-  // @ts-ignore
-  ErrorResponseToJSON,
-  // @ts-ignore
-  UploadPartFromJSON,
-  // @ts-ignore
-  UploadPartToJSON,
-  // @ts-ignore
-  UploadPartListFromJSON,
-  // @ts-ignore
-  UploadPartListToJSON
-} from "../models";
 
 export interface BeginMultipartUploadOperationRequest {
   accountId: string;
@@ -125,12 +99,12 @@ export class UploadApi extends runtime.BaseAPI {
         method: "POST",
         headers: headerParameters,
         query: queryParameters,
-        body: BeginMultipartUploadRequestToJSON(requestParameters.beginMultipartUploadRequest)
+        body: requestParameters.beginMultipartUploadRequest
       },
       initOverrides
     );
 
-    return new runtime.JSONApiResponse(response, jsonValue => BeginMultipartUploadResponseFromJSON(jsonValue));
+    return new runtime.JSONApiResponse(response);
   }
 
   /**
@@ -201,7 +175,7 @@ export class UploadApi extends runtime.BaseAPI {
         method: "PUT",
         headers: headerParameters,
         query: queryParameters,
-        body: CompleteUploadPartRequestToJSON(requestParameters.completeUploadPartRequest)
+        body: requestParameters.completeUploadPartRequest
       },
       initOverrides
     );
@@ -268,7 +242,7 @@ export class UploadApi extends runtime.BaseAPI {
       initOverrides
     );
 
-    return new runtime.JSONApiResponse(response, jsonValue => UploadPartFromJSON(jsonValue));
+    return new runtime.JSONApiResponse(response);
   }
 
   /**
@@ -323,7 +297,7 @@ export class UploadApi extends runtime.BaseAPI {
       initOverrides
     );
 
-    return new runtime.JSONApiResponse(response, jsonValue => UploadPartListFromJSON(jsonValue));
+    return new runtime.JSONApiResponse(response);
   }
 
   /**
