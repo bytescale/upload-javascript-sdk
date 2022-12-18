@@ -6,11 +6,19 @@ Documentation: **[Upload JavaScript SDK Docs](https://upload.io/docs/upload-sdk/
 
 ---
 
-**`upload-js-full`  is the _full_ JavaScript SDK for Upload.io**
+This version:
+
+- [`upload-js-full`](https://github.com/upload-io/upload-js-full)
+  - Functionality: Methods for all [Upload API](https://upload.io/docs/upload-api) endpoints.
+  - Size: 15KB
+  - Environments: Browser + Node.js.
 
 Alternative versions:
 
-- [`upload-js`](https://github.com/upload-io/upload-js): lightweight browser-only version.
+- [`upload-js`](https://github.com/upload-io/upload-js)
+  - Functionality: File upload methods only.
+  - Size: 6KB
+  - Environments: Browser only.
 
 ## Installation
 
