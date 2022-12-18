@@ -36,11 +36,12 @@ npm install node-fetch
 import { FolderApi } from "upload-js-full";
 
 const folderApi = new FolderApi(new Configuration({
-  fetchApi: require("node-fetch") // Node.js only.
+  fetchApi: require("node-fetch"), // Node.js only.
+  apiKey: "YOUR_UPLOAD_API_KEY"
 }));
 
 const folders = await folderApi.listFolderChildren({
-  accountId: "YOUR_ACCOUNT_ID",
+  accountId: "YOUR_UPLOAD_ACCOUNT_ID",
   folderPath: "/"
 });
 

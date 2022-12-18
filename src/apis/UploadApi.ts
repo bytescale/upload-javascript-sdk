@@ -113,7 +113,7 @@ export class UploadApi extends runtime.BaseAPI {
     headerParameters["Content-Type"] = "application/json";
 
     if (this.configuration && this.configuration.apiKey) {
-      headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // authorization-header authentication
+      headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey("Authorization")}`; // authorization-header authentication
     }
 
     const response = await this.request(
@@ -189,7 +189,7 @@ export class UploadApi extends runtime.BaseAPI {
     headerParameters["Content-Type"] = "application/json";
 
     if (this.configuration && this.configuration.apiKey) {
-      headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // authorization-header authentication
+      headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey("Authorization")}`; // authorization-header authentication
     }
 
     const response = await this.request(
@@ -252,7 +252,7 @@ export class UploadApi extends runtime.BaseAPI {
     const headerParameters: runtime.HTTPHeaders = {};
 
     if (this.configuration && this.configuration.apiKey) {
-      headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // authorization-header authentication
+      headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey("Authorization")}`; // authorization-header authentication
     }
 
     const response = await this.request(
@@ -308,7 +308,7 @@ export class UploadApi extends runtime.BaseAPI {
     const headerParameters: runtime.HTTPHeaders = {};
 
     if (this.configuration && this.configuration.apiKey) {
-      headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // authorization-header authentication
+      headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey("Authorization")}`; // authorization-header authentication
     }
 
     const response = await this.request(

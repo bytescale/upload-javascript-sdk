@@ -172,7 +172,7 @@ export class {{classname}} extends runtime.BaseAPI {
         {{#isApiKey}}
         {{#isKeyInHeader}}
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["{{keyParamName}}"] = this.configuration.apiKey("{{keyParamName}}"); // {{name}} authentication
+            headerParameters["{{keyParamName}}"] = `Bearer ${this.configuration.apiKey("{{keyParamName}}")}`; // {{name}} authentication
         }
 
         {{/isKeyInHeader}}
