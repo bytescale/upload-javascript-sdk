@@ -43,7 +43,7 @@ const uploadManager = new Upload.UploadManager(
 uploadManager
   .upload({
     accountId: "YOUR_UPLOAD_ACCOUNT_ID", // e.g. "W142hJk"
-    // Support types:
+    // Supported types for 'data' field:
     // - String
     // - Blob
     // - Buffer
