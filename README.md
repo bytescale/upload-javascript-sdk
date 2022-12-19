@@ -6,14 +6,7 @@ Full Documentation: **[Upload JavaScript SDK Docs »](https://upload.io/docs/upl
 
 ---
 
-- [`upload-js-full`](https://github.com/upload-io/upload-js-full) (this package)
-
-  - Supports all [Upload API](https://upload.io/docs/upload-api) endpoints.
-  - Node.js + Browsers
-
-- [`upload-js`](https://github.com/upload-io/upload-js) (lightweight version)
-  - Supports file uploads only.
-  - Browsers only.
+This package supports Node.js + modern browsers.
 
 ## Installation
 
