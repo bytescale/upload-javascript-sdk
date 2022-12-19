@@ -2,7 +2,7 @@
 
 ---
 
-Full Documentation: **[Upload JavaScript SDK Docs »](https://upload.io/docs/upload-sdk/javascript)**
+Docs: **[Upload JavaScript SDK »](https://upload.io/docs/upload-sdk/javascript)**
 
 ---
 
