@@ -10,7 +10,7 @@ Full JavaScript SDK for the [Upload API](https://upload.io/docs/upload-api).
 
 - Supports: Node.js + modern browsers.
 
-- Note: For a lightweight browser-only version, please see [Upload.js](https://github.com/upload-io/upload-js)
+- For a lightweight browser-only version (6KB vs 11KB) see [Upload.js](https://github.com/upload-io/upload-js).
 
 ## Installation
 

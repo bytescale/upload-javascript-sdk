@@ -16,7 +16,7 @@ module.exports = {
   resolve: {
     extensions: [".ts"]
   },
-  externals: nodeExternals(),
+  externals: [nodeExternals(), "stream"],
   module: {
     rules: [
       {

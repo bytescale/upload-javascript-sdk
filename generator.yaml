@@ -17,10 +17,10 @@ files:
   runtime.mustache:
     templateType: SupportingFiles
     destinationFilename: runtime.ts
-  UploadManager.ts: {}
-  models/BlobLike.ts: {}
-  models/CancellationToken.ts: {}
-  models/CancelledError.ts: {}
-  models/UploadRequest.ts: {}
-  models/UploadSource.ts: {}
+  index.mustache:
+    templateType: SupportingFiles
+    destinationFilename: index.ts
   utils/ChunkedStream.ts: {}
+  utils/index.ts: {}
+  utils/Model.ts: {}
+  utils/UploadManager.ts: {}

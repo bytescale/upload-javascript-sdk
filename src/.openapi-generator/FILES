@@ -1,5 +1,4 @@
 .openapi-generator-ignore
-UploadManager.ts
 apis/FileApi.ts
 apis/FolderApi.ts
 apis/JobApi.ts
@@ -20,9 +19,6 @@ models/BeginMultipartUploadResponse.ts
 models/BeginMultipartUploadResponse.ts
 models/BeginMultipartUploadResponseUploadParts.ts
 models/BeginMultipartUploadResponseUploadParts.ts
-models/BlobLike.ts
-models/CancellationToken.ts
-models/CancelledError.ts
 models/CompleteUploadPartRequest.ts
 models/CompleteUploadPartRequest.ts
 models/DeleteFileBatchRequest.ts
@@ -117,8 +113,6 @@ models/UploadPartList.ts
 models/UploadPartList.ts
 models/UploadPartRange.ts
 models/UploadPartRange.ts
-models/UploadRequest.ts
-models/UploadSource.ts
 models/WebStorage.ts
 models/WebStorage.ts
 models/WithFolderPathPublicPermissionsArray.ts
@@ -128,3 +122,6 @@ models/WithFolderPathStorageLayerSummary.ts
 models/index.ts
 runtime.ts
 utils/ChunkedStream.ts
+utils/Model.ts
+utils/UploadManager.ts
+utils/index.ts

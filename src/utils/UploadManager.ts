@@ -1,11 +1,8 @@
-import { BeginMultipartUploadResponse, DefaultConfig, FileDetails, UploadApi, UploadPart } from "../src";
-import { UploadRequest } from "./models/UploadRequest";
-import { BlobLike } from "./models/BlobLike";
-import { UploadSource, UploadSourceProcessed } from "./models/UploadSource";
-import { CancelledError } from "./models/CancelledError";
+import { BeginMultipartUploadResponse, DefaultConfig, FileDetails, UploadApi, UploadPart } from "../../src";
 import { Readable } from "stream";
 import * as buffer from "buffer";
-import { ChunkedStream } from "./utils/ChunkedStream";
+import { ChunkedStream } from "./ChunkedStream";
+import { BlobLike, CancelledError, UploadRequest, UploadSource, UploadSourceProcessed } from "./Model";
 
 export class UploadManager {
   private readonly defaultMaxConcurrentUploadParts = 4;
