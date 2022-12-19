@@ -337,6 +337,16 @@ export interface ErrorResponseError {
  */
 export interface FileDetails {
   /**
+   * Your account ID.
+   *
+   * This is visible on the settings page:
+   *
+   * https://upload.io/dashboard/settings
+   * @type {string}
+   * @memberof FileDetails
+   */
+  accountId: string;
+  /**
    * The file metadata specified in the original upload request as a JSON object.
    * @type {{ [key: string]: any; }}
    * @memberof FileDetails
@@ -681,7 +691,8 @@ export interface FolderSettingsStorageLayerSummaryStorageLayer {
 export const FolderSettingsStorageLayerSummaryStorageLayerTypeEnum = {
   S3: "S3"
 } as const;
-export type FolderSettingsStorageLayerSummaryStorageLayerTypeEnum = typeof FolderSettingsStorageLayerSummaryStorageLayerTypeEnum[keyof typeof FolderSettingsStorageLayerSummaryStorageLayerTypeEnum];
+export type FolderSettingsStorageLayerSummaryStorageLayerTypeEnum =
+  typeof FolderSettingsStorageLayerSummaryStorageLayerTypeEnum[keyof typeof FolderSettingsStorageLayerSummaryStorageLayerTypeEnum];
 
 /**
  * The folder's status.
@@ -1074,7 +1085,8 @@ export interface PickS3StorageExcludeKeyofS3StorageCredentials {
 export const PickS3StorageExcludeKeyofS3StorageCredentialsTypeEnum = {
   S3: "S3"
 } as const;
-export type PickS3StorageExcludeKeyofS3StorageCredentialsTypeEnum = typeof PickS3StorageExcludeKeyofS3StorageCredentialsTypeEnum[keyof typeof PickS3StorageExcludeKeyofS3StorageCredentialsTypeEnum];
+export type PickS3StorageExcludeKeyofS3StorageCredentialsTypeEnum =
+  typeof PickS3StorageExcludeKeyofS3StorageCredentialsTypeEnum[keyof typeof PickS3StorageExcludeKeyofS3StorageCredentialsTypeEnum];
 
 /**
  *
@@ -1279,7 +1291,8 @@ export interface SpecifiedFieldValueFolderDescriptionOrNull {
 export const SpecifiedFieldValueFolderDescriptionOrNullSetEnum = {
   True: true
 } as const;
-export type SpecifiedFieldValueFolderDescriptionOrNullSetEnum = typeof SpecifiedFieldValueFolderDescriptionOrNullSetEnum[keyof typeof SpecifiedFieldValueFolderDescriptionOrNullSetEnum];
+export type SpecifiedFieldValueFolderDescriptionOrNullSetEnum =
+  typeof SpecifiedFieldValueFolderDescriptionOrNullSetEnum[keyof typeof SpecifiedFieldValueFolderDescriptionOrNullSetEnum];
 
 /**
  * This data type specifies the field must be updated.
@@ -1307,7 +1320,8 @@ export interface SpecifiedFieldValuePublicPermissionsArrayOrNull {
 export const SpecifiedFieldValuePublicPermissionsArrayOrNullSetEnum = {
   True: true
 } as const;
-export type SpecifiedFieldValuePublicPermissionsArrayOrNullSetEnum = typeof SpecifiedFieldValuePublicPermissionsArrayOrNullSetEnum[keyof typeof SpecifiedFieldValuePublicPermissionsArrayOrNullSetEnum];
+export type SpecifiedFieldValuePublicPermissionsArrayOrNullSetEnum =
+  typeof SpecifiedFieldValuePublicPermissionsArrayOrNullSetEnum[keyof typeof SpecifiedFieldValuePublicPermissionsArrayOrNullSetEnum];
 
 /**
  * This data type specifies the field must be updated.
@@ -1335,7 +1349,8 @@ export interface SpecifiedFieldValueStorageLayerUpdateOrNull {
 export const SpecifiedFieldValueStorageLayerUpdateOrNullSetEnum = {
   True: true
 } as const;
-export type SpecifiedFieldValueStorageLayerUpdateOrNullSetEnum = typeof SpecifiedFieldValueStorageLayerUpdateOrNullSetEnum[keyof typeof SpecifiedFieldValueStorageLayerUpdateOrNullSetEnum];
+export type SpecifiedFieldValueStorageLayerUpdateOrNullSetEnum =
+  typeof SpecifiedFieldValueStorageLayerUpdateOrNullSetEnum[keyof typeof SpecifiedFieldValueStorageLayerUpdateOrNullSetEnum];
 
 /**
  * The value to set into the field.
@@ -1433,7 +1448,8 @@ export interface SpecifiedFieldValueStorageLayerUpdateOrNullValue {
 export const SpecifiedFieldValueStorageLayerUpdateOrNullValueTypeEnum = {
   S3: "S3"
 } as const;
-export type SpecifiedFieldValueStorageLayerUpdateOrNullValueTypeEnum = typeof SpecifiedFieldValueStorageLayerUpdateOrNullValueTypeEnum[keyof typeof SpecifiedFieldValueStorageLayerUpdateOrNullValueTypeEnum];
+export type SpecifiedFieldValueStorageLayerUpdateOrNullValueTypeEnum =
+  typeof SpecifiedFieldValueStorageLayerUpdateOrNullValueTypeEnum[keyof typeof SpecifiedFieldValueStorageLayerUpdateOrNullValueTypeEnum];
 
 /**
  * Storage layer summary information, describing an existing folder's storage layer.
@@ -1649,7 +1665,8 @@ export interface UnspecifiedFieldValue {
 export const UnspecifiedFieldValueSetEnum = {
   False: false
 } as const;
-export type UnspecifiedFieldValueSetEnum = typeof UnspecifiedFieldValueSetEnum[keyof typeof UnspecifiedFieldValueSetEnum];
+export type UnspecifiedFieldValueSetEnum =
+  typeof UnspecifiedFieldValueSetEnum[keyof typeof UnspecifiedFieldValueSetEnum];
 
 /**
  *
@@ -1677,7 +1694,8 @@ export interface UpdatableFieldFolderDescriptionOrNull {
 export const UpdatableFieldFolderDescriptionOrNullSetEnum = {
   True: true
 } as const;
-export type UpdatableFieldFolderDescriptionOrNullSetEnum = typeof UpdatableFieldFolderDescriptionOrNullSetEnum[keyof typeof UpdatableFieldFolderDescriptionOrNullSetEnum];
+export type UpdatableFieldFolderDescriptionOrNullSetEnum =
+  typeof UpdatableFieldFolderDescriptionOrNullSetEnum[keyof typeof UpdatableFieldFolderDescriptionOrNullSetEnum];
 
 /**
  *
@@ -1705,7 +1723,8 @@ export interface UpdatableFieldPublicPermissionsArrayOrNull {
 export const UpdatableFieldPublicPermissionsArrayOrNullSetEnum = {
   True: true
 } as const;
-export type UpdatableFieldPublicPermissionsArrayOrNullSetEnum = typeof UpdatableFieldPublicPermissionsArrayOrNullSetEnum[keyof typeof UpdatableFieldPublicPermissionsArrayOrNullSetEnum];
+export type UpdatableFieldPublicPermissionsArrayOrNullSetEnum =
+  typeof UpdatableFieldPublicPermissionsArrayOrNullSetEnum[keyof typeof UpdatableFieldPublicPermissionsArrayOrNullSetEnum];
 
 /**
  *
@@ -1733,7 +1752,8 @@ export interface UpdatableFieldStorageLayerUpdateOrNull {
 export const UpdatableFieldStorageLayerUpdateOrNullSetEnum = {
   True: true
 } as const;
-export type UpdatableFieldStorageLayerUpdateOrNullSetEnum = typeof UpdatableFieldStorageLayerUpdateOrNullSetEnum[keyof typeof UpdatableFieldStorageLayerUpdateOrNullSetEnum];
+export type UpdatableFieldStorageLayerUpdateOrNullSetEnum =
+  typeof UpdatableFieldStorageLayerUpdateOrNullSetEnum[keyof typeof UpdatableFieldStorageLayerUpdateOrNullSetEnum];
 
 /**
  * Represents a part of a file to be uploaded as part of a multipart file upload.

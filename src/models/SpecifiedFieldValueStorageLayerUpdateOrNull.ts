@@ -3,7 +3,8 @@
  * @export
  */
 export const SpecifiedFieldValueStorageLayerUpdateOrNull = {} as const;
-export type SpecifiedFieldValueStorageLayerUpdateOrNull = typeof SpecifiedFieldValueStorageLayerUpdateOrNull[keyof typeof SpecifiedFieldValueStorageLayerUpdateOrNull];
+export type SpecifiedFieldValueStorageLayerUpdateOrNull =
+  typeof SpecifiedFieldValueStorageLayerUpdateOrNull[keyof typeof SpecifiedFieldValueStorageLayerUpdateOrNull];
 
 export function SpecifiedFieldValueStorageLayerUpdateOrNullFromJSON(
   json: any

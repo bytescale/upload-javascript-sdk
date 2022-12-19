@@ -2,20 +2,17 @@
 
 ---
 
-Full Documentation: **[Upload JavaScript SDK Docs](https://upload.io/docs/upload-sdk/javascript)**
+Full Documentation: **[Upload JavaScript SDK Docs »](https://upload.io/docs/upload-sdk/javascript)**
 
 ---
 
-This version:
+- [`upload-js-full`](https://github.com/upload-io/upload-js-full) (this package)
 
-- [`upload-js-full`](https://github.com/upload-io/upload-js-full)
-  - Includes support for all [Upload API](https://upload.io/docs/upload-api) endpoints.
+  - Supports all [Upload API](https://upload.io/docs/upload-api) endpoints.
   - Node.js + Browsers
 
-Alternative versions:
-
-- [`upload-js`](https://github.com/upload-io/upload-js)
-  - Includes support for file uploads only.
+- [`upload-js`](https://github.com/upload-io/upload-js) (lightweight version)
+  - Supports file uploads only.
   - Browsers only.
 
 ## Installation
@@ -30,7 +27,67 @@ Additional step for Node.js:
 npm install node-fetch
 ```
 
-## Basic Usage
+## Usage
+
+- [Upload](#upload)
+- [Get File Details](#get-file-details)
+- [List Folder Children](#list-folder-children)
+- **[See All Methods »](https://upload.io/docs/upload-sdk/javascript)**
+
+### Upload
+
+```javascript
+import Upload from "upload-js-full";
+import fetch from "node-fetch"; // Node.js only.
+
+const uploadManager = new Upload.UploadManager(
+  new Upload.Configuration({
+    fetchApi: fetch,
+    apiKey: "YOUR_UPLOAD_API_KEY" // e.g. "secret_xxxxx"
+  })
+);
+
+uploadManager
+  .upload({
+    accountId: "YOUR_UPLOAD_ACCOUNT_ID", // e.g. "W142hJk"
+    // Support types:
+    // - String
+    // - Blob
+    // - Buffer
+    // - ReadableStream (Node.js)
+    data: "Example Data"
+  })
+  .then(
+    uploadedFile => console.log(uploadedFile),
+    error => console.error(error)
+  );
+```
+
+### Get File Details
+
+```javascript
+import Upload from "upload-js-full";
+import fetch from "node-fetch"; // Node.js only.
+
+const fileApi = new Upload.FileApi(
+  new Upload.Configuration({
+    fetchApi: fetch,
+    apiKey: "YOUR_UPLOAD_API_KEY" // e.g. "secret_xxxxx"
+  })
+);
+
+fileApi
+  .getFileDetails({
+    accountId: "YOUR_UPLOAD_ACCOUNT_ID", // e.g. "W142hJk"
+    filePath: "/uploads/2022/12/25/image.jpg"
+  })
+  .then(
+    fileDetails => console.log(fileDetails),
+    error => console.error(error)
+  );
+```
+
+### List Folder Children
 
 ```javascript
 import Upload from "upload-js-full";
@@ -50,13 +107,13 @@ folderApi
   })
   .then(
     folders => console.log(folders),
-    error   => console.error(error)
+    error => console.error(error)
   );
 ```
 
-## Documentation
+## Full Documentation
 
-Please see **[Upload JavaScript SDK](https://upload.io/docs/upload-sdk/javascript)** for detailed docs.
+**[Upload JavaScript SDK Docs »](https://upload.io/docs/upload-sdk/javascript)**
 
 ## License
 

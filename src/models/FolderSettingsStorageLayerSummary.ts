@@ -3,7 +3,8 @@
  * @export
  */
 export const FolderSettingsStorageLayerSummary = {} as const;
-export type FolderSettingsStorageLayerSummary = typeof FolderSettingsStorageLayerSummary[keyof typeof FolderSettingsStorageLayerSummary];
+export type FolderSettingsStorageLayerSummary =
+  typeof FolderSettingsStorageLayerSummary[keyof typeof FolderSettingsStorageLayerSummary];
 
 export function FolderSettingsStorageLayerSummaryFromJSON(json: any): FolderSettingsStorageLayerSummary {
   return json as FolderSettingsStorageLayerSummary;

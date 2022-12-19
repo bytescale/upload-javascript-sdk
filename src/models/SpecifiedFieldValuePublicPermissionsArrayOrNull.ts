@@ -3,7 +3,8 @@
  * @export
  */
 export const SpecifiedFieldValuePublicPermissionsArrayOrNull = {} as const;
-export type SpecifiedFieldValuePublicPermissionsArrayOrNull = typeof SpecifiedFieldValuePublicPermissionsArrayOrNull[keyof typeof SpecifiedFieldValuePublicPermissionsArrayOrNull];
+export type SpecifiedFieldValuePublicPermissionsArrayOrNull =
+  typeof SpecifiedFieldValuePublicPermissionsArrayOrNull[keyof typeof SpecifiedFieldValuePublicPermissionsArrayOrNull];
 
 export function SpecifiedFieldValuePublicPermissionsArrayOrNullFromJSON(
   json: any

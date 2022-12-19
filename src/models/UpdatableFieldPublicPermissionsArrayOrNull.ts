@@ -3,7 +3,8 @@
  * @export
  */
 export const UpdatableFieldPublicPermissionsArrayOrNull = {} as const;
-export type UpdatableFieldPublicPermissionsArrayOrNull = typeof UpdatableFieldPublicPermissionsArrayOrNull[keyof typeof UpdatableFieldPublicPermissionsArrayOrNull];
+export type UpdatableFieldPublicPermissionsArrayOrNull =
+  typeof UpdatableFieldPublicPermissionsArrayOrNull[keyof typeof UpdatableFieldPublicPermissionsArrayOrNull];
 
 export function UpdatableFieldPublicPermissionsArrayOrNullFromJSON(
   json: any
