@@ -141,8 +141,15 @@ export class UploadManager {
     return readable;
   }
 
+  /**
+   * Only expected to be called in Node.js environments, and as such, we can assume 'BlobLike' is not a DOM 'File' object.
+   */
   private async blobToBuffer(blob: BlobLike): Promise<ArrayBuffer> {
-    return await (blob as buffer.Blob).arrayBuffer();
+    // DOM Blob and Node.js Blob both have 'arrayBuffer' with the same signature...
+    if ((blob as Partial<buffer.Blob>).arrayBuffer !== undefined) {
+      return await (blob as buffer.Blob).arrayBuffer();
+    }
+    throw new Error("The provided 'data' field was treated as a BLOB, but it does not have an 'arrayBuffer' method.");
   }
 
   private sliceDataForRequest(data: UploadSourceProcessed, part: UploadPart): UploadSource {
@@ -263,7 +270,7 @@ export class UploadManager {
     }
   ): T {
     if (typeof data === "string") {
-      return handle.ifBlob(this.stringToBlobLike(data));
+      return handle.ifBlob(this.stringToBlob(data));
     }
     if ((data as Partial<NodeJS.ReadableStream>).on !== undefined) {
       return handle.ifNodeJsStream(data as NodeJS.ReadableStream);
@@ -279,7 +286,7 @@ export class UploadManager {
 
   private processUploadSource(data: UploadSource): UploadSourceProcessed {
     if (typeof data === "string") {
-      return this.stringToBlobLike(data);
+      return this.stringToBlob(data);
     }
     if ((data as Partial<NodeJS.ReadableStream>).on !== undefined) {
       return new ChunkedStream(data as NodeJS.ReadableStream);
@@ -294,13 +301,9 @@ export class UploadManager {
     throw new Error(`Unsupported type for 'data' parameter. Please provide a String, Blob, or Readable (Node.js).`);
   }
 
-  private stringToBlobLike(data: string): BlobLike {
-    return {
-      size: data.length,
-      name: undefined,
-      type: "text/plain",
-      slice: (start, end) => this.stringToBlobLike(data.slice(start, end))
-    };
+  private stringToBlob(data: string): BlobLike {
+    const B = globalThis.Blob ?? buffer.Blob;
+    return new B([data], { type: "text/plain" });
   }
 
   private async mapAsync<T>(items: T[], concurrency: number, callback: (item: T) => Promise<void>): Promise<void> {
