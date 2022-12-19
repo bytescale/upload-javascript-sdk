@@ -144,10 +144,10 @@ export class UploadManager {
   /**
    * Only expected to be called in Node.js environments, and as such, we can assume 'BlobLike' is not a DOM 'File' object.
    */
-  private async blobToBuffer(blob: BlobLike): Promise<ArrayBuffer> {
+  private async blobToBuffer(blob: BlobLike): Promise<Buffer> {
     // DOM Blob and Node.js Blob both have 'arrayBuffer' with the same signature...
     if ((blob as Partial<buffer.Blob>).arrayBuffer !== undefined) {
-      return await (blob as buffer.Blob).arrayBuffer();
+      return Buffer.from(await (blob as buffer.Blob).arrayBuffer());
     }
     throw new Error("The provided 'data' field was treated as a BLOB, but it does not have an 'arrayBuffer' method.");
   }
