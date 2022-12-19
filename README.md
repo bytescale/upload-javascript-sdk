@@ -6,9 +6,11 @@ Full Documentation: **[Upload JavaScript SDK Docs »](https://upload.io/docs/upl
 
 ---
 
-JavaScript client library for the [Upload API](https://upload.io/docs/upload-api) (includes all endpoints, whereas the original [Upload.js](https://github.com/upload-io/upload-js) library does not).
+Full JavaScript SDK for the [Upload API](https://upload.io/docs/upload-api).
 
-Supports Node.js + modern browsers.
+- **Supports:** Node.js + modern browsers.
+
+- **Note:** For a lightweight browser-only version, please see [Upload.js](https://github.com/upload-io/upload-js)
 
 ## Installation
 
