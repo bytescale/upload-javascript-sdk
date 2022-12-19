@@ -247,7 +247,6 @@ function isFormData(value: any): value is FormData {
 }
 
 export class UploadApiError extends Error {
-  // prettier-ignore
   override name: "UploadApiError" = "UploadApiError";
   public readonly errorCode: string;
   public readonly details: any | undefined;
@@ -261,7 +260,6 @@ export class UploadApiError extends Error {
 }
 
 export class ResponseError extends Error {
-  // prettier-ignore
   override name: "ResponseError" = "ResponseError";
   constructor(public response: Response, msg?: string) {
     super(msg);
@@ -276,7 +274,6 @@ export class FetchError extends Error {
 }
 
 export class RequiredError extends Error {
-  // prettier-ignore
   override name: "RequiredError" = "RequiredError";
   constructor(public field: string, msg?: string) {
     super(msg);
