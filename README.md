@@ -2,7 +2,7 @@
 
 ---
 
-Docs: **[Upload JavaScript SDK »](https://upload.io/docs/upload-sdk/javascript)**
+Documentation: **[Upload JavaScript SDK »](https://upload.io/docs/upload-sdk/javascript)**
 
 ---
 
@@ -27,6 +27,7 @@ npm install node-fetch
 ## Usage
 
 - [Upload](#upload)
+- [Download](#download)
 - [Get File Details](#get-file-details)
 - [List Folder Children](#list-folder-children)
 - **[See All Methods »](https://upload.io/docs/upload-sdk/javascript)**
@@ -56,6 +57,31 @@ uploadManager
   })
   .then(
     uploadedFile => console.log(uploadedFile),
+    error => console.error(error)
+  );
+```
+
+### Download
+
+```javascript
+import Upload from "upload-js-full";
+import fetch from "node-fetch"; // Node.js only.
+
+const fileApi = new Upload.FileApi(
+  new Upload.Configuration({
+    fetchApi: fetch,
+    apiKey: "YOUR_UPLOAD_API_KEY" // e.g. "secret_xxxxx"
+  })
+);
+
+fileApi
+  .downloadFile({
+    accountId: "YOUR_UPLOAD_ACCOUNT_ID", // e.g. "W142hJk"
+    filePath: "/uploads/2022/12/25/hello_world.txt"
+  })
+  .then(response => response.text())
+  .then(
+    fileContents => console.log(fileContents),
     error => console.error(error)
   );
 ```
@@ -108,9 +134,9 @@ folderApi
   );
 ```
 
-## Full Documentation
+## Documentation
 
-**[Upload JavaScript SDK Docs »](https://upload.io/docs/upload-sdk/javascript)**
+Please see: **[Upload JavaScript SDK Docs »](https://upload.io/docs/upload-sdk/javascript)**
 
 ## License
 
