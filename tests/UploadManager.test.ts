@@ -45,6 +45,21 @@ function createPseudoRandomStream(sizeInBytes: number): NodeJS.ReadableStream {
   });
 }
 
+async function testStreamingUpload(expectedSize: number): Promise<void> {
+  const expectedData = (): NodeJS.ReadableStream => createPseudoRandomStream(expectedSize);
+  const uploadedFile = await uploadManager.upload({
+    accountId,
+    data: expectedData(),
+    size: expectedSize
+  });
+  const fileDetails = await fileApi.getFileDetails({ accountId, filePath: uploadedFile.filePath });
+  const actualData = await (await fileApi.downloadFile({ accountId, filePath: uploadedFile.filePath })).stream();
+  const actualSize = fileDetails.size;
+  const streamsAreEqual = await streamEqual(new ReadableWebToNodeStream(actualData) as any, expectedData() as any);
+  expect(actualSize).toEqual(expectedSize);
+  expect(streamsAreEqual).toEqual(true);
+}
+
 describe("UploadManager", () => {
   test("upload a string", async () => {
     const expectedData = "Example Data";
@@ -104,21 +119,17 @@ describe("UploadManager", () => {
   });
 
   test(
+    "upload a small stream",
+    async () => {
+      await testStreamingUpload(Math.pow(1024, 2) * 2); // 2MB
+    },
+    10 * 60 * 1000
+  );
+
+  test(
     "upload a large stream",
     async () => {
-      const expectedSize = Math.pow(1024, 2) * 500; // 500MB
-      const expectedData = (): NodeJS.ReadableStream => createPseudoRandomStream(expectedSize);
-      const uploadedFile = await uploadManager.upload({
-        accountId,
-        data: expectedData(),
-        size: expectedSize
-      });
-      const fileDetails = await fileApi.getFileDetails({ accountId, filePath: uploadedFile.filePath });
-      const actualData = await (await fileApi.downloadFile({ accountId, filePath: uploadedFile.filePath })).stream();
-      const actualSize = fileDetails.size;
-      const streamsAreEqual = await streamEqual(new ReadableWebToNodeStream(actualData) as any, expectedData() as any);
-      expect(actualSize).toEqual(expectedSize);
-      expect(streamsAreEqual).toEqual(true);
+      await testStreamingUpload(Math.pow(1024, 2) * 500); // 500MB
     },
     10 * 60 * 1000
   );
