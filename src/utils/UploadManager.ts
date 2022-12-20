@@ -85,10 +85,17 @@ export class UploadManager {
     const fetchApi = this.configuration.fetchApi ?? fetch;
     const isMultipart = uploadInfo.uploadParts.count > 1;
 
-    // Headers only need setting for single-part uploads, as they're already set by the Upload API for multipart uploads.
-    let headers: HeadersInit | undefined;
+    let headers: HeadersInit = {
+      // Required to prevent fetch using "Transfer-Encoding: Chunked" when body is a stream.
+      "content-length": (part.range.inclusiveEnd + 1 - part.range.inclusiveStart).toString()
+    };
+
     if (!isMultipart) {
-      headers = { "content-type": uploadInfo.file.mime };
+      headers = {
+        ...headers,
+        "content-type": uploadInfo.file.mime
+      };
+
       if (uploadInfo.file.originalFileName !== null) {
         headers = {
           ...headers,
@@ -106,6 +113,11 @@ export class UploadManager {
     });
 
     const etag = response.headers.get("etag") ?? undefined;
+    if (Math.floor(response.status / 100) !== 2) {
+      console.error(`Failed to upload part (${response.status}). Response from server:\n${await response.text()}`);
+      throw new Error(`Failed to upload part (${response.status}).`);
+    }
+
     if (etag === undefined) {
       throw new Error("No 'etag' response header found in upload part response.");
     }
@@ -121,7 +133,7 @@ export class UploadManager {
     part: UploadPart,
     data: UploadSourceProcessed
   ): Promise<NodeJS.ReadableStream | Buffer | BlobLike> {
-    const slicedData = this.sliceDataForRequest(data, part);
+    const slicedData = await this.sliceDataForRequest(data, part);
     const isNodeJs = this.isNodeJs();
 
     // node-fetch requires 'NodeJS.ReadableStream' for the body.
@@ -152,7 +164,7 @@ export class UploadManager {
     throw new Error("The provided 'data' field was treated as a BLOB, but it does not have an 'arrayBuffer' method.");
   }
 
-  private sliceDataForRequest(data: UploadSourceProcessed, part: UploadPart): UploadSource {
+  private async sliceDataForRequest(data: UploadSourceProcessed, part: UploadPart): Promise<UploadSource> {
     if (part.range.inclusiveEnd === -1) {
       return "";
     }
@@ -161,10 +173,10 @@ export class UploadManager {
     const endExclusive = part.range.inclusiveEnd + 1;
     const partSize = endExclusive - start;
 
-    return this.foldData<UploadSource>(data, {
-      ifBlob: (blob): UploadSource => blob.slice(start, endExclusive),
-      ifBuffer: (buffer): UploadSource => buffer.subarray(start, endExclusive),
-      ifNodeJsStream: (stream): UploadSource => stream.take(partSize) // Assumes stream is read using one worker (which it is).
+    return await this.foldData<Promise<UploadSource>>(data, {
+      ifBlob: async (blob): Promise<UploadSource> => blob.slice(start, endExclusive),
+      ifBuffer: async (buffer): Promise<UploadSource> => buffer.subarray(start, endExclusive),
+      ifNodeJsStream: async (stream): Promise<UploadSource> => await stream.take(partSize) // Assumes stream is read using one worker (which it is).
     });
   }
 

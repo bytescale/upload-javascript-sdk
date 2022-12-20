@@ -82,17 +82,38 @@ export class JobApi extends runtime.BaseAPI {
       headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // authorization-header authentication
     }
 
+    const operationBasePathOverride = [][0];
+
     const response = await this.request(
       {
         path: `/v2/accounts/{accountId}/jobs/{jobType}/{jobId}`
-          .replace(`{${"accountId"}}`, encodeURIComponent(String(requestParameters.accountId)))
-          .replace(`{${"jobType"}}`, encodeURIComponent(String(requestParameters.jobType)))
-          .replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters.jobId))),
+          .replace(
+            `{${"accountId"}}`,
+            // @ts-ignore
+            "accountId" === "filePath"
+              ? String(requestParameters.accountId).substr(1)
+              : encodeURIComponent(String(requestParameters.accountId))
+          )
+          .replace(
+            `{${"jobType"}}`,
+            // @ts-ignore
+            "jobType" === "filePath"
+              ? String(requestParameters.jobType).substr(1)
+              : encodeURIComponent(String(requestParameters.jobType))
+          )
+          .replace(
+            `{${"jobId"}}`,
+            // @ts-ignore
+            "jobId" === "filePath"
+              ? String(requestParameters.jobId).substr(1)
+              : encodeURIComponent(String(requestParameters.jobId))
+          ),
         method: "DELETE",
         headers: headerParameters,
         query: queryParameters
       },
-      initOverrides
+      initOverrides,
+      operationBasePathOverride
     );
 
     return new runtime.VoidApiResponse(response);
@@ -144,17 +165,38 @@ export class JobApi extends runtime.BaseAPI {
       headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // authorization-header authentication
     }
 
+    const operationBasePathOverride = [][0];
+
     const response = await this.request(
       {
         path: `/v2/accounts/{accountId}/jobs/{jobType}/{jobId}`
-          .replace(`{${"accountId"}}`, encodeURIComponent(String(requestParameters.accountId)))
-          .replace(`{${"jobType"}}`, encodeURIComponent(String(requestParameters.jobType)))
-          .replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters.jobId))),
+          .replace(
+            `{${"accountId"}}`,
+            // @ts-ignore
+            "accountId" === "filePath"
+              ? String(requestParameters.accountId).substr(1)
+              : encodeURIComponent(String(requestParameters.accountId))
+          )
+          .replace(
+            `{${"jobType"}}`,
+            // @ts-ignore
+            "jobType" === "filePath"
+              ? String(requestParameters.jobType).substr(1)
+              : encodeURIComponent(String(requestParameters.jobType))
+          )
+          .replace(
+            `{${"jobId"}}`,
+            // @ts-ignore
+            "jobId" === "filePath"
+              ? String(requestParameters.jobId).substr(1)
+              : encodeURIComponent(String(requestParameters.jobId))
+          ),
         method: "GET",
         headers: headerParameters,
         query: queryParameters
       },
-      initOverrides
+      initOverrides,
+      operationBasePathOverride
     );
 
     return new runtime.JSONApiResponse(response);
@@ -204,17 +246,23 @@ export class JobApi extends runtime.BaseAPI {
       headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // authorization-header authentication
     }
 
+    const operationBasePathOverride = [][0];
+
     const response = await this.request(
       {
         path: `/v2/accounts/{accountId}/jobs`.replace(
           `{${"accountId"}}`,
-          encodeURIComponent(String(requestParameters.accountId))
+          // @ts-ignore
+          "accountId" === "filePath"
+            ? String(requestParameters.accountId).substr(1)
+            : encodeURIComponent(String(requestParameters.accountId))
         ),
         method: "GET",
         headers: headerParameters,
         query: queryParameters
       },
-      initOverrides
+      initOverrides,
+      operationBasePathOverride
     );
 
     return new runtime.JSONApiResponse(response);

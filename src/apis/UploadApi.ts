@@ -90,18 +90,24 @@ export class UploadApi extends runtime.BaseAPI {
       headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // authorization-header authentication
     }
 
+    const operationBasePathOverride = [][0];
+
     const response = await this.request(
       {
         path: `/v2/accounts/{accountId}/uploads`.replace(
           `{${"accountId"}}`,
-          encodeURIComponent(String(requestParameters.accountId))
+          // @ts-ignore
+          "accountId" === "filePath"
+            ? String(requestParameters.accountId).substr(1)
+            : encodeURIComponent(String(requestParameters.accountId))
         ),
         method: "POST",
         headers: headerParameters,
         query: queryParameters,
         body: requestParameters.beginMultipartUploadRequest
       },
-      initOverrides
+      initOverrides,
+      operationBasePathOverride
     );
 
     return new runtime.JSONApiResponse(response);
@@ -166,18 +172,39 @@ export class UploadApi extends runtime.BaseAPI {
       headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // authorization-header authentication
     }
 
+    const operationBasePathOverride = [][0];
+
     const response = await this.request(
       {
         path: `/v2/accounts/{accountId}/uploads/{uploadId}/parts/{uploadPartIndex}`
-          .replace(`{${"accountId"}}`, encodeURIComponent(String(requestParameters.accountId)))
-          .replace(`{${"uploadId"}}`, encodeURIComponent(String(requestParameters.uploadId)))
-          .replace(`{${"uploadPartIndex"}}`, encodeURIComponent(String(requestParameters.uploadPartIndex))),
+          .replace(
+            `{${"accountId"}}`,
+            // @ts-ignore
+            "accountId" === "filePath"
+              ? String(requestParameters.accountId).substr(1)
+              : encodeURIComponent(String(requestParameters.accountId))
+          )
+          .replace(
+            `{${"uploadId"}}`,
+            // @ts-ignore
+            "uploadId" === "filePath"
+              ? String(requestParameters.uploadId).substr(1)
+              : encodeURIComponent(String(requestParameters.uploadId))
+          )
+          .replace(
+            `{${"uploadPartIndex"}}`,
+            // @ts-ignore
+            "uploadPartIndex" === "filePath"
+              ? String(requestParameters.uploadPartIndex).substr(1)
+              : encodeURIComponent(String(requestParameters.uploadPartIndex))
+          ),
         method: "PUT",
         headers: headerParameters,
         query: queryParameters,
         body: requestParameters.completeUploadPartRequest
       },
-      initOverrides
+      initOverrides,
+      operationBasePathOverride
     );
 
     return new runtime.VoidApiResponse(response);
@@ -229,17 +256,38 @@ export class UploadApi extends runtime.BaseAPI {
       headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // authorization-header authentication
     }
 
+    const operationBasePathOverride = [][0];
+
     const response = await this.request(
       {
         path: `/v2/accounts/{accountId}/uploads/{uploadId}/parts/{uploadPartIndex}`
-          .replace(`{${"accountId"}}`, encodeURIComponent(String(requestParameters.accountId)))
-          .replace(`{${"uploadId"}}`, encodeURIComponent(String(requestParameters.uploadId)))
-          .replace(`{${"uploadPartIndex"}}`, encodeURIComponent(String(requestParameters.uploadPartIndex))),
+          .replace(
+            `{${"accountId"}}`,
+            // @ts-ignore
+            "accountId" === "filePath"
+              ? String(requestParameters.accountId).substr(1)
+              : encodeURIComponent(String(requestParameters.accountId))
+          )
+          .replace(
+            `{${"uploadId"}}`,
+            // @ts-ignore
+            "uploadId" === "filePath"
+              ? String(requestParameters.uploadId).substr(1)
+              : encodeURIComponent(String(requestParameters.uploadId))
+          )
+          .replace(
+            `{${"uploadPartIndex"}}`,
+            // @ts-ignore
+            "uploadPartIndex" === "filePath"
+              ? String(requestParameters.uploadPartIndex).substr(1)
+              : encodeURIComponent(String(requestParameters.uploadPartIndex))
+          ),
         method: "GET",
         headers: headerParameters,
         query: queryParameters
       },
-      initOverrides
+      initOverrides,
+      operationBasePathOverride
     );
 
     return new runtime.JSONApiResponse(response);
@@ -285,16 +333,31 @@ export class UploadApi extends runtime.BaseAPI {
       headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // authorization-header authentication
     }
 
+    const operationBasePathOverride = [][0];
+
     const response = await this.request(
       {
         path: `/v2/accounts/{accountId}/uploads/{uploadId}/parts`
-          .replace(`{${"accountId"}}`, encodeURIComponent(String(requestParameters.accountId)))
-          .replace(`{${"uploadId"}}`, encodeURIComponent(String(requestParameters.uploadId))),
+          .replace(
+            `{${"accountId"}}`,
+            // @ts-ignore
+            "accountId" === "filePath"
+              ? String(requestParameters.accountId).substr(1)
+              : encodeURIComponent(String(requestParameters.accountId))
+          )
+          .replace(
+            `{${"uploadId"}}`,
+            // @ts-ignore
+            "uploadId" === "filePath"
+              ? String(requestParameters.uploadId).substr(1)
+              : encodeURIComponent(String(requestParameters.uploadId))
+          ),
         method: "GET",
         headers: headerParameters,
         query: queryParameters
       },
-      initOverrides
+      initOverrides,
+      operationBasePathOverride
     );
 
     return new runtime.JSONApiResponse(response);

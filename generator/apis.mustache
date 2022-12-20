@@ -241,12 +241,16 @@ export class {{classname}} extends runtime.BaseAPI {
             {{/withoutRuntimeChecks}}
             {{/isPrimitiveType}}
         }
-
         {{/isArray}}
         {{/formParams}}
         {{/hasFormParams}}
+
+        const operationBasePathOverride = [ {{#servers}}"{{{url}}}"{{^-last}}, {{/-last}}{{/servers}} ][0];
+
         const response = await this.request({
-            path: `{{{path}}}`{{#pathParams}}.replace(`{${"{{baseName}}"}}`, encodeURIComponent(String(requestParameters.{{paramName}}))){{/pathParams}},
+            path: `{{{path}}}`{{#pathParams}}.replace(`{${"{{baseName}}"}}`,
+                // @ts-ignore
+                "{{baseName}}" === "filePath" ? String(requestParameters.{{paramName}}).substr(1) : encodeURIComponent(String(requestParameters.{{paramName}}))){{/pathParams}},
             method: '{{httpMethod}}',
             headers: headerParameters,
             query: queryParameters,
@@ -278,7 +282,7 @@ export class {{classname}} extends runtime.BaseAPI {
             {{#hasFormParams}}
             body: formParams,
             {{/hasFormParams}}
-        }, initOverrides);
+        }, initOverrides, operationBasePathOverride);
 
         {{#returnType}}
         {{#isResponseFile}}

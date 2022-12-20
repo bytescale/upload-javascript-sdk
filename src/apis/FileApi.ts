@@ -97,17 +97,23 @@ export class FileApi extends runtime.BaseAPI {
       headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // authorization-header authentication
     }
 
+    const operationBasePathOverride = [][0];
+
     const response = await this.request(
       {
         path: `/v2/accounts/{accountId}/files`.replace(
           `{${"accountId"}}`,
-          encodeURIComponent(String(requestParameters.accountId))
+          // @ts-ignore
+          "accountId" === "filePath"
+            ? String(requestParameters.accountId).substr(1)
+            : encodeURIComponent(String(requestParameters.accountId))
         ),
         method: "DELETE",
         headers: headerParameters,
         query: queryParameters
       },
-      initOverrides
+      initOverrides,
+      operationBasePathOverride
     );
 
     return new runtime.VoidApiResponse(response);
@@ -154,18 +160,24 @@ export class FileApi extends runtime.BaseAPI {
       headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // authorization-header authentication
     }
 
+    const operationBasePathOverride = [][0];
+
     const response = await this.request(
       {
         path: `/v2/accounts/{accountId}/files/batch`.replace(
           `{${"accountId"}}`,
-          encodeURIComponent(String(requestParameters.accountId))
+          // @ts-ignore
+          "accountId" === "filePath"
+            ? String(requestParameters.accountId).substr(1)
+            : encodeURIComponent(String(requestParameters.accountId))
         ),
         method: "DELETE",
         headers: headerParameters,
         query: queryParameters,
         body: requestParameters.deleteFileBatchRequest
       },
-      initOverrides
+      initOverrides,
+      operationBasePathOverride
     );
 
     return new runtime.JSONApiResponse(response);
@@ -227,16 +239,31 @@ export class FileApi extends runtime.BaseAPI {
       headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // authorization-header authentication
     }
 
+    const operationBasePathOverride = ["https://upcdn.io"][0];
+
     const response = await this.request(
       {
         path: `/{accountId}/raw/{filePath}`
-          .replace(`{${"accountId"}}`, encodeURIComponent(String(requestParameters.accountId)))
-          .replace(`{${"filePath"}}`, encodeURIComponent(String(requestParameters.filePath))),
+          .replace(
+            `{${"accountId"}}`,
+            // @ts-ignore
+            "accountId" === "filePath"
+              ? String(requestParameters.accountId).substr(1)
+              : encodeURIComponent(String(requestParameters.accountId))
+          )
+          .replace(
+            `{${"filePath"}}`,
+            // @ts-ignore
+            "filePath" === "filePath"
+              ? String(requestParameters.filePath).substr(1)
+              : encodeURIComponent(String(requestParameters.filePath))
+          ),
         method: "GET",
         headers: headerParameters,
         query: queryParameters
       },
-      initOverrides
+      initOverrides,
+      operationBasePathOverride
     );
 
     return new runtime.BlobApiResponse(response);
@@ -286,17 +313,23 @@ export class FileApi extends runtime.BaseAPI {
       headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // authorization-header authentication
     }
 
+    const operationBasePathOverride = [][0];
+
     const response = await this.request(
       {
         path: `/v2/accounts/{accountId}/files/details`.replace(
           `{${"accountId"}}`,
-          encodeURIComponent(String(requestParameters.accountId))
+          // @ts-ignore
+          "accountId" === "filePath"
+            ? String(requestParameters.accountId).substr(1)
+            : encodeURIComponent(String(requestParameters.accountId))
         ),
         method: "GET",
         headers: headerParameters,
         query: queryParameters
       },
-      initOverrides
+      initOverrides,
+      operationBasePathOverride
     );
 
     return new runtime.JSONApiResponse(response);
@@ -369,17 +402,38 @@ export class FileApi extends runtime.BaseAPI {
       headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // authorization-header authentication
     }
 
+    const operationBasePathOverride = ["https://upcdn.io"][0];
+
     const response = await this.request(
       {
         path: `/{accountId}/{transformation}/{filePath}`
-          .replace(`{${"accountId"}}`, encodeURIComponent(String(requestParameters.accountId)))
-          .replace(`{${"filePath"}}`, encodeURIComponent(String(requestParameters.filePath)))
-          .replace(`{${"transformation"}}`, encodeURIComponent(String(requestParameters.transformation))),
+          .replace(
+            `{${"accountId"}}`,
+            // @ts-ignore
+            "accountId" === "filePath"
+              ? String(requestParameters.accountId).substr(1)
+              : encodeURIComponent(String(requestParameters.accountId))
+          )
+          .replace(
+            `{${"filePath"}}`,
+            // @ts-ignore
+            "filePath" === "filePath"
+              ? String(requestParameters.filePath).substr(1)
+              : encodeURIComponent(String(requestParameters.filePath))
+          )
+          .replace(
+            `{${"transformation"}}`,
+            // @ts-ignore
+            "transformation" === "filePath"
+              ? String(requestParameters.transformation).substr(1)
+              : encodeURIComponent(String(requestParameters.transformation))
+          ),
         method: "GET",
         headers: headerParameters,
         query: queryParameters
       },
-      initOverrides
+      initOverrides,
+      operationBasePathOverride
     );
 
     return new runtime.BlobApiResponse(response);

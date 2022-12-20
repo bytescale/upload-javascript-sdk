@@ -105,8 +105,8 @@ export class BaseAPI {
         return this.withMiddleware<T>(...middlewares);
     }
 
-    protected async request(context: RequestOpts, initOverrides?: RequestInit | InitOverrideFunction): Promise<Response> {
-        const { url, init } = await this.createFetchParams(context, initOverrides);
+    protected async request(context: RequestOpts, initOverrides: RequestInit | InitOverrideFunction | undefined, operationBasePathOverride: string | undefined): Promise<Response> {
+        const { url, init } = await this.createFetchParams(context, initOverrides, operationBasePathOverride);
         const response = await this.fetchApi(url, init);
         if (response && (response.status >= 200 && response.status < 300)) {
             return response;
@@ -128,8 +128,8 @@ export class BaseAPI {
         throw new ResponseError(response, 'Response returned an error code');
     }
 
-    private async createFetchParams(context: RequestOpts, initOverrides?: RequestInit | InitOverrideFunction) {
-        let url = this.configuration.basePath + context.path;
+    private async createFetchParams(context: RequestOpts, initOverrides: RequestInit | InitOverrideFunction | undefined, operationBasePathOverride: string | undefined) {
+        let url = (operationBasePathOverride ?? this.configuration.basePath) + context.path;
         if (context.query !== undefined && Object.keys(context.query).length !== 0) {
             // only add the querystring to the URL if there are query parameters.
             // this is done to avoid urls ending with a "?" character which buggy webservers

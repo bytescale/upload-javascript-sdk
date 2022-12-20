@@ -81,12 +81,12 @@ export class ChunkedStream {
   /**
    * Only call 'take' after the previously returned stream has been fully consumed.
    */
-  take(bytes: number): NodeJS.ReadableStream {
+  async take(bytes: number): Promise<NodeJS.ReadableStream> {
     if (bytes <= 0) {
-      return this.emptyStream();
+      return await this.emptyStream();
     }
 
-    const readable = this.createStream();
+    const readable = await this.createStream();
     const consumedFromBuffer = this.consumeFromBuffer(bytes);
     const consumedFromBufferLength = consumedFromBuffer?.length ?? 0;
     const bytesToConsumeFromStream = bytes - consumedFromBufferLength;
@@ -140,17 +140,16 @@ export class ChunkedStream {
     return [consumed, remaining];
   }
 
-  private createStream(): Readable {
+  private async createStream(): Promise<Readable> {
     // We import "stream" lazily to support browsers, which won't have this module available.
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const Readable = require("stream").Readable;
+    const Readable = (await import("stream")).Readable;
     const readable = new Readable();
     readable._read = () => {}; // _read is required but you can noop it
     return readable;
   }
 
-  private emptyStream(): NodeJS.ReadableStream {
-    const readable = this.createStream();
+  private async emptyStream(): Promise<NodeJS.ReadableStream> {
+    const readable = await this.createStream();
     this.finishStream(readable);
     return readable;
   }

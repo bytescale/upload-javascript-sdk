@@ -96,18 +96,24 @@ export class FolderApi extends runtime.BaseAPI {
       headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // authorization-header authentication
     }
 
+    const operationBasePathOverride = [][0];
+
     const response = await this.request(
       {
         path: `/v2/accounts/{accountId}/folders`.replace(
           `{${"accountId"}}`,
-          encodeURIComponent(String(requestParameters.accountId))
+          // @ts-ignore
+          "accountId" === "filePath"
+            ? String(requestParameters.accountId).substr(1)
+            : encodeURIComponent(String(requestParameters.accountId))
         ),
         method: "DELETE",
         headers: headerParameters,
         query: queryParameters,
         body: requestParameters.deleteFolderRequest
       },
-      initOverrides
+      initOverrides,
+      operationBasePathOverride
     );
 
     return new runtime.JSONApiResponse(response);
@@ -158,18 +164,24 @@ export class FolderApi extends runtime.BaseAPI {
       headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // authorization-header authentication
     }
 
+    const operationBasePathOverride = [][0];
+
     const response = await this.request(
       {
         path: `/v2/accounts/{accountId}/folders/batch`.replace(
           `{${"accountId"}}`,
-          encodeURIComponent(String(requestParameters.accountId))
+          // @ts-ignore
+          "accountId" === "filePath"
+            ? String(requestParameters.accountId).substr(1)
+            : encodeURIComponent(String(requestParameters.accountId))
         ),
         method: "DELETE",
         headers: headerParameters,
         query: queryParameters,
         body: requestParameters.deleteFolderBatchRequest
       },
-      initOverrides
+      initOverrides,
+      operationBasePathOverride
     );
 
     return new runtime.JSONApiResponse(response);
@@ -219,17 +231,23 @@ export class FolderApi extends runtime.BaseAPI {
       headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // authorization-header authentication
     }
 
+    const operationBasePathOverride = [][0];
+
     const response = await this.request(
       {
         path: `/v2/accounts/{accountId}/folders`.replace(
           `{${"accountId"}}`,
-          encodeURIComponent(String(requestParameters.accountId))
+          // @ts-ignore
+          "accountId" === "filePath"
+            ? String(requestParameters.accountId).substr(1)
+            : encodeURIComponent(String(requestParameters.accountId))
         ),
         method: "GET",
         headers: headerParameters,
         query: queryParameters
       },
-      initOverrides
+      initOverrides,
+      operationBasePathOverride
     );
 
     return new runtime.JSONApiResponse(response);
@@ -299,17 +317,23 @@ export class FolderApi extends runtime.BaseAPI {
       headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // authorization-header authentication
     }
 
+    const operationBasePathOverride = [][0];
+
     const response = await this.request(
       {
         path: `/v2/accounts/{accountId}/folders/children`.replace(
           `{${"accountId"}}`,
-          encodeURIComponent(String(requestParameters.accountId))
+          // @ts-ignore
+          "accountId" === "filePath"
+            ? String(requestParameters.accountId).substr(1)
+            : encodeURIComponent(String(requestParameters.accountId))
         ),
         method: "GET",
         headers: headerParameters,
         query: queryParameters
       },
-      initOverrides
+      initOverrides,
+      operationBasePathOverride
     );
 
     return new runtime.JSONApiResponse(response);
@@ -357,18 +381,24 @@ export class FolderApi extends runtime.BaseAPI {
       headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // authorization-header authentication
     }
 
+    const operationBasePathOverride = [][0];
+
     const response = await this.request(
       {
         path: `/v2/accounts/{accountId}/folders`.replace(
           `{${"accountId"}}`,
-          encodeURIComponent(String(requestParameters.accountId))
+          // @ts-ignore
+          "accountId" === "filePath"
+            ? String(requestParameters.accountId).substr(1)
+            : encodeURIComponent(String(requestParameters.accountId))
         ),
         method: "PUT",
         headers: headerParameters,
         query: queryParameters,
         body: requestParameters.putFolderRequest
       },
-      initOverrides
+      initOverrides,
+      operationBasePathOverride
     );
 
     return new runtime.JSONApiResponse(response);
