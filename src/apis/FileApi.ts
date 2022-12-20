@@ -200,7 +200,7 @@ export class FileApi extends runtime.BaseAPI {
   private async downloadFileRaw(
     requestParameters: DownloadFileRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<Blob>> {
+  ): Promise<runtime.StreamingApiResponse> {
     if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
       throw new runtime.RequiredError(
         "accountId",
@@ -266,7 +266,7 @@ export class FileApi extends runtime.BaseAPI {
       operationBasePathOverride
     );
 
-    return new runtime.BlobApiResponse(response);
+    return new runtime.StreamingApiResponse(response);
   }
 
   /**
@@ -275,9 +275,9 @@ export class FileApi extends runtime.BaseAPI {
   async downloadFile(
     requestParameters: DownloadFileRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<Blob> {
+  ): Promise<runtime.StreamingApiResponse> {
     const response = await this.downloadFileRaw(requestParameters, initOverrides);
-    return await response.value();
+    return response;
   }
 
   /**
@@ -352,7 +352,7 @@ export class FileApi extends runtime.BaseAPI {
   private async processFileRaw(
     requestParameters: ProcessFileRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<Blob>> {
+  ): Promise<runtime.StreamingApiResponse> {
     if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
       throw new runtime.RequiredError(
         "accountId",
@@ -436,7 +436,7 @@ export class FileApi extends runtime.BaseAPI {
       operationBasePathOverride
     );
 
-    return new runtime.BlobApiResponse(response);
+    return new runtime.StreamingApiResponse(response);
   }
 
   /**
@@ -445,8 +445,8 @@ export class FileApi extends runtime.BaseAPI {
   async processFile(
     requestParameters: ProcessFileRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<Blob> {
+  ): Promise<runtime.StreamingApiResponse> {
     const response = await this.processFileRaw(requestParameters, initOverrides);
-    return await response.value();
+    return response;
   }
 }

@@ -4,7 +4,6 @@ import randomGen from "random-seed";
 import * as buffer from "buffer";
 import streamEqual from "stream-equal";
 import { Readable } from "stream"; // Node.js only.
-import { ReadableWebToNodeStream } from "readable-web-to-node-stream";
 
 if (process.env.UPLOAD_SECRET_API_KEY === undefined) {
   throw new Error("Expected env var: UPLOAD_SECRET_API_KEY");
@@ -53,9 +52,9 @@ async function testStreamingUpload(expectedSize: number): Promise<void> {
     size: expectedSize
   });
   const fileDetails = await fileApi.getFileDetails({ accountId, filePath: uploadedFile.filePath });
-  const actualData = await (await fileApi.downloadFile({ accountId, filePath: uploadedFile.filePath })).stream();
+  const actualData = (await fileApi.downloadFile({ accountId, filePath: uploadedFile.filePath })).stream();
   const actualSize = fileDetails.size;
-  const streamsAreEqual = await streamEqual(new ReadableWebToNodeStream(actualData) as any, expectedData() as any);
+  const streamsAreEqual = await streamEqual(actualData as any, expectedData() as any);
   expect(actualSize).toEqual(expectedSize);
   expect(streamsAreEqual).toEqual(true);
 }

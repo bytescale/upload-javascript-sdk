@@ -442,14 +442,31 @@ export class VoidApiResponse {
   }
 }
 
-export class BlobApiResponse {
+export class StreamingApiResponse {
   constructor(public raw: Response) {}
 
-  async value(): Promise<Blob> {
+  stream(): ReadableStream<Uint8Array> {
+    if (this.raw.bodyUsed) {
+      throw new Error("Response body has already been consumed.");
+    }
+    if (this.raw.body === null) {
+      throw new Error("Response body does not exist.");
+    }
+    return this.raw.body;
+  }
+
+  async text(): Promise<string> {
+    return await this.raw.text();
+  }
+
+  async blob(): Promise<Blob> {
     return await this.raw.blob();
   }
-}
 
+  async json(): Promise<any> {
+    return await this.raw.json();
+  }
+}
 export class TextApiResponse {
   constructor(public raw: Response) {}
 
