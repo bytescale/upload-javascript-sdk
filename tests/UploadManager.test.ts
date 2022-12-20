@@ -60,6 +60,20 @@ async function testStreamingUpload(expectedSize: number): Promise<void> {
 }
 
 describe("UploadManager", () => {
+  test("upload an empty string", async () => {
+    const expectedData = "";
+    const expectedSize = 0;
+    const uploadedFile = await uploadManager.upload({
+      accountId,
+      data: expectedData
+    });
+    const fileDetails = await fileApi.getFileDetails({ accountId, filePath: uploadedFile.filePath });
+    const actualData = await (await fileApi.downloadFile({ accountId, filePath: uploadedFile.filePath })).text();
+    const actualSize = fileDetails.size;
+    expect(actualData).toEqual(expectedData);
+    expect(actualSize).toEqual(expectedSize);
+  });
+
   test("upload a string", async () => {
     const expectedData = "Example Data";
     const expectedMime = "text/plain";
