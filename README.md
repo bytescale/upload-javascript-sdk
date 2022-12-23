@@ -28,6 +28,7 @@ npm install node-fetch
 
 - [Upload](#upload)
 - [Download](#download)
+- [Process (Transform File)](#process-transform-file)
 - [Get File Details](#get-file-details)
 - [List Folder Children](#list-folder-children)
 - **[See All Methods »](https://upload.io/docs/upload-sdk/javascript)**
@@ -85,6 +86,45 @@ fileApi
     error => console.error(error)
   );
 ```
+
+**Note:** you can also download files using: `https://upcdn.io/{accountId}/raw/{filePath}`
+
+### Process (Transform File)
+
+```javascript
+import Upload from "upload-js-full";
+import fetch from "node-fetch"; // Node.js only.
+
+const fileApi = new Upload.FileApi(
+  new Upload.Configuration({
+    fetchApi: fetch,
+    apiKey: "YOUR_UPLOAD_API_KEY" // e.g. "secret_xxxxx"
+  })
+);
+
+fileApi
+  .processFile({
+    accountId: "YOUR_UPLOAD_ACCOUNT_ID", // e.g. "W142hJk"
+    filePath: "/uploads/2022/12/25/image.jpg",
+    transformation: "thumbnail" // Create transformations in the [Upload Dashboard](https://upload.io/dashboard/transformations)
+  })
+  .then(response => response.stream())
+  .then(
+    imageByteStream =>
+      new Promise((resolve, reject) => {
+        const writer = fs.createWriteStream("image-thumbnail.jpg");
+        writer.on("close", resolve);
+        writer.on("error", reject);
+        reader.pipe(writer);
+      })
+  )
+  .then(
+    () => console.log("Thumbnail saved to 'image-thumbnail.jpg'"),
+    error => console.error(error)
+  );
+```
+
+**Note:** you can also process files using: `https://upcdn.io/{accountId}/{transformation}/{filePath}`
 
 ### Get File Details
 

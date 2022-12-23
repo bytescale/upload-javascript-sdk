@@ -8,9 +8,23 @@ interface Consumer {
 export class ChunkedStream {
   private buffer: Buffer = Buffer.alloc(0);
   private consumer: Consumer | undefined;
-  private isSourceFinished = false;
+  private isSourceFullyConsumed = false; // true if the source stream indicates it has finished.
+  private isFinishedConsuming = false; // true if _we_ indicate we have finished reading all we want from the stream.
+  private resolver: (() => void) | undefined = undefined;
 
   constructor(private readonly source: NodeJS.ReadableStream) {}
+
+  /**
+   * If the source stream is larger than the 'size' the user is consuming (i.e. they're only wanting to upload a subset
+   * of the stream) then the stream won't be resolved by the 'end' event inside 'runChunkPipeline', so calling this
+   * method is necessary.
+   */
+  finishedConsuming(): void {
+    this.isFinishedConsuming = true;
+    if (this.resolver !== undefined) {
+      this.resolver();
+    }
+  }
 
   /**
    * Promise resolves when the entire stream has finished processing, or an error occurs.
@@ -18,17 +32,23 @@ export class ChunkedStream {
    */
   async runChunkPipeline(): Promise<void> {
     return await new Promise((resolve, reject) => {
+      this.resolver = resolve;
+
       const onError = (error: any): void => {
         removeListeners();
         reject(error);
       };
       const onEnd = (): void => {
-        this.isSourceFinished = true;
+        this.isSourceFullyConsumed = true;
         removeListeners();
         resolve();
       };
       const onData = (buffer: Buffer): void => {
         try {
+          if (this.isFinishedConsuming) {
+            return;
+          }
+
           if (this.consumer === undefined) {
             console.warn(
               "Stream yielded data while paused. The data will be buffered, but excessive buffering can cause memory issues."
@@ -56,6 +76,7 @@ export class ChunkedStream {
           this.consumer.stream.push(consumed);
           if (this.consumer.bytesRemaining === 0) {
             this.finishStream(this.consumer.stream);
+            this.consumer = undefined;
             this.source.pause();
           }
         } catch (e) {
@@ -82,6 +103,10 @@ export class ChunkedStream {
    * Only call 'take' after the previously returned stream has been fully consumed.
    */
   async take(bytes: number): Promise<NodeJS.ReadableStream> {
+    if (this.consumer !== undefined) {
+      throw new Error("The stream from the previous 'take' call must be fully consumed before calling 'take' again.");
+    }
+
     if (bytes <= 0) {
       return await this.emptyStream();
     }
@@ -96,7 +121,7 @@ export class ChunkedStream {
     }
 
     if (bytesToConsumeFromStream > 0) {
-      if (this.isSourceFinished) {
+      if (this.isSourceFullyConsumed) {
         throw new Error(
           `Stream finished processing earlier than expected. The "size" parameter is likely larger than the stream's actual contents.`
         );

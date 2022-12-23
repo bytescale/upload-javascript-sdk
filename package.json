@@ -22,7 +22,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "typecheck": "tsc --noEmit",
     "dist": "rm -rf dist && webpack",
-    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --runInBand",
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --runInBand --silent=false --verbose=false",
     "prepack": "rm -f upload-js-full.tgz && npm run dist",
     "postpack": "[ ! -f upload-js-full-*.tgz ] || mv upload-js-full-*.tgz upload-js-full.tgz",
     "prepare": "husky install"

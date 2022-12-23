@@ -20,10 +20,16 @@ export class UploadManager {
     const maxConcurrency = this.calculateMaxConcurrency(request, data);
     const partCount = uploadInfo.uploadParts.count;
     const parts = [...Array(partCount).keys()];
-    await Promise.all([
-      chunkedStream?.runChunkPipeline(),
-      this.mapAsync(parts, maxConcurrency, async part => await this.uploadPart(request, data, part, uploadInfo))
-    ]);
+
+    const runSourceStreamPump = chunkedStream?.runChunkPipeline();
+    await this.mapAsync(parts, maxConcurrency, async part => await this.uploadPart(request, data, part, uploadInfo));
+
+    if (chunkedStream !== undefined) {
+      chunkedStream.finishedConsuming();
+    }
+
+    await runSourceStreamPump;
+
     return uploadInfo.file;
   }
 
@@ -323,7 +329,7 @@ export class UploadManager {
     await Promise.all(
       [...Array(concurrency).keys()].map(async () => {
         while (workQueue.length > 0) {
-          const work = workQueue.pop();
+          const work = workQueue.shift(); // IMPORTANT: use 'shift' instead of 'pop' to ensure 'items' are processed in order when 'concurrency = 1'.
           if (work !== undefined) {
             await callback(work);
           }

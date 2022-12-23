@@ -1,9 +1,11 @@
 import { UploadManager, Configuration, FileApi } from "../src";
 import fetch from "node-fetch";
-import randomGen from "random-seed";
 import * as buffer from "buffer";
-import streamEqual from "stream-equal";
-import { Readable } from "stream"; // Node.js only.
+import { createRandomStreamFactory } from "./utils/RandomStream";
+import { streamToBuffer } from "./utils/StreamToBuffer";
+import { promises as fsAsync } from "fs";
+import { prepareTempDirectory } from "./utils/TempUtils";
+import * as Path from "path";
 
 if (process.env.UPLOAD_SECRET_API_KEY === undefined) {
   throw new Error("Expected env var: UPLOAD_SECRET_API_KEY");
@@ -20,32 +22,10 @@ const configuration = new Configuration({
 
 const uploadManager = new UploadManager(configuration);
 const fileApi = new FileApi(configuration);
-
-function createPseudoRandomStream(sizeInBytes: number): NodeJS.ReadableStream {
-  const generator = randomGen.create("my-seed");
-
-  let producedSize = 0;
-  return new Readable({
-    read(readSize) {
-      let shouldEnd = false;
-
-      if (producedSize + readSize >= sizeInBytes) {
-        readSize = sizeInBytes - producedSize;
-        shouldEnd = true;
-      }
-
-      producedSize += readSize;
-      this.push(generator.string(readSize));
-
-      if (shouldEnd) {
-        this.push(null);
-      }
-    }
-  });
-}
+const largeFileSize = Math.pow(1024, 2) * 500; // 500MB
 
 async function testStreamingUpload(expectedSize: number): Promise<void> {
-  const expectedData = (): NodeJS.ReadableStream => createPseudoRandomStream(expectedSize);
+  const expectedData = await createRandomStreamFactory(expectedSize);
   const uploadedFile = await uploadManager.upload({
     accountId,
     data: expectedData(),
@@ -53,10 +33,22 @@ async function testStreamingUpload(expectedSize: number): Promise<void> {
   });
   const fileDetails = await fileApi.getFileDetails({ accountId, filePath: uploadedFile.filePath });
   const actualData = (await fileApi.downloadFile({ accountId, filePath: uploadedFile.filePath })).stream();
+  const expectedDataBuffer = await streamToBuffer(expectedData());
+  const actualDataBuffer = await streamToBuffer(actualData as any);
+  const buffersEqual = Buffer.compare(expectedDataBuffer, actualDataBuffer) === 0;
   const actualSize = fileDetails.size;
-  const streamsAreEqual = await streamEqual(actualData as any, expectedData() as any);
+
   expect(actualSize).toEqual(expectedSize);
-  expect(streamsAreEqual).toEqual(true);
+  expect(actualDataBuffer.length).toEqual(expectedDataBuffer.length);
+  expect(actualDataBuffer.byteLength).toEqual(expectedDataBuffer.byteLength);
+
+  if (!buffersEqual) {
+    const dir = await prepareTempDirectory();
+    await fsAsync.writeFile(Path.join(dir, "expected.txt"), expectedDataBuffer);
+    await fsAsync.writeFile(Path.join(dir, "actual.txt"), actualDataBuffer);
+  }
+
+  expect(buffersEqual).toEqual(true);
 }
 
 describe("UploadManager", () => {
@@ -102,20 +94,6 @@ describe("UploadManager", () => {
     expect(actualMime).toEqual(expectedMime);
   });
 
-  test("upload a buffer", async () => {
-    const expectedData = "Example Data";
-    const expectedMime = "application/octet-stream";
-    const uploadedFile = await uploadManager.upload({
-      accountId,
-      data: Buffer.from(expectedData, "utf8")
-    });
-    const fileDetails = await fileApi.getFileDetails({ accountId, filePath: uploadedFile.filePath });
-    const actualData = await (await fileApi.downloadFile({ accountId, filePath: uploadedFile.filePath })).text();
-    const actualMime = fileDetails.mime;
-    expect(actualData).toEqual(expectedData);
-    expect(actualMime).toEqual(expectedMime);
-  });
-
   test("upload a buffer (override MIME)", async () => {
     const expectedData = "Example Data";
     const expectedMime = "text/plain";
@@ -131,6 +109,43 @@ describe("UploadManager", () => {
     expect(actualMime).toEqual(expectedMime);
   });
 
+  test("upload a small buffer", async () => {
+    const expectedData = "Example Data";
+    const expectedMime = "application/octet-stream";
+    const uploadedFile = await uploadManager.upload({
+      accountId,
+      data: Buffer.from(expectedData, "utf8")
+    });
+    const fileDetails = await fileApi.getFileDetails({ accountId, filePath: uploadedFile.filePath });
+    const actualData = await (await fileApi.downloadFile({ accountId, filePath: uploadedFile.filePath })).text();
+    const actualMime = fileDetails.mime;
+    expect(actualData).toEqual(expectedData);
+    expect(actualMime).toEqual(expectedMime);
+  });
+
+  // test(
+  //   "upload a large buffer",
+  //   async () => {
+  //     const expectedSize = largeFileSize;
+  //     const expectedData = await streamToBuffer(createPseudoRandomStream(expectedSize));
+  //     const uploadedFile = await uploadManager.upload({
+  //       accountId,
+  //       data: expectedData
+  //     });
+  //     const fileDetails = await fileApi.getFileDetails({ accountId, filePath: uploadedFile.filePath });
+  //     const actualStream = (await fileApi.downloadFile({ accountId, filePath: uploadedFile.filePath })).stream();
+  //     const actualData = await streamToBuffer(actualStream as any);
+  //     const actualSize = fileDetails.size;
+  //     const buffersEqual = Buffer.compare(expectedData, actualData) === 0;
+  //
+  //     expect(actualSize).toEqual(expectedSize);
+  //     expect(actualData.length).toEqual(expectedData.length);
+  //     expect(actualData.byteLength).toEqual(expectedData.byteLength);
+  //     expect(buffersEqual).toEqual(true);
+  //   },
+  //   10 * 60 * 1000
+  // );
+
   test(
     "upload a small stream",
     async () => {
@@ -142,7 +157,7 @@ describe("UploadManager", () => {
   test(
     "upload a large stream",
     async () => {
-      await testStreamingUpload(Math.pow(1024, 2) * 500); // 500MB
+      await testStreamingUpload(largeFileSize); // 500MB
     },
     10 * 60 * 1000
   );
