@@ -18,6 +18,7 @@
     "*"
   ],
   "scripts": {
+    "clean": "rm -rf dist && rm -f upload-js-full.tgz",
     "generate": "./generator.sh",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "typecheck": "tsc --noEmit",
