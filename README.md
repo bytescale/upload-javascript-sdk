@@ -52,6 +52,7 @@ uploadManager
     // Supported types for 'data' field:
     // - String
     // - Blob
+    // - File (i.e. from a DOM file input element)
     // - Buffer
     // - ReadableStream (Node.js), e.g. fs.createReadStream("file.txt")
     data: "Example Data"
