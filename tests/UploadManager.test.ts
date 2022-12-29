@@ -123,28 +123,28 @@ describe("UploadManager", () => {
     expect(actualMime).toEqual(expectedMime);
   });
 
-  // test(
-  //   "upload a large buffer",
-  //   async () => {
-  //     const expectedSize = largeFileSize;
-  //     const expectedData = await streamToBuffer(createPseudoRandomStream(expectedSize));
-  //     const uploadedFile = await uploadManager.upload({
-  //       accountId,
-  //       data: expectedData
-  //     });
-  //     const fileDetails = await fileApi.getFileDetails({ accountId, filePath: uploadedFile.filePath });
-  //     const actualStream = (await fileApi.downloadFile({ accountId, filePath: uploadedFile.filePath })).stream();
-  //     const actualData = await streamToBuffer(actualStream as any);
-  //     const actualSize = fileDetails.size;
-  //     const buffersEqual = Buffer.compare(expectedData, actualData) === 0;
-  //
-  //     expect(actualSize).toEqual(expectedSize);
-  //     expect(actualData.length).toEqual(expectedData.length);
-  //     expect(actualData.byteLength).toEqual(expectedData.byteLength);
-  //     expect(buffersEqual).toEqual(true);
-  //   },
-  //   10 * 60 * 1000
-  // );
+  test(
+    "upload a large buffer",
+    async () => {
+      const expectedSize = largeFileSize;
+      const expectedData = await streamToBuffer((await createRandomStreamFactory(expectedSize))());
+      const uploadedFile = await uploadManager.upload({
+        accountId,
+        data: expectedData
+      });
+      const fileDetails = await fileApi.getFileDetails({ accountId, filePath: uploadedFile.filePath });
+      const actualStream = (await fileApi.downloadFile({ accountId, filePath: uploadedFile.filePath })).stream();
+      const actualData = await streamToBuffer(actualStream as any);
+      const actualSize = fileDetails.size;
+      const buffersEqual = Buffer.compare(expectedData, actualData) === 0;
+
+      expect(actualSize).toEqual(expectedSize);
+      expect(actualData.length).toEqual(expectedData.length);
+      expect(actualData.byteLength).toEqual(expectedData.byteLength);
+      expect(buffersEqual).toEqual(true);
+    },
+    10 * 60 * 1000
+  );
 
   test(
     "upload a small stream",

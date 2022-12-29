@@ -26,14 +26,14 @@ npm install node-fetch
 
 ## Usage
 
-- [Upload](#upload)
-- [Download](#download)
-- [Process (Transform File)](#process-transform-file)
+- [Upload a File](#upload-a-file)
+- [Download a File](#download-a-file)
+- [Process a File](#process-a-file)
 - [Get File Details](#get-file-details)
 - [List Folder Children](#list-folder-children)
 - **[See All Methods »](https://upload.io/docs/upload-sdk/javascript)**
 
-### Upload
+### Upload a File
 
 ```javascript
 import Upload from "upload-js-full";
@@ -53,7 +53,7 @@ uploadManager
     // - String
     // - Blob
     // - Buffer
-    // - ReadableStream (Node.js)
+    // - ReadableStream (Node.js), e.g. fs.createReadStream("file.txt")
     data: "Example Data"
   })
   .then(
@@ -62,7 +62,7 @@ uploadManager
   );
 ```
 
-### Download
+### Download a File
 
 ```javascript
 import Upload from "upload-js-full";
@@ -89,7 +89,7 @@ fileApi
 
 **Note:** you can also download files using: `https://upcdn.io/{accountId}/raw/{filePath}`
 
-### Process (Transform File)
+### Process a File
 
 ```javascript
 import Upload from "upload-js-full";
