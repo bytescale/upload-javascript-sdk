@@ -25,7 +25,12 @@
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --runInBand --silent=false --verbose=false",
     "prepack": "rm -f upload-js-full.tgz && npm run dist",
     "postpack": "[ ! -f upload-js-full-*.tgz ] || mv upload-js-full-*.tgz upload-js-full.tgz",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "prepack:cdn": "npm run clean && webpack --config webpack.config.cdn.js && find dist -name \"*.ts\" -type f -delete && for f in dist/*.js; do cp -- \"$f\" \"${f%.js}\"; done",
+    "publish:executeIfReleaseCommit": "bash -c 'COMMIT=$(git log -1 --pretty=%B) && [ \"${COMMIT:0:8}\" != \"Release \" ] || npm run publish:execute'",
+    "publish:execute": "npm run publish:cdn && npm publish && npm run publish:createGitHubRelease",
+    "publish:createGitHubRelease": "gh release create v$(node -p \"require('./package.json').version\")",
+    "publish:cdn": "npm run prepack:cdn && aws s3 cp --recursive --content-type application/javascript dist/ s3://upload-js-releases/upload-js-full/ && aws cloudfront create-invalidation --distribution-id EO4VJPLCDN8HY --paths '/upload-js-full/*'"
   },
   "husky": {
     "hooks": {
