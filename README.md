@@ -80,7 +80,7 @@ fileApi
     accountId: "YOUR_UPLOAD_ACCOUNT_ID", // e.g. "W142hJk"
     filePath: "/uploads/2022/12/25/hello_world.txt"
   })
-  .then(response => response.text())
+  .then(response => response.text()) // .text() | .json() | .blob() | .stream()
   .then(
     fileContents => console.log(fileContents),
     error => console.error(error)
@@ -108,14 +108,14 @@ fileApi
     filePath: "/uploads/2022/12/25/image.jpg",
     transformation: "thumbnail" // Create transformations here: https://upload.io/dashboard/transformations
   })
-  .then(response => response.stream())
+  .then(response => response.stream()) // .text() | .json() | .blob() | .stream()
   .then(
     imageByteStream =>
       new Promise((resolve, reject) => {
         const writer = fs.createWriteStream("image-thumbnail.jpg");
         writer.on("close", resolve);
         writer.on("error", reject);
-        reader.pipe(writer);
+        imageByteStream.pipe(writer);
       })
   )
   .then(
