@@ -8,8 +8,7 @@ Documentation: **[Upload JavaScript SDK »](https://upload.io/docs/upload-sdk/ja
 
 The official full version JavaScript SDK for the [Upload API](https://upload.io/docs/upload-api).
 
-- Full version: `upload-js-full` (supports: browsers, Node.js, file uploads & other API endpoints).
-
+- Full version (this package): `upload-js-full` (supports: browsers, Node.js, file uploads & other operations).
 - Minimal version: [`upload-js`](https://github.com/upload-io/upload-js) (supports: browsers only, file uploads only).
 
 ## Installation
@@ -107,7 +106,7 @@ fileApi
   .processFile({
     accountId: "YOUR_UPLOAD_ACCOUNT_ID", // e.g. "W142hJk"
     filePath: "/uploads/2022/12/25/image.jpg",
-    transformation: "thumbnail" // Create transformations in the [Upload Dashboard](https://upload.io/dashboard/transformations)
+    transformation: "thumbnail" // Create transformations here: https://upload.io/dashboard/transformations
   })
   .then(response => response.stream())
   .then(
