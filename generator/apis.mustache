@@ -85,7 +85,7 @@ export class {{classname}} extends runtime.BaseAPI {
      * {{&summary}}
      {{/summary}}
      */
-    private async {{nickname}}Raw({{#allParams.0}}requestParameters: {{#prefixParameterInterfaces}}{{classname}}{{/prefixParameterInterfaces}}{{operationIdCamelCase}}Params, {{/allParams.0}}initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{{#isResponseFile}}runtime.StreamingApiResponse{{/isResponseFile}}{{^isResponseFile}}runtime.ApiResponse<{{{returnType}}}{{^returnType}}void{{/returnType}}>{{/isResponseFile}}> {
+    private async {{nickname}}Raw({{#allParams.0}}requestParameters: {{#prefixParameterInterfaces}}{{classname}}{{/prefixParameterInterfaces}}{{operationIdCamelCase}}Params, {{/allParams.0}}initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{{#isResponseFile}}runtime.BinaryResult{{/isResponseFile}}{{^isResponseFile}}runtime.ApiResponse<{{{returnType}}}{{^returnType}}void{{/returnType}}>{{/isResponseFile}}> {
         {{#allParams}}
         {{#required}}
         if (requestParameters.{{paramName}} === null || requestParameters.{{paramName}} === undefined) {
@@ -286,7 +286,7 @@ export class {{classname}} extends runtime.BaseAPI {
 
         {{#returnType}}
         {{#isResponseFile}}
-        return new runtime.StreamingApiResponse(response);
+        return new runtime.BinaryResult(response);
         {{/isResponseFile}}
         {{^isResponseFile}}
         {{#returnTypeIsPrimitive}}
@@ -329,7 +329,7 @@ export class {{classname}} extends runtime.BaseAPI {
      {{/summary}}
      */
     {{^useSingleRequestParameter}}
-    async {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{#isNullable}} | null{{/isNullable}}{{/isEnum}}, {{/allParams}}initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{{#isResponseFile}}runtime.StreamingApiResponse{{/isResponseFile}}{{^isResponseFile}}{{{returnType}}}{{^returnType}}void{{/returnType}}{{/isResponseFile}}> {
+    async {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{#isNullable}} | null{{/isNullable}}{{/isEnum}}, {{/allParams}}initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{{#isResponseFile}}runtime.BinaryResult{{/isResponseFile}}{{^isResponseFile}}{{{returnType}}}{{^returnType}}void{{/returnType}}{{/isResponseFile}}> {
         {{#returnType}}
         const response = await this.{{nickname}}Raw({{#allParams.0}}{ {{#allParams}}{{paramName}}: {{paramName}}{{^-last}}, {{/-last}}{{/allParams}} }, {{/allParams.0}}initOverrides);
         return await response.value();
@@ -340,7 +340,7 @@ export class {{classname}} extends runtime.BaseAPI {
     }
     {{/useSingleRequestParameter}}
     {{#useSingleRequestParameter}}
-    async {{nickname}}({{#allParams.0}}requestParameters: {{#prefixParameterInterfaces}}{{classname}}{{/prefixParameterInterfaces}}{{operationIdCamelCase}}Params{{^hasRequiredParams}} = {}{{/hasRequiredParams}}, {{/allParams.0}}initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{{#isResponseFile}}runtime.StreamingApiResponse{{/isResponseFile}}{{^isResponseFile}}{{{returnType}}}{{^returnType}}void{{/returnType}}{{/isResponseFile}}> {
+    async {{nickname}}({{#allParams.0}}requestParameters: {{#prefixParameterInterfaces}}{{classname}}{{/prefixParameterInterfaces}}{{operationIdCamelCase}}Params{{^hasRequiredParams}} = {}{{/hasRequiredParams}}, {{/allParams.0}}initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{{#isResponseFile}}runtime.BinaryResult{{/isResponseFile}}{{^isResponseFile}}{{{returnType}}}{{^returnType}}void{{/returnType}}{{/isResponseFile}}> {
         {{#returnType}}
         const response = await this.{{nickname}}Raw({{#allParams.0}}requestParameters, {{/allParams.0}}initOverrides);
         {{#isResponseFile}}

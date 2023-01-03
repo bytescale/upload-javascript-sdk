@@ -200,7 +200,7 @@ export class FileApi extends runtime.BaseAPI {
   private async downloadFileRaw(
     requestParameters: DownloadFileParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.StreamingApiResponse> {
+  ): Promise<runtime.BinaryResult> {
     if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
       throw new runtime.RequiredError(
         "accountId",
@@ -266,7 +266,7 @@ export class FileApi extends runtime.BaseAPI {
       operationBasePathOverride
     );
 
-    return new runtime.StreamingApiResponse(response);
+    return new runtime.BinaryResult(response);
   }
 
   /**
@@ -275,7 +275,7 @@ export class FileApi extends runtime.BaseAPI {
   async downloadFile(
     requestParameters: DownloadFileParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.StreamingApiResponse> {
+  ): Promise<runtime.BinaryResult> {
     const response = await this.downloadFileRaw(requestParameters, initOverrides);
     return response;
   }
@@ -352,7 +352,7 @@ export class FileApi extends runtime.BaseAPI {
   private async processFileRaw(
     requestParameters: ProcessFileParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.StreamingApiResponse> {
+  ): Promise<runtime.BinaryResult> {
     if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
       throw new runtime.RequiredError(
         "accountId",
@@ -436,7 +436,7 @@ export class FileApi extends runtime.BaseAPI {
       operationBasePathOverride
     );
 
-    return new runtime.StreamingApiResponse(response);
+    return new runtime.BinaryResult(response);
   }
 
   /**
@@ -445,7 +445,7 @@ export class FileApi extends runtime.BaseAPI {
   async processFile(
     requestParameters: ProcessFileParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.StreamingApiResponse> {
+  ): Promise<runtime.BinaryResult> {
     const response = await this.processFileRaw(requestParameters, initOverrides);
     return response;
   }

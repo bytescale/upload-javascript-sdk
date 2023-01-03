@@ -442,7 +442,7 @@ export class VoidApiResponse {
   }
 }
 
-export class StreamingApiResponse {
+export class BinaryResult {
   constructor(public raw: Response) {}
 
   stream(): ReadableStream<Uint8Array> {
