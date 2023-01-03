@@ -163,8 +163,6 @@ export interface BeginMultipartUploadResponseUploadParts {
 }
 /**
  * Request body for CompleteUploadPart.
- *
- * See also: basic file uploads.
  * @export
  * @interface CompleteUploadPartRequest
  */
@@ -1800,8 +1798,6 @@ export interface UploadPart {
 }
 /**
  * Identifies the UploadPart indexes that still need uploading for an active multipart file upload.
- *
- * See also: basic file uploads.
  * @export
  * @interface UploadPartList
  */

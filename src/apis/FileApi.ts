@@ -25,17 +25,17 @@ import type {
   FileDetails
 } from "../models";
 
-export interface DeleteFileRequest {
+export interface DeleteFileParams {
   accountId: string;
   filePath: string;
 }
 
-export interface DeleteFileBatchOperationRequest {
+export interface DeleteFileBatchOperationParams {
   accountId: string;
   deleteFileBatchRequest: DeleteFileBatchRequest;
 }
 
-export interface DownloadFileRequest {
+export interface DownloadFileParams {
   accountId: string;
   filePath: string;
   auth?: boolean;
@@ -44,12 +44,12 @@ export interface DownloadFileRequest {
   version?: string;
 }
 
-export interface GetFileDetailsRequest {
+export interface GetFileDetailsParams {
   accountId: string;
   filePath: string;
 }
 
-export interface ProcessFileRequest {
+export interface ProcessFileParams {
   accountId: string;
   filePath: string;
   transformation: string;
@@ -68,7 +68,7 @@ export class FileApi extends runtime.BaseAPI {
    * Synchronously deletes a single file.
    */
   private async deleteFileRaw(
-    requestParameters: DeleteFileRequest,
+    requestParameters: DeleteFileParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<void>> {
     if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
@@ -123,7 +123,7 @@ export class FileApi extends runtime.BaseAPI {
    * Synchronously deletes a single file.
    */
   async deleteFile(
-    requestParameters: DeleteFileRequest,
+    requestParameters: DeleteFileParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<void> {
     await this.deleteFileRaw(requestParameters, initOverrides);
@@ -133,7 +133,7 @@ export class FileApi extends runtime.BaseAPI {
    * Asynchronously deletes multiple files.
    */
   private async deleteFileBatchRaw(
-    requestParameters: DeleteFileBatchOperationRequest,
+    requestParameters: DeleteFileBatchOperationParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<AsyncResponse>> {
     if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
@@ -187,7 +187,7 @@ export class FileApi extends runtime.BaseAPI {
    * Asynchronously deletes multiple files.
    */
   async deleteFileBatch(
-    requestParameters: DeleteFileBatchOperationRequest,
+    requestParameters: DeleteFileBatchOperationParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<AsyncResponse> {
     const response = await this.deleteFileBatchRaw(requestParameters, initOverrides);
@@ -198,7 +198,7 @@ export class FileApi extends runtime.BaseAPI {
    * To download files: navigate to a file URL in your browser.  Authorization is only required when the file is private — public files can be downloaded via the URL in any browser.
    */
   private async downloadFileRaw(
-    requestParameters: DownloadFileRequest,
+    requestParameters: DownloadFileParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.StreamingApiResponse> {
     if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
@@ -273,7 +273,7 @@ export class FileApi extends runtime.BaseAPI {
    * To download files: navigate to a file URL in your browser.  Authorization is only required when the file is private — public files can be downloaded via the URL in any browser.
    */
   async downloadFile(
-    requestParameters: DownloadFileRequest,
+    requestParameters: DownloadFileParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.StreamingApiResponse> {
     const response = await this.downloadFileRaw(requestParameters, initOverrides);
@@ -284,7 +284,7 @@ export class FileApi extends runtime.BaseAPI {
    * Retrieves the full details for a file.
    */
   private async getFileDetailsRaw(
-    requestParameters: GetFileDetailsRequest,
+    requestParameters: GetFileDetailsParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<FileDetails>> {
     if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
@@ -339,7 +339,7 @@ export class FileApi extends runtime.BaseAPI {
    * Retrieves the full details for a file.
    */
   async getFileDetails(
-    requestParameters: GetFileDetailsRequest,
+    requestParameters: GetFileDetailsParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<FileDetails> {
     const response = await this.getFileDetailsRaw(requestParameters, initOverrides);
@@ -350,7 +350,7 @@ export class FileApi extends runtime.BaseAPI {
    * To process files: replace \"raw\" in your file URLs with a transformation, e.g. \"thumbnail\".  To manage your transformations: https://upload.io/dashboard/transformations  Authorization is only required when the file is private — public files can be transformed via the URL in any browser.
    */
   private async processFileRaw(
-    requestParameters: ProcessFileRequest,
+    requestParameters: ProcessFileParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.StreamingApiResponse> {
     if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
@@ -443,7 +443,7 @@ export class FileApi extends runtime.BaseAPI {
    * To process files: replace \"raw\" in your file URLs with a transformation, e.g. \"thumbnail\".  To manage your transformations: https://upload.io/dashboard/transformations  Authorization is only required when the file is private — public files can be transformed via the URL in any browser.
    */
   async processFile(
-    requestParameters: ProcessFileRequest,
+    requestParameters: ProcessFileParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.StreamingApiResponse> {
     const response = await this.processFileRaw(requestParameters, initOverrides);

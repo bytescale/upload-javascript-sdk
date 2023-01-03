@@ -2,7 +2,7 @@ import { BeginMultipartUploadResponse, DefaultConfig, FileDetails, UploadApi, Up
 import { Readable } from "stream";
 import * as buffer from "buffer";
 import { ChunkedStream } from "./ChunkedStream";
-import { BlobLike, CancelledError, UploadRequest, UploadSource, UploadSourceProcessed } from "./Model";
+import { BlobLike, CancelledError, UploadManagerParams, UploadSource, UploadSourceProcessed } from "./Model";
 
 export class UploadManager {
   private readonly defaultMaxConcurrentUploadParts = 4;
@@ -12,7 +12,7 @@ export class UploadManager {
     this.uploadApi = new UploadApi(configuration);
   }
 
-  async upload(request: UploadRequest): Promise<FileDetails> {
+  async upload(request: UploadManagerParams): Promise<FileDetails> {
     const data = this.processUploadSource(request.data);
     const chunkedStream = this.getChunkedStream(data);
     const uploadInfo = await this.beginUpload(request, data);
@@ -33,14 +33,14 @@ export class UploadManager {
     return uploadInfo.file;
   }
 
-  private checkIfCancelled(request: UploadRequest): void {
+  private checkIfCancelled(request: UploadManagerParams): void {
     if (request.cancellationToken?.isCancelled === true) {
       throw new CancelledError("Upload cancelled by user.");
     }
   }
 
   private async beginUpload(
-    request: UploadRequest,
+    request: UploadManagerParams,
     data: UploadSourceProcessed
   ): Promise<BeginMultipartUploadResponse> {
     const size = this.calculateSize(request, data);
@@ -60,7 +60,7 @@ export class UploadManager {
   }
 
   private async uploadPart(
-    request: UploadRequest,
+    request: UploadManagerParams,
     data: UploadSourceProcessed,
     partIndex: number,
     uploadInfo: BeginMultipartUploadResponse
@@ -191,7 +191,7 @@ export class UploadManager {
   }
 
   private async getUploadPart(
-    request: UploadRequest,
+    request: UploadManagerParams,
     partIndex: number,
     uploadInfo: BeginMultipartUploadResponse
   ): Promise<UploadPart> {
@@ -205,7 +205,7 @@ export class UploadManager {
     });
   }
 
-  private calculateSize(request: UploadRequest, data: UploadSourceProcessed): number {
+  private calculateSize(request: UploadManagerParams, data: UploadSourceProcessed): number {
     return this.foldData(data, {
       ifBlob: blob => blob.size,
       ifBuffer: buffer => buffer.length,
@@ -218,7 +218,7 @@ export class UploadManager {
     });
   }
 
-  private calculateMime(request: UploadRequest, data: UploadSourceProcessed): string | undefined {
+  private calculateMime(request: UploadManagerParams, data: UploadSourceProcessed): string | undefined {
     return (
       request.mime ??
       this.foldData(data, {
@@ -229,7 +229,7 @@ export class UploadManager {
     );
   }
 
-  private calculateOriginalFileName(request: UploadRequest, data: UploadSourceProcessed): string | undefined {
+  private calculateOriginalFileName(request: UploadManagerParams, data: UploadSourceProcessed): string | undefined {
     return (
       request.originalFileName ??
       this.foldData(data, {
@@ -240,7 +240,7 @@ export class UploadManager {
     );
   }
 
-  private calculateMaxConcurrency(request: UploadRequest, data: UploadSourceProcessed): number {
+  private calculateMaxConcurrency(request: UploadManagerParams, data: UploadSourceProcessed): number {
     return (
       this.foldData(data, {
         ifBlob: _ => request.maxConcurrentUploadParts,

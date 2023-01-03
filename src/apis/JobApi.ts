@@ -25,19 +25,19 @@ import type {
   ListRecentJobsResponse
 } from "../models";
 
-export interface CancelJobRequest {
+export interface CancelJobParams {
   accountId: string;
   jobType: AccountJobType;
   jobId: string;
 }
 
-export interface GetJobRequest {
+export interface GetJobParams {
   accountId: string;
   jobType: AccountJobType;
   jobId: string;
 }
 
-export interface ListRecentJobsRequest {
+export interface ListRecentJobsParams {
   accountId: string;
   jobType: Array<AccountJobType>;
 }
@@ -50,7 +50,7 @@ export class JobApi extends runtime.BaseAPI {
    * Cancels an in-progress job.  This endpoint requires a `secret_*` API key.
    */
   private async cancelJobRaw(
-    requestParameters: CancelJobRequest,
+    requestParameters: CancelJobParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<void>> {
     if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
@@ -123,17 +123,17 @@ export class JobApi extends runtime.BaseAPI {
    * Cancels an in-progress job.  This endpoint requires a `secret_*` API key.
    */
   async cancelJob(
-    requestParameters: CancelJobRequest,
+    requestParameters: CancelJobParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<void> {
     await this.cancelJobRaw(requestParameters, initOverrides);
   }
 
   /**
-   * Gets information on a job.  This endpoint requires a `secret_*` API key.
+   * Gets information on a job (e.g. a batch file deletion).  This endpoint requires a `secret_*` API key.
    */
   private async getJobRaw(
-    requestParameters: GetJobRequest,
+    requestParameters: GetJobParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<JobSummary>> {
     if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
@@ -203,10 +203,10 @@ export class JobApi extends runtime.BaseAPI {
   }
 
   /**
-   * Gets information on a job.  This endpoint requires a `secret_*` API key.
+   * Gets information on a job (e.g. a batch file deletion).  This endpoint requires a `secret_*` API key.
    */
   async getJob(
-    requestParameters: GetJobRequest,
+    requestParameters: GetJobParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<JobSummary> {
     const response = await this.getJobRaw(requestParameters, initOverrides);
@@ -214,10 +214,10 @@ export class JobApi extends runtime.BaseAPI {
   }
 
   /**
-   * Lists the most recently issued jobs.  This endpoint requires a `secret_*` API key.
+   * Lists the most recently issued jobs (e.g. batch file deletions, folder deletions, etc.).  This endpoint requires a `secret_*` API key.
    */
   private async listRecentJobsRaw(
-    requestParameters: ListRecentJobsRequest,
+    requestParameters: ListRecentJobsParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<ListRecentJobsResponse>> {
     if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
@@ -269,10 +269,10 @@ export class JobApi extends runtime.BaseAPI {
   }
 
   /**
-   * Lists the most recently issued jobs.  This endpoint requires a `secret_*` API key.
+   * Lists the most recently issued jobs (e.g. batch file deletions, folder deletions, etc.).  This endpoint requires a `secret_*` API key.
    */
   async listRecentJobs(
-    requestParameters: ListRecentJobsRequest,
+    requestParameters: ListRecentJobsParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<ListRecentJobsResponse> {
     const response = await this.listRecentJobsRaw(requestParameters, initOverrides);

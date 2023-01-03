@@ -31,22 +31,22 @@ import type {
   PutFolderRequest
 } from "../models";
 
-export interface DeleteFolderOperationRequest {
+export interface DeleteFolderOperationParams {
   accountId: string;
   deleteFolderRequest: DeleteFolderRequest;
 }
 
-export interface DeleteFolderBatchOperationRequest {
+export interface DeleteFolderBatchOperationParams {
   accountId: string;
   deleteFolderBatchRequest: DeleteFolderBatchRequest;
 }
 
-export interface GetFolderDetailsRequest {
+export interface GetFolderDetailsParams {
   accountId: string;
   folderPath: string;
 }
 
-export interface ListFolderChildrenRequest {
+export interface ListFolderChildrenParams {
   accountId: string;
   folderPath: string;
   includeFolders?: boolean;
@@ -56,7 +56,7 @@ export interface ListFolderChildrenRequest {
   cursor?: string;
 }
 
-export interface PutFolderOperationRequest {
+export interface PutFolderOperationParams {
   accountId: string;
   putFolderRequest: PutFolderRequest;
 }
@@ -69,7 +69,7 @@ export class FolderApi extends runtime.BaseAPI {
    * Asynchronously deletes a folder.
    */
   private async deleteFolderRaw(
-    requestParameters: DeleteFolderOperationRequest,
+    requestParameters: DeleteFolderOperationParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<AsyncResponse>> {
     if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
@@ -123,7 +123,7 @@ export class FolderApi extends runtime.BaseAPI {
    * Asynchronously deletes a folder.
    */
   async deleteFolder(
-    requestParameters: DeleteFolderOperationRequest,
+    requestParameters: DeleteFolderOperationParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<AsyncResponse> {
     const response = await this.deleteFolderRaw(requestParameters, initOverrides);
@@ -134,7 +134,7 @@ export class FolderApi extends runtime.BaseAPI {
    * Asynchronously deletes multiple folders.
    */
   private async deleteFolderBatchRaw(
-    requestParameters: DeleteFolderBatchOperationRequest,
+    requestParameters: DeleteFolderBatchOperationParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<AsyncResponse>> {
     if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
@@ -191,7 +191,7 @@ export class FolderApi extends runtime.BaseAPI {
    * Asynchronously deletes multiple folders.
    */
   async deleteFolderBatch(
-    requestParameters: DeleteFolderBatchOperationRequest,
+    requestParameters: DeleteFolderBatchOperationParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<AsyncResponse> {
     const response = await this.deleteFolderBatchRaw(requestParameters, initOverrides);
@@ -202,7 +202,7 @@ export class FolderApi extends runtime.BaseAPI {
    * Gets the settings for this folder.  Returns an empty object if none exist.
    */
   private async getFolderDetailsRaw(
-    requestParameters: GetFolderDetailsRequest,
+    requestParameters: GetFolderDetailsParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<FolderDetails>> {
     if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
@@ -257,7 +257,7 @@ export class FolderApi extends runtime.BaseAPI {
    * Gets the settings for this folder.  Returns an empty object if none exist.
    */
   async getFolderDetails(
-    requestParameters: GetFolderDetailsRequest,
+    requestParameters: GetFolderDetailsParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<FolderDetails> {
     const response = await this.getFolderDetailsRaw(requestParameters, initOverrides);
@@ -268,7 +268,7 @@ export class FolderApi extends runtime.BaseAPI {
    * Lists the children (files and sub-folders) of a folder.
    */
   private async listFolderChildrenRaw(
-    requestParameters: ListFolderChildrenRequest,
+    requestParameters: ListFolderChildrenParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<ListFolderChildrenResponse>> {
     if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
@@ -343,7 +343,7 @@ export class FolderApi extends runtime.BaseAPI {
    * Lists the children (files and sub-folders) of a folder.
    */
   async listFolderChildren(
-    requestParameters: ListFolderChildrenRequest,
+    requestParameters: ListFolderChildrenParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<ListFolderChildrenResponse> {
     const response = await this.listFolderChildrenRaw(requestParameters, initOverrides);
@@ -354,7 +354,7 @@ export class FolderApi extends runtime.BaseAPI {
    * Creates or updates the folder specified by the `folderPath`.  If the folder\'s ancestors do not exist, they will be created automatically (with empty FolderSettings).  *Note:* you don\'t need to create folders before uploading files to them.
    */
   private async putFolderRaw(
-    requestParameters: PutFolderOperationRequest,
+    requestParameters: PutFolderOperationParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<FolderDetails>> {
     if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
@@ -408,7 +408,7 @@ export class FolderApi extends runtime.BaseAPI {
    * Creates or updates the folder specified by the `folderPath`.  If the folder\'s ancestors do not exist, they will be created automatically (with empty FolderSettings).  *Note:* you don\'t need to create folders before uploading files to them.
    */
   async putFolder(
-    requestParameters: PutFolderOperationRequest,
+    requestParameters: PutFolderOperationParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<FolderDetails> {
     const response = await this.putFolderRaw(requestParameters, initOverrides);

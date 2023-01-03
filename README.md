@@ -169,7 +169,7 @@ folderApi
     folderPath: "/"
   })
   .then(
-    // Note: endpoint is paginated, see 'result.cursor' and 'params.cursor'.
+    // Note: operation is paginated, see 'result.cursor' and 'params.cursor'.
     result => console.log(`Items in folder: ${result.children.length}`),
     error => console.error(error)
   );

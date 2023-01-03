@@ -2,8 +2,14 @@ generatorName: typescript-fetch
 outputDir: src
 inputSpec: ../upload/api/src/common/routing/generated/openapi-spec-v3-sdk.json
 templateDir: generator
+
+# See all options with:
+# npx openapi-generator-cli config-help -g typescript-fetch
 additionalProperties:
   withoutRuntimeChecks: true
+
+# See all supported template files here:
+# https://github.com/OpenAPITools/openapi-generator/tree/v6.2.1/modules/openapi-generator/src/main/resources/typescript-fetch
 files:
   modelEnum.mustache:
     templateType: Model

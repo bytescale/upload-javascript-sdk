@@ -29,25 +29,25 @@ import type {
   UploadPartList
 } from "../models";
 
-export interface BeginMultipartUploadOperationRequest {
+export interface BeginMultipartUploadOperationParams {
   accountId: string;
   beginMultipartUploadRequest: BeginMultipartUploadRequest;
 }
 
-export interface CompleteUploadPartOperationRequest {
+export interface CompleteUploadPartOperationParams {
   accountId: string;
   uploadId: string;
   uploadPartIndex: number;
   completeUploadPartRequest: CompleteUploadPartRequest;
 }
 
-export interface GetUploadPartRequest {
+export interface GetUploadPartParams {
   accountId: string;
   uploadId: string;
   uploadPartIndex: number;
 }
 
-export interface ListUploadPartsRequest {
+export interface ListUploadPartsParams {
   accountId: string;
   uploadId: string;
 }
@@ -57,10 +57,10 @@ export interface ListUploadPartsRequest {
  */
 export class UploadApi extends runtime.BaseAPI {
   /**
-   * Begins a new multipart file upload process.  See also: basic file uploads.
+   * Begins a new multipart file upload process.
    */
   private async beginMultipartUploadRaw(
-    requestParameters: BeginMultipartUploadOperationRequest,
+    requestParameters: BeginMultipartUploadOperationParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<BeginMultipartUploadResponse>> {
     if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
@@ -114,10 +114,10 @@ export class UploadApi extends runtime.BaseAPI {
   }
 
   /**
-   * Begins a new multipart file upload process.  See also: basic file uploads.
+   * Begins a new multipart file upload process.
    */
   async beginMultipartUpload(
-    requestParameters: BeginMultipartUploadOperationRequest,
+    requestParameters: BeginMultipartUploadOperationParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<BeginMultipartUploadResponse> {
     const response = await this.beginMultipartUploadRaw(requestParameters, initOverrides);
@@ -128,7 +128,7 @@ export class UploadApi extends runtime.BaseAPI {
    * Marks an upload part as uploaded.  You must call this endpoint after you have successfully issued a `PUT` request to the `uploadUrl` on the corresponding UploadPart.
    */
   private async completeUploadPartRaw(
-    requestParameters: CompleteUploadPartOperationRequest,
+    requestParameters: CompleteUploadPartOperationParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<void>> {
     if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
@@ -214,7 +214,7 @@ export class UploadApi extends runtime.BaseAPI {
    * Marks an upload part as uploaded.  You must call this endpoint after you have successfully issued a `PUT` request to the `uploadUrl` on the corresponding UploadPart.
    */
   async completeUploadPart(
-    requestParameters: CompleteUploadPartOperationRequest,
+    requestParameters: CompleteUploadPartOperationParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<void> {
     await this.completeUploadPartRaw(requestParameters, initOverrides);
@@ -224,7 +224,7 @@ export class UploadApi extends runtime.BaseAPI {
    * Gets a remaining upload part for a multipart file upload.
    */
   private async getUploadPartRaw(
-    requestParameters: GetUploadPartRequest,
+    requestParameters: GetUploadPartParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<UploadPart>> {
     if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
@@ -297,7 +297,7 @@ export class UploadApi extends runtime.BaseAPI {
    * Gets a remaining upload part for a multipart file upload.
    */
   async getUploadPart(
-    requestParameters: GetUploadPartRequest,
+    requestParameters: GetUploadPartParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<UploadPart> {
     const response = await this.getUploadPartRaw(requestParameters, initOverrides);
@@ -308,7 +308,7 @@ export class UploadApi extends runtime.BaseAPI {
    * Lists the remaining upload parts for a multipart file upload.  An empty array is returned when the upload is complete.
    */
   private async listUploadPartsRaw(
-    requestParameters: ListUploadPartsRequest,
+    requestParameters: ListUploadPartsParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<UploadPartList>> {
     if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
@@ -367,7 +367,7 @@ export class UploadApi extends runtime.BaseAPI {
    * Lists the remaining upload parts for a multipart file upload.  An empty array is returned when the upload is complete.
    */
   async listUploadParts(
-    requestParameters: ListUploadPartsRequest,
+    requestParameters: ListUploadPartsParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<UploadPartList> {
     const response = await this.listUploadPartsRaw(requestParameters, initOverrides);
