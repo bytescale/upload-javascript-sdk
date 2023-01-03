@@ -1,15 +1,17 @@
-# Upload JavaScript SDK
+# Upload JavaScript SDK (Full Version)
 
 ---
 
-Documentation: **[Upload JavaScript SDK »](https://upload.io/docs/upload-sdk/javascript)**
+Documentation: **[Upload JavaScript SDK (Full Version) »](https://upload.io/docs/upload-sdk/javascript/full)**
 
 ---
 
-The official full version JavaScript SDK for the [Upload API](https://upload.io/docs/upload-api).
+Welcome to the [Upload JavaScript SDK (Full Version)](https://upload.io/docs/upload-sdk/javascript/full) for the [Upload API](https://upload.io/docs/upload-api).
 
-- Full version (this package): `upload-js-full` (supports: browsers, Node.js, file uploads & other operations).
-- Minimal version: [`upload-js`](https://github.com/upload-io/upload-js) (supports: browsers only, file uploads only).
+Versions Explained:
+
+- Full Version (this package): `upload-js-full` (supports: browsers, Node.js, file uploads & other operations).
+- Minimal Version: [`upload-js`](https://github.com/upload-io/upload-js) (supports: browsers only, file uploads only).
 
 ## Installation
 
