@@ -1,15 +1,11 @@
 # Upload JavaScript SDK
 
----
-
-Documentation: **[Upload JavaScript SDK »](https://upload.io/docs/upload-sdk/javascript/full)**
-
----
-
 The [Upload API](https://upload.io/docs/upload-api) provides two JavaScript SDKs:
 
-- Upload JavaScript SDK (full SDK): `upload-js-full` (supports: browsers, Node.js, file uploads & other operations).
-- Upload.js (lightweight SDK): [`upload-js`](https://github.com/upload-io/upload-js) (supports: browsers only, file uploads only).
+| Package          | Repository                                                    | Browsers | Node.js | File Uploads | All Upload API Operations | Size |
+| ---------------- | ------------------------------------------------------------- | -------- | ------- | ------------ | ------------------------- | ---- |
+| `upload-js-full` | (this repository)                                             | ✅       | ✅      | ✅           | ✅                        | 13KB |
+| `upload-js`      | [upload-io/upload-js](https://github.com/upload-io/upload-js) | ✅       | ❌      | ✅           | ❌                        | 6KB  |
 
 ## Installation
 
@@ -22,6 +18,10 @@ Additional step for Node.js:
 ```bash
 npm install node-fetch
 ```
+
+## Documentation
+
+**[Upload JavaScript SDK Docs »](https://upload.io/docs/upload-sdk/javascript/full)**
 
 ## Usage
 
@@ -174,10 +174,6 @@ folderApi
     error => console.error(error)
   );
 ```
-
-## Documentation
-
-Please see: **[Upload JavaScript SDK Docs »](https://upload.io/docs/upload-sdk/javascript)**
 
 ## License
 
