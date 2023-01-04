@@ -121,7 +121,3 @@ models/WithFolderPathStorageLayerSummary.ts
 models/WithFolderPathStorageLayerSummary.ts
 models/index.ts
 runtime.ts
-utils/ChunkedStream.ts
-utils/Model.ts
-utils/UploadManager.ts
-utils/index.ts

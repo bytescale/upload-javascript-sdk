@@ -265,7 +265,7 @@ export class FolderApi extends runtime.BaseAPI {
   }
 
   /**
-   * Lists the children (files and sub-folders) of a folder.
+   * Lists the children (files and sub-folders) of a folder.  Pagination is complete when the response `cursor` matches the request `cursor`.
    */
   private async listFolderChildrenRaw(
     requestParameters: ListFolderChildrenParams,
@@ -340,7 +340,7 @@ export class FolderApi extends runtime.BaseAPI {
   }
 
   /**
-   * Lists the children (files and sub-folders) of a folder.
+   * Lists the children (files and sub-folders) of a folder.  Pagination is complete when the response `cursor` matches the request `cursor`.
    */
   async listFolderChildren(
     requestParameters: ListFolderChildrenParams,
@@ -351,7 +351,7 @@ export class FolderApi extends runtime.BaseAPI {
   }
 
   /**
-   * Creates or updates the folder specified by the `folderPath`.  If the folder\'s ancestors do not exist, they will be created automatically (with empty FolderSettings).  *Note:* you don\'t need to create folders before uploading files to them.
+   * Creates or updates the folder specified by the `folderPath`.  If the folder\'s ancestors do not exist, they will be created automatically (with empty FolderSettings).  Note: you don\'t need to create folders before uploading files to them.
    */
   private async putFolderRaw(
     requestParameters: PutFolderOperationParams,
@@ -405,7 +405,7 @@ export class FolderApi extends runtime.BaseAPI {
   }
 
   /**
-   * Creates or updates the folder specified by the `folderPath`.  If the folder\'s ancestors do not exist, they will be created automatically (with empty FolderSettings).  *Note:* you don\'t need to create folders before uploading files to them.
+   * Creates or updates the folder specified by the `folderPath`.  If the folder\'s ancestors do not exist, they will be created automatically (with empty FolderSettings).  Note: you don\'t need to create folders before uploading files to them.
    */
   async putFolder(
     requestParameters: PutFolderOperationParams,

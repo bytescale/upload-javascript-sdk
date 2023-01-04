@@ -195,7 +195,7 @@ export class FileApi extends runtime.BaseAPI {
   }
 
   /**
-   * To download files: navigate to a file URL in your browser.  Authorization is only required when the file is private — public files can be downloaded via the URL in any browser.
+   * Downloads a file in its original/unprocessed state.
    */
   private async downloadFileRaw(
     requestParameters: DownloadFileParams,
@@ -270,7 +270,7 @@ export class FileApi extends runtime.BaseAPI {
   }
 
   /**
-   * To download files: navigate to a file URL in your browser.  Authorization is only required when the file is private — public files can be downloaded via the URL in any browser.
+   * Downloads a file in its original/unprocessed state.
    */
   async downloadFile(
     requestParameters: DownloadFileParams,
@@ -347,7 +347,7 @@ export class FileApi extends runtime.BaseAPI {
   }
 
   /**
-   * To process files: replace \"raw\" in your file URLs with a transformation, e.g. \"thumbnail\".  To manage your transformations: https://upload.io/dashboard/transformations  Authorization is only required when the file is private — public files can be transformed via the URL in any browser.
+   * Processes a file and downloads the result.
    */
   private async processFileRaw(
     requestParameters: ProcessFileParams,
@@ -440,7 +440,7 @@ export class FileApi extends runtime.BaseAPI {
   }
 
   /**
-   * To process files: replace \"raw\" in your file URLs with a transformation, e.g. \"thumbnail\".  To manage your transformations: https://upload.io/dashboard/transformations  Authorization is only required when the file is private — public files can be transformed via the URL in any browser.
+   * Processes a file and downloads the result.
    */
   async processFile(
     requestParameters: ProcessFileParams,
