@@ -19,7 +19,6 @@
   ],
   "scripts": {
     "clean": "rm -rf dist && rm -f upload-js-full.tgz",
-    "generate": "./generator.sh",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "typecheck": "tsc --noEmit",
     "dist": "rm -rf dist && webpack",
@@ -53,7 +52,6 @@
     "@babel/cli": "7.19.3",
     "@babel/core": "7.20.5",
     "@babel/preset-env": "7.20.2",
-    "@openapitools/openapi-generator-cli": "2.5.2",
     "@types/jest": "29.2.4",
     "@types/random-seed": "^0.3.3",
     "@typescript-eslint/eslint-plugin": "4.33.0",
