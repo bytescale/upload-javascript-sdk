@@ -19,11 +19,11 @@ Additional step for Node.js:
 npm install node-fetch
 ```
 
-## Documentation
+## Full Documentation
 
 **[Upload JavaScript SDK Docs »](https://upload.io/docs/upload-sdk/javascript/full)**
 
-## Usage
+## Quick Guide
 
 - [Upload a File](#upload-a-file)
 - [Download a File](#download-a-file)
