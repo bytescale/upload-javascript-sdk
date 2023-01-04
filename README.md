@@ -2,10 +2,10 @@
 
 The [Upload API](https://upload.io/docs/upload-api) provides two JavaScript SDKs:
 
-| Package          | Repository                                                    | Browsers | Node.js | File Uploads | All Upload API Operations | Size |
-| ---------------- | ------------------------------------------------------------- | -------- | ------- | ------------ | ------------------------- | ---- |
-| `upload-js-full` | (this repository)                                             | ✅       | ✅      | ✅           | ✅                        | 13KB |
-| `upload-js`      | [upload-io/upload-js](https://github.com/upload-io/upload-js) | ✅       | ❌      | ✅           | ❌                        | 6KB  |
+| Package          | Repository                                                    | Browsers | Node.js | File Uploads | [All Endpoints](https://upload.io/docs/upload-api) | Size |
+| ---------------- | ------------------------------------------------------------- | -------- | ------- | ------------ | -------------------------------------------------- | ---- |
+| `upload-js-full` | (this repository)                                             | ✅       | ✅      | ✅           | ✅                                                 | 13KB |
+| `upload-js`      | [upload-io/upload-js](https://github.com/upload-io/upload-js) | ✅       | ❌      | ✅           | ❌                                                 | 6KB  |
 
 ## Installation
 
