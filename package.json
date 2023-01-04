@@ -6,13 +6,13 @@
   "license": "MIT",
   "main": "dist/main.js",
   "types": "dist/index.d.ts",
-  "homepage": "https://github.com/upload-io/upload-js-full",
+  "homepage": "https://github.com/upload-io/upload-javascript-sdk",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/upload-io/upload-js-full.git"
+    "url": "git+https://github.com/upload-io/upload-javascript-sdk.git"
   },
   "bugs": {
-    "url": "https://github.com/upload-io/upload-js-full/issues"
+    "url": "https://github.com/upload-io/upload-javascript-sdk/issues"
   },
   "files": [
     "*"
