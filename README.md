@@ -1,13 +1,19 @@
 # Upload JavaScript SDK
 
-[Upload.io](https://upload.io/) maintains two JavaScript SDKs for the [Upload API](https://upload.io/docs/upload-api):
+The Upload JavaScript SDK allows you to quickly integrate your application with [Upload.io](https://upload.io).
+
+Effortlessly upload, optimize, transform, and host your digital media assets.
+
+## Versions
+
+[Upload.io](https://upload.io/) maintains two JavaScript SDKs for the [Upload API](https://upload.io/docs/upload-api).
+
+Pick the version that best suits your feature and size requirements:
 
 | Package          | Repository                                                    | Browsers | Node.js | File Uploads | [All Endpoints](https://upload.io/docs/upload-api) | Size |
 | ---------------- | ------------------------------------------------------------- | -------- | ------- | ------------ | -------------------------------------------------- | ---- |
 | `upload-js-full` | (this repository)                                             | ✅       | ✅      | ✅           | ✅                                                 | 13KB |
 | `upload-js`      | [upload-io/upload-js](https://github.com/upload-io/upload-js) | ✅       | ❌      | ✅           | ❌                                                 | 6KB  |
-
-_Use the SDK that best suits your feature and size requirements._
 
 ## Installation
 
