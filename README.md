@@ -6,7 +6,7 @@ Effortlessly upload, optimize, transform, and host your digital media assets.
 
 ## Versions
 
-[Upload.io](https://upload.io/) maintains two JavaScript SDKs for the [Upload API](https://upload.io/docs/upload-api).
+There are two actively maintained JavaScript SDKs.
 
 Pick the version that best suits your feature and size requirements:
 
