@@ -66,6 +66,7 @@ export interface ProcessFileParams {
 export class FileApi extends runtime.BaseAPI {
   /**
    * Synchronously deletes a single file.
+   * Synchronously deletes a single file.
    */
   private async deleteFileRaw(
     requestParameters: DeleteFileParams,
@@ -121,6 +122,7 @@ export class FileApi extends runtime.BaseAPI {
 
   /**
    * Synchronously deletes a single file.
+   * Synchronously deletes a single file.
    */
   async deleteFile(
     requestParameters: DeleteFileParams,
@@ -130,6 +132,7 @@ export class FileApi extends runtime.BaseAPI {
   }
 
   /**
+   * Asynchronously deletes multiple files.
    * Asynchronously deletes multiple files.
    */
   private async deleteFileBatchRaw(
@@ -185,6 +188,7 @@ export class FileApi extends runtime.BaseAPI {
 
   /**
    * Asynchronously deletes multiple files.
+   * Asynchronously deletes multiple files.
    */
   async deleteFileBatch(
     requestParameters: DeleteFileBatchOperationParams,
@@ -195,6 +199,7 @@ export class FileApi extends runtime.BaseAPI {
   }
 
   /**
+   * Downloads a file in its original/unprocessed state.
    * Downloads a file in its original/unprocessed state.
    */
   private async downloadFileRaw(
@@ -271,6 +276,7 @@ export class FileApi extends runtime.BaseAPI {
 
   /**
    * Downloads a file in its original/unprocessed state.
+   * Downloads a file in its original/unprocessed state.
    */
   async downloadFile(
     requestParameters: DownloadFileParams,
@@ -281,6 +287,7 @@ export class FileApi extends runtime.BaseAPI {
   }
 
   /**
+   * Retrieves the full details for a file.
    * Retrieves the full details for a file.
    */
   private async getFileDetailsRaw(
@@ -337,6 +344,7 @@ export class FileApi extends runtime.BaseAPI {
 
   /**
    * Retrieves the full details for a file.
+   * Retrieves the full details for a file.
    */
   async getFileDetails(
     requestParameters: GetFileDetailsParams,
@@ -347,6 +355,7 @@ export class FileApi extends runtime.BaseAPI {
   }
 
   /**
+   * Processes a file and downloads the result.
    * Processes a file and downloads the result.
    */
   private async processFileRaw(
@@ -440,6 +449,7 @@ export class FileApi extends runtime.BaseAPI {
   }
 
   /**
+   * Processes a file and downloads the result.
    * Processes a file and downloads the result.
    */
   async processFile(
