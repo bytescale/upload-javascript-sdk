@@ -6,14 +6,14 @@ Effortlessly upload, optimize, transform, and host your digital media assets.
 
 ## Versions
 
-There are two actively maintained JavaScript SDKs.
-
-Pick the version that best suits your feature and size requirements:
+There are two actively maintained JavaScript SDKs:
 
 | Package          | Repository                                                    | Browsers | Node.js | File Uploads | [All Endpoints](https://upload.io/docs/upload-api) | Size |
 | ---------------- | ------------------------------------------------------------- | -------- | ------- | ------------ | -------------------------------------------------- | ---- |
 | `upload-js-full` | (this repository)                                             | ✅       | ✅      | ✅           | ✅                                                 | 13KB |
 | `upload-js`      | [upload-io/upload-js](https://github.com/upload-io/upload-js) | ✅       | ❌      | ✅           | ❌                                                 | 6KB  |
+
+(Pick the version that best suits your feature and package size requirements.)
 
 ## Installation
 
@@ -29,7 +29,7 @@ npm install node-fetch
 
 ## Full Documentation
 
-**[Upload JavaScript SDK Docs »](https://upload.io/docs/upload-sdk/javascript/full)**
+**[Upload JavaScript SDK Full Documentation »](https://upload.io/docs/upload-sdk/javascript/full)**
 
 ## Quick Guide
 
