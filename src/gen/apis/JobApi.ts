@@ -27,14 +27,14 @@ import type {
 
 export interface CancelJobParams {
   accountId: string;
-  jobType: AccountJobType;
   jobId: string;
+  jobType: AccountJobType;
 }
 
 export interface GetJobParams {
   accountId: string;
-  jobType: AccountJobType;
   jobId: string;
+  jobType: AccountJobType;
 }
 
 export interface ListRecentJobsParams {
@@ -61,17 +61,17 @@ export class JobApi extends runtime.BaseAPI {
       );
     }
 
-    if (requestParameters.jobType === null || requestParameters.jobType === undefined) {
-      throw new runtime.RequiredError(
-        "jobType",
-        "Required parameter requestParameters.jobType was null or undefined when calling cancelJob."
-      );
-    }
-
     if (requestParameters.jobId === null || requestParameters.jobId === undefined) {
       throw new runtime.RequiredError(
         "jobId",
         "Required parameter requestParameters.jobId was null or undefined when calling cancelJob."
+      );
+    }
+
+    if (requestParameters.jobType === null || requestParameters.jobType === undefined) {
+      throw new runtime.RequiredError(
+        "jobType",
+        "Required parameter requestParameters.jobType was null or undefined when calling cancelJob."
       );
     }
 
@@ -96,18 +96,18 @@ export class JobApi extends runtime.BaseAPI {
               : encodeURIComponent(String(requestParameters.accountId))
           )
           .replace(
-            `{${"jobType"}}`,
-            // @ts-ignore
-            "jobType" === "filePath"
-              ? String(requestParameters.jobType).substr(1)
-              : encodeURIComponent(String(requestParameters.jobType))
-          )
-          .replace(
             `{${"jobId"}}`,
             // @ts-ignore
             "jobId" === "filePath"
               ? String(requestParameters.jobId).substr(1)
               : encodeURIComponent(String(requestParameters.jobId))
+          )
+          .replace(
+            `{${"jobType"}}`,
+            // @ts-ignore
+            "jobType" === "filePath"
+              ? String(requestParameters.jobType).substr(1)
+              : encodeURIComponent(String(requestParameters.jobType))
           ),
         method: "DELETE",
         headers: headerParameters,
@@ -146,17 +146,17 @@ export class JobApi extends runtime.BaseAPI {
       );
     }
 
-    if (requestParameters.jobType === null || requestParameters.jobType === undefined) {
-      throw new runtime.RequiredError(
-        "jobType",
-        "Required parameter requestParameters.jobType was null or undefined when calling getJob."
-      );
-    }
-
     if (requestParameters.jobId === null || requestParameters.jobId === undefined) {
       throw new runtime.RequiredError(
         "jobId",
         "Required parameter requestParameters.jobId was null or undefined when calling getJob."
+      );
+    }
+
+    if (requestParameters.jobType === null || requestParameters.jobType === undefined) {
+      throw new runtime.RequiredError(
+        "jobType",
+        "Required parameter requestParameters.jobType was null or undefined when calling getJob."
       );
     }
 
@@ -181,18 +181,18 @@ export class JobApi extends runtime.BaseAPI {
               : encodeURIComponent(String(requestParameters.accountId))
           )
           .replace(
-            `{${"jobType"}}`,
-            // @ts-ignore
-            "jobType" === "filePath"
-              ? String(requestParameters.jobType).substr(1)
-              : encodeURIComponent(String(requestParameters.jobType))
-          )
-          .replace(
             `{${"jobId"}}`,
             // @ts-ignore
             "jobId" === "filePath"
               ? String(requestParameters.jobId).substr(1)
               : encodeURIComponent(String(requestParameters.jobId))
+          )
+          .replace(
+            `{${"jobType"}}`,
+            // @ts-ignore
+            "jobType" === "filePath"
+              ? String(requestParameters.jobType).substr(1)
+              : encodeURIComponent(String(requestParameters.jobType))
           ),
         method: "GET",
         headers: headerParameters,

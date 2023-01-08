@@ -49,11 +49,11 @@ export interface GetFolderDetailsParams {
 export interface ListFolderChildrenParams {
   accountId: string;
   folderPath: string;
-  includeFolders?: boolean;
-  includeFiles?: boolean;
-  traverseVirtualFolders?: boolean;
-  limit?: number;
   cursor?: string;
+  includeFiles?: boolean;
+  includeFolders?: boolean;
+  limit?: number;
+  traverseVirtualFolders?: boolean;
 }
 
 export interface PutFolderOperationParams {
@@ -294,28 +294,28 @@ export class FolderApi extends runtime.BaseAPI {
 
     const queryParameters: any = {};
 
-    if (requestParameters.folderPath !== undefined) {
-      queryParameters["folderPath"] = requestParameters.folderPath;
+    if (requestParameters.cursor !== undefined) {
+      queryParameters["cursor"] = requestParameters.cursor;
     }
 
-    if (requestParameters.includeFolders !== undefined) {
-      queryParameters["includeFolders"] = requestParameters.includeFolders;
+    if (requestParameters.folderPath !== undefined) {
+      queryParameters["folderPath"] = requestParameters.folderPath;
     }
 
     if (requestParameters.includeFiles !== undefined) {
       queryParameters["includeFiles"] = requestParameters.includeFiles;
     }
 
-    if (requestParameters.traverseVirtualFolders !== undefined) {
-      queryParameters["traverseVirtualFolders"] = requestParameters.traverseVirtualFolders;
+    if (requestParameters.includeFolders !== undefined) {
+      queryParameters["includeFolders"] = requestParameters.includeFolders;
     }
 
     if (requestParameters.limit !== undefined) {
       queryParameters["limit"] = requestParameters.limit;
     }
 
-    if (requestParameters.cursor !== undefined) {
-      queryParameters["cursor"] = requestParameters.cursor;
+    if (requestParameters.traverseVirtualFolders !== undefined) {
+      queryParameters["traverseVirtualFolders"] = requestParameters.traverseVirtualFolders;
     }
 
     const headerParameters: runtime.HTTPHeaders = {};

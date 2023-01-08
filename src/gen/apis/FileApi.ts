@@ -53,11 +53,11 @@ export interface ProcessFileParams {
   accountId: string;
   filePath: string;
   transformation: string;
+  artifact?: string;
   auth?: boolean;
   cache?: boolean;
   download?: boolean;
   version?: string;
-  artifact?: string;
 }
 
 /**
@@ -385,6 +385,10 @@ export class FileApi extends runtime.BaseAPI {
 
     const queryParameters: any = {};
 
+    if (requestParameters.artifact !== undefined) {
+      queryParameters["_artifact"] = requestParameters.artifact;
+    }
+
     if (requestParameters.auth !== undefined) {
       queryParameters["_auth"] = requestParameters.auth;
     }
@@ -399,10 +403,6 @@ export class FileApi extends runtime.BaseAPI {
 
     if (requestParameters.version !== undefined) {
       queryParameters["_version"] = requestParameters.version;
-    }
-
-    if (requestParameters.artifact !== undefined) {
-      queryParameters["_artifact"] = requestParameters.artifact;
     }
 
     const headerParameters: runtime.HTTPHeaders = {};
