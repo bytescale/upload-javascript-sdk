@@ -49,7 +49,7 @@ export class JobApi extends runtime.BaseAPI {
   /**
    * Cancels an in-progress job.  Requires a `secret_*` API key.
    */
-  private async cancelJobRaw(
+  private async cancelJobWithHttpInfo(
     requestParameters: CancelJobParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<void>> {
@@ -126,13 +126,13 @@ export class JobApi extends runtime.BaseAPI {
     requestParameters: CancelJobParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<void> {
-    await this.cancelJobRaw(requestParameters, initOverrides);
+    await this.cancelJobWithHttpInfo(requestParameters, initOverrides);
   }
 
   /**
    * Gets information on a job (e.g. a batch file deletion).  Requires a `secret_*` API key.
    */
-  private async getJobRaw(
+  private async getJobWithHttpInfo(
     requestParameters: GetJobParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<JobSummary>> {
@@ -209,14 +209,14 @@ export class JobApi extends runtime.BaseAPI {
     requestParameters: GetJobParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<JobSummary> {
-    const response = await this.getJobRaw(requestParameters, initOverrides);
+    const response = await this.getJobWithHttpInfo(requestParameters, initOverrides);
     return await response.value();
   }
 
   /**
    * Lists the most recently issued jobs (e.g. batch file deletions, folder deletions, etc.).  Requires a `secret_*` API key.
    */
-  private async listRecentJobsRaw(
+  private async listRecentJobsWithHttpInfo(
     requestParameters: ListRecentJobsParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<ListRecentJobsResponse>> {
@@ -275,7 +275,7 @@ export class JobApi extends runtime.BaseAPI {
     requestParameters: ListRecentJobsParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<ListRecentJobsResponse> {
-    const response = await this.listRecentJobsRaw(requestParameters, initOverrides);
+    const response = await this.listRecentJobsWithHttpInfo(requestParameters, initOverrides);
     return await response.value();
   }
 }

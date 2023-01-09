@@ -59,7 +59,7 @@ export class UploadApi extends runtime.BaseAPI {
   /**
    * Begins a new multipart file upload process.
    */
-  private async beginMultipartUploadRaw(
+  private async beginMultipartUploadWithHttpInfo(
     requestParameters: BeginMultipartUploadOperationParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<BeginMultipartUploadResponse>> {
@@ -120,14 +120,14 @@ export class UploadApi extends runtime.BaseAPI {
     requestParameters: BeginMultipartUploadOperationParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<BeginMultipartUploadResponse> {
-    const response = await this.beginMultipartUploadRaw(requestParameters, initOverrides);
+    const response = await this.beginMultipartUploadWithHttpInfo(requestParameters, initOverrides);
     return await response.value();
   }
 
   /**
    * Marks an upload part as uploaded.  You must call this endpoint after you have successfully issued a `PUT` request to the `uploadUrl` on the corresponding UploadPart.
    */
-  private async completeUploadPartRaw(
+  private async completeUploadPartWithHttpInfo(
     requestParameters: CompleteUploadPartOperationParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<void>> {
@@ -217,13 +217,13 @@ export class UploadApi extends runtime.BaseAPI {
     requestParameters: CompleteUploadPartOperationParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<void> {
-    await this.completeUploadPartRaw(requestParameters, initOverrides);
+    await this.completeUploadPartWithHttpInfo(requestParameters, initOverrides);
   }
 
   /**
    * Gets a remaining upload part for a multipart file upload.
    */
-  private async getUploadPartRaw(
+  private async getUploadPartWithHttpInfo(
     requestParameters: GetUploadPartParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<UploadPart>> {
@@ -300,14 +300,14 @@ export class UploadApi extends runtime.BaseAPI {
     requestParameters: GetUploadPartParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<UploadPart> {
-    const response = await this.getUploadPartRaw(requestParameters, initOverrides);
+    const response = await this.getUploadPartWithHttpInfo(requestParameters, initOverrides);
     return await response.value();
   }
 
   /**
    * Lists the remaining upload parts for a multipart file upload.  An empty array is returned when the upload is complete.
    */
-  private async listUploadPartsRaw(
+  private async listUploadPartsWithHttpInfo(
     requestParameters: ListUploadPartsParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<UploadPartList>> {
@@ -370,7 +370,7 @@ export class UploadApi extends runtime.BaseAPI {
     requestParameters: ListUploadPartsParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<UploadPartList> {
-    const response = await this.listUploadPartsRaw(requestParameters, initOverrides);
+    const response = await this.listUploadPartsWithHttpInfo(requestParameters, initOverrides);
     return await response.value();
   }
 }

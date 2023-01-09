@@ -68,7 +68,7 @@ export class FolderApi extends runtime.BaseAPI {
   /**
    * Asynchronously deletes a folder.
    */
-  private async deleteFolderRaw(
+  private async deleteFolderWithHttpInfo(
     requestParameters: DeleteFolderOperationParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<AsyncResponse>> {
@@ -126,14 +126,14 @@ export class FolderApi extends runtime.BaseAPI {
     requestParameters: DeleteFolderOperationParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<AsyncResponse> {
-    const response = await this.deleteFolderRaw(requestParameters, initOverrides);
+    const response = await this.deleteFolderWithHttpInfo(requestParameters, initOverrides);
     return await response.value();
   }
 
   /**
    * Asynchronously deletes multiple folders.
    */
-  private async deleteFolderBatchRaw(
+  private async deleteFolderBatchWithHttpInfo(
     requestParameters: DeleteFolderBatchOperationParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<AsyncResponse>> {
@@ -194,14 +194,14 @@ export class FolderApi extends runtime.BaseAPI {
     requestParameters: DeleteFolderBatchOperationParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<AsyncResponse> {
-    const response = await this.deleteFolderBatchRaw(requestParameters, initOverrides);
+    const response = await this.deleteFolderBatchWithHttpInfo(requestParameters, initOverrides);
     return await response.value();
   }
 
   /**
    * Gets the settings for this folder.  Returns an empty object if none exist.
    */
-  private async getFolderDetailsRaw(
+  private async getFolderDetailsWithHttpInfo(
     requestParameters: GetFolderDetailsParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<FolderDetails>> {
@@ -260,14 +260,14 @@ export class FolderApi extends runtime.BaseAPI {
     requestParameters: GetFolderDetailsParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<FolderDetails> {
-    const response = await this.getFolderDetailsRaw(requestParameters, initOverrides);
+    const response = await this.getFolderDetailsWithHttpInfo(requestParameters, initOverrides);
     return await response.value();
   }
 
   /**
    * Lists the children (files and sub-folders) of a folder.  Pagination is complete when the response `cursor` matches the request `cursor`.
    */
-  private async listFolderChildrenRaw(
+  private async listFolderChildrenWithHttpInfo(
     requestParameters: ListFolderChildrenParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<ListFolderChildrenResponse>> {
@@ -346,14 +346,14 @@ export class FolderApi extends runtime.BaseAPI {
     requestParameters: ListFolderChildrenParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<ListFolderChildrenResponse> {
-    const response = await this.listFolderChildrenRaw(requestParameters, initOverrides);
+    const response = await this.listFolderChildrenWithHttpInfo(requestParameters, initOverrides);
     return await response.value();
   }
 
   /**
    * Creates or updates the folder specified by the `folderPath`.  If the folder\'s ancestors do not exist, they will be created automatically (with empty FolderSettings).  Note: you don\'t need to create folders before uploading files to them.
    */
-  private async putFolderRaw(
+  private async putFolderWithHttpInfo(
     requestParameters: PutFolderOperationParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<FolderDetails>> {
@@ -411,7 +411,7 @@ export class FolderApi extends runtime.BaseAPI {
     requestParameters: PutFolderOperationParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<FolderDetails> {
-    const response = await this.putFolderRaw(requestParameters, initOverrides);
+    const response = await this.putFolderWithHttpInfo(requestParameters, initOverrides);
     return await response.value();
   }
 }

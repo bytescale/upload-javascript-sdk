@@ -67,7 +67,7 @@ export class FileApi extends runtime.BaseAPI {
   /**
    * Synchronously deletes a single file.
    */
-  private async deleteFileRaw(
+  private async deleteFileWithHttpInfo(
     requestParameters: DeleteFileParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<void>> {
@@ -126,13 +126,13 @@ export class FileApi extends runtime.BaseAPI {
     requestParameters: DeleteFileParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<void> {
-    await this.deleteFileRaw(requestParameters, initOverrides);
+    await this.deleteFileWithHttpInfo(requestParameters, initOverrides);
   }
 
   /**
    * Asynchronously deletes multiple files.
    */
-  private async deleteFileBatchRaw(
+  private async deleteFileBatchWithHttpInfo(
     requestParameters: DeleteFileBatchOperationParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<AsyncResponse>> {
@@ -190,14 +190,14 @@ export class FileApi extends runtime.BaseAPI {
     requestParameters: DeleteFileBatchOperationParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<AsyncResponse> {
-    const response = await this.deleteFileBatchRaw(requestParameters, initOverrides);
+    const response = await this.deleteFileBatchWithHttpInfo(requestParameters, initOverrides);
     return await response.value();
   }
 
   /**
    * Downloads a file in its original/unprocessed state.
    */
-  private async downloadFileRaw(
+  private async downloadFileWithHttpInfo(
     requestParameters: DownloadFileParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.BinaryResult> {
@@ -276,14 +276,14 @@ export class FileApi extends runtime.BaseAPI {
     requestParameters: DownloadFileParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.BinaryResult> {
-    const response = await this.downloadFileRaw(requestParameters, initOverrides);
+    const response = await this.downloadFileWithHttpInfo(requestParameters, initOverrides);
     return response;
   }
 
   /**
    * Retrieves the full details for a file.
    */
-  private async getFileDetailsRaw(
+  private async getFileDetailsWithHttpInfo(
     requestParameters: GetFileDetailsParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<FileDetails>> {
@@ -342,14 +342,14 @@ export class FileApi extends runtime.BaseAPI {
     requestParameters: GetFileDetailsParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<FileDetails> {
-    const response = await this.getFileDetailsRaw(requestParameters, initOverrides);
+    const response = await this.getFileDetailsWithHttpInfo(requestParameters, initOverrides);
     return await response.value();
   }
 
   /**
    * Processes a file and downloads the result.
    */
-  private async processFileRaw(
+  private async processFileWithHttpInfo(
     requestParameters: ProcessFileParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.BinaryResult> {
@@ -446,7 +446,7 @@ export class FileApi extends runtime.BaseAPI {
     requestParameters: ProcessFileParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.BinaryResult> {
-    const response = await this.processFileRaw(requestParameters, initOverrides);
+    const response = await this.processFileWithHttpInfo(requestParameters, initOverrides);
     return response;
   }
 }
