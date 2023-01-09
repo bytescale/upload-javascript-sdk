@@ -58,7 +58,6 @@ export interface ListUploadPartsParams {
 export class UploadApi extends runtime.BaseAPI {
   /**
    * Begins a new multipart file upload process.
-   * Begins a new multipart file upload process.
    */
   private async beginMultipartUploadRaw(
     requestParameters: BeginMultipartUploadOperationParams,
@@ -116,7 +115,6 @@ export class UploadApi extends runtime.BaseAPI {
 
   /**
    * Begins a new multipart file upload process.
-   * Begins a new multipart file upload process.
    */
   async beginMultipartUpload(
     requestParameters: BeginMultipartUploadOperationParams,
@@ -127,7 +125,6 @@ export class UploadApi extends runtime.BaseAPI {
   }
 
   /**
-   * Marks an upload part as uploaded.  You must call this endpoint after you have successfully issued a `PUT` request to the `uploadUrl` on the corresponding UploadPart.
    * Marks an upload part as uploaded.  You must call this endpoint after you have successfully issued a `PUT` request to the `uploadUrl` on the corresponding UploadPart.
    */
   private async completeUploadPartRaw(
@@ -215,7 +212,6 @@ export class UploadApi extends runtime.BaseAPI {
 
   /**
    * Marks an upload part as uploaded.  You must call this endpoint after you have successfully issued a `PUT` request to the `uploadUrl` on the corresponding UploadPart.
-   * Marks an upload part as uploaded.  You must call this endpoint after you have successfully issued a `PUT` request to the `uploadUrl` on the corresponding UploadPart.
    */
   async completeUploadPart(
     requestParameters: CompleteUploadPartOperationParams,
@@ -225,7 +221,6 @@ export class UploadApi extends runtime.BaseAPI {
   }
 
   /**
-   * Gets a remaining upload part for a multipart file upload.
    * Gets a remaining upload part for a multipart file upload.
    */
   private async getUploadPartRaw(
@@ -300,7 +295,6 @@ export class UploadApi extends runtime.BaseAPI {
 
   /**
    * Gets a remaining upload part for a multipart file upload.
-   * Gets a remaining upload part for a multipart file upload.
    */
   async getUploadPart(
     requestParameters: GetUploadPartParams,
@@ -311,7 +305,6 @@ export class UploadApi extends runtime.BaseAPI {
   }
 
   /**
-   * Lists the remaining upload parts for a multipart file upload.  An empty array is returned when the upload is complete.
    * Lists the remaining upload parts for a multipart file upload.  An empty array is returned when the upload is complete.
    */
   private async listUploadPartsRaw(
@@ -371,7 +364,6 @@ export class UploadApi extends runtime.BaseAPI {
   }
 
   /**
-   * Lists the remaining upload parts for a multipart file upload.  An empty array is returned when the upload is complete.
    * Lists the remaining upload parts for a multipart file upload.  An empty array is returned when the upload is complete.
    */
   async listUploadParts(

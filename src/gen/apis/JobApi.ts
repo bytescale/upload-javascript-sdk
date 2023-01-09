@@ -48,7 +48,6 @@ export interface ListRecentJobsParams {
 export class JobApi extends runtime.BaseAPI {
   /**
    * Cancels an in-progress job.  Requires a `secret_*` API key.
-   * Cancels an in-progress job.  Requires a `secret_*` API key.
    */
   private async cancelJobRaw(
     requestParameters: CancelJobParams,
@@ -122,7 +121,6 @@ export class JobApi extends runtime.BaseAPI {
 
   /**
    * Cancels an in-progress job.  Requires a `secret_*` API key.
-   * Cancels an in-progress job.  Requires a `secret_*` API key.
    */
   async cancelJob(
     requestParameters: CancelJobParams,
@@ -132,7 +130,6 @@ export class JobApi extends runtime.BaseAPI {
   }
 
   /**
-   * Gets information on a job (e.g. a batch file deletion).  Requires a `secret_*` API key.
    * Gets information on a job (e.g. a batch file deletion).  Requires a `secret_*` API key.
    */
   private async getJobRaw(
@@ -207,7 +204,6 @@ export class JobApi extends runtime.BaseAPI {
 
   /**
    * Gets information on a job (e.g. a batch file deletion).  Requires a `secret_*` API key.
-   * Gets information on a job (e.g. a batch file deletion).  Requires a `secret_*` API key.
    */
   async getJob(
     requestParameters: GetJobParams,
@@ -218,7 +214,6 @@ export class JobApi extends runtime.BaseAPI {
   }
 
   /**
-   * Lists the most recently issued jobs (e.g. batch file deletions, folder deletions, etc.).  Requires a `secret_*` API key.
    * Lists the most recently issued jobs (e.g. batch file deletions, folder deletions, etc.).  Requires a `secret_*` API key.
    */
   private async listRecentJobsRaw(
@@ -274,7 +269,6 @@ export class JobApi extends runtime.BaseAPI {
   }
 
   /**
-   * Lists the most recently issued jobs (e.g. batch file deletions, folder deletions, etc.).  Requires a `secret_*` API key.
    * Lists the most recently issued jobs (e.g. batch file deletions, folder deletions, etc.).  Requires a `secret_*` API key.
    */
   async listRecentJobs(

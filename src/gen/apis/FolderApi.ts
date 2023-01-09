@@ -67,7 +67,6 @@ export interface PutFolderOperationParams {
 export class FolderApi extends runtime.BaseAPI {
   /**
    * Asynchronously deletes a folder.
-   * Asynchronously deletes a folder.
    */
   private async deleteFolderRaw(
     requestParameters: DeleteFolderOperationParams,
@@ -122,7 +121,6 @@ export class FolderApi extends runtime.BaseAPI {
 
   /**
    * Asynchronously deletes a folder.
-   * Asynchronously deletes a folder.
    */
   async deleteFolder(
     requestParameters: DeleteFolderOperationParams,
@@ -133,7 +131,6 @@ export class FolderApi extends runtime.BaseAPI {
   }
 
   /**
-   * Asynchronously deletes multiple folders.
    * Asynchronously deletes multiple folders.
    */
   private async deleteFolderBatchRaw(
@@ -192,7 +189,6 @@ export class FolderApi extends runtime.BaseAPI {
 
   /**
    * Asynchronously deletes multiple folders.
-   * Asynchronously deletes multiple folders.
    */
   async deleteFolderBatch(
     requestParameters: DeleteFolderBatchOperationParams,
@@ -203,7 +199,6 @@ export class FolderApi extends runtime.BaseAPI {
   }
 
   /**
-   * Gets the settings for this folder.  Returns an empty object if none exist.
    * Gets the settings for this folder.  Returns an empty object if none exist.
    */
   private async getFolderDetailsRaw(
@@ -260,7 +255,6 @@ export class FolderApi extends runtime.BaseAPI {
 
   /**
    * Gets the settings for this folder.  Returns an empty object if none exist.
-   * Gets the settings for this folder.  Returns an empty object if none exist.
    */
   async getFolderDetails(
     requestParameters: GetFolderDetailsParams,
@@ -271,7 +265,6 @@ export class FolderApi extends runtime.BaseAPI {
   }
 
   /**
-   * Lists the children (files and sub-folders) of a folder.  Pagination is complete when the response `cursor` matches the request `cursor`.
    * Lists the children (files and sub-folders) of a folder.  Pagination is complete when the response `cursor` matches the request `cursor`.
    */
   private async listFolderChildrenRaw(
@@ -348,7 +341,6 @@ export class FolderApi extends runtime.BaseAPI {
 
   /**
    * Lists the children (files and sub-folders) of a folder.  Pagination is complete when the response `cursor` matches the request `cursor`.
-   * Lists the children (files and sub-folders) of a folder.  Pagination is complete when the response `cursor` matches the request `cursor`.
    */
   async listFolderChildren(
     requestParameters: ListFolderChildrenParams,
@@ -359,7 +351,6 @@ export class FolderApi extends runtime.BaseAPI {
   }
 
   /**
-   * Creates or updates the folder specified by the `folderPath`.  If the folder\'s ancestors do not exist, they will be created automatically (with empty FolderSettings).  Note: you don\'t need to create folders before uploading files to them.
    * Creates or updates the folder specified by the `folderPath`.  If the folder\'s ancestors do not exist, they will be created automatically (with empty FolderSettings).  Note: you don\'t need to create folders before uploading files to them.
    */
   private async putFolderRaw(
@@ -414,7 +405,6 @@ export class FolderApi extends runtime.BaseAPI {
   }
 
   /**
-   * Creates or updates the folder specified by the `folderPath`.  If the folder\'s ancestors do not exist, they will be created automatically (with empty FolderSettings).  Note: you don\'t need to create folders before uploading files to them.
    * Creates or updates the folder specified by the `folderPath`.  If the folder\'s ancestors do not exist, they will be created automatically (with empty FolderSettings).  Note: you don\'t need to create folders before uploading files to them.
    */
   async putFolder(
