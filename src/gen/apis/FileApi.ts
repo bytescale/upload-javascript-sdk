@@ -38,9 +38,7 @@ export interface DeleteFileBatchOperationParams {
 export interface DownloadFileParams {
   accountId: string;
   filePath: string;
-  auth?: boolean;
   cache?: boolean;
-  download?: boolean;
   version?: string;
 }
 
@@ -54,9 +52,7 @@ export interface ProcessFileParams {
   filePath: string;
   transformation: string;
   artifact?: string;
-  auth?: boolean;
   cache?: boolean;
-  download?: boolean;
   version?: string;
 }
 
@@ -217,16 +213,8 @@ export class FileApi extends runtime.BaseAPI {
 
     const queryParameters: any = {};
 
-    if (requestParameters.auth !== undefined) {
-      queryParameters["_auth"] = requestParameters.auth;
-    }
-
     if (requestParameters.cache !== undefined) {
       queryParameters["_cache"] = requestParameters.cache;
-    }
-
-    if (requestParameters.download !== undefined) {
-      queryParameters["_download"] = requestParameters.download;
     }
 
     if (requestParameters.version !== undefined) {
@@ -380,16 +368,8 @@ export class FileApi extends runtime.BaseAPI {
       queryParameters["_artifact"] = requestParameters.artifact;
     }
 
-    if (requestParameters.auth !== undefined) {
-      queryParameters["_auth"] = requestParameters.auth;
-    }
-
     if (requestParameters.cache !== undefined) {
       queryParameters["_cache"] = requestParameters.cache;
-    }
-
-    if (requestParameters.download !== undefined) {
-      queryParameters["_download"] = requestParameters.download;
     }
 
     if (requestParameters.version !== undefined) {
