@@ -1,5 +1,6 @@
 /* eslint @typescript-eslint/no-var-requires: 0 */
 const nodeExternals = require("webpack-node-externals");
+const externals = require("./webpack.config.externals.js");
 const path = require("path");
 
 module.exports = {
@@ -16,7 +17,7 @@ module.exports = {
   resolve: {
     extensions: [".ts"]
   },
-  externals: [nodeExternals(), "stream"],
+  externals: [nodeExternals(), ...externals],
   module: {
     rules: [
       {

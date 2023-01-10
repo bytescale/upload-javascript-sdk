@@ -1,10 +1,11 @@
 import { BeginMultipartUploadResponse, DefaultConfig, FileDetails, UploadApi, UploadPart } from "../../src";
 import { Readable } from "stream";
-import * as buffer from "buffer";
+import type * as buffer from "buffer";
 import { ChunkedStream } from "./ChunkedStream";
 import { BlobLike, CancelledError, UploadManagerParams, UploadSource, UploadSourceProcessed } from "./Model";
 
 export class UploadManager {
+  private readonly stringMimeType = "text/plain";
   private readonly defaultMaxConcurrentUploadParts = 4;
   private readonly uploadApi: UploadApi;
 
@@ -13,7 +14,7 @@ export class UploadManager {
   }
 
   async upload(request: UploadManagerParams): Promise<FileDetails> {
-    const data = this.processUploadSource(request.data);
+    const data = await this.processUploadSource(request.data);
     const chunkedStream = this.getChunkedStream(data);
     const uploadInfo = await this.beginUpload(request, data);
     this.checkIfCancelled(request);
@@ -144,7 +145,7 @@ export class UploadManager {
 
     // node-fetch requires 'NodeJS.ReadableStream' for the body.
     // browser fetch supports blobs and buffers.
-    return await this.foldDataRaw<Promise<NodeJS.ReadableStream | Buffer | BlobLike>>(slicedData, {
+    return await this.foldDataRaw<NodeJS.ReadableStream | Buffer | BlobLike>(slicedData, {
       ifBuffer: async buffer => (isNodeJs ? this.bufferToStream(buffer) : buffer),
       ifBlob: async blob => (isNodeJs ? this.bufferToStream(await this.blobToBuffer(blob)) : blob),
       ifNodeJsStream: async stream => stream
@@ -279,32 +280,32 @@ export class UploadManager {
     throw new Error(`Unsupported type for 'data' parameter. Please provide a String, Blob, or Readable (Node.js).`);
   }
 
-  private foldDataRaw<T>(
+  private async foldDataRaw<T>(
     data: UploadSource,
     handle: {
-      ifBlob: (blob: BlobLike) => T;
-      ifBuffer: (buffer: Buffer) => T;
-      ifNodeJsStream: (stream: NodeJS.ReadableStream) => T;
+      ifBlob: (blob: BlobLike) => Promise<T>;
+      ifBuffer: (buffer: Buffer) => Promise<T>;
+      ifNodeJsStream: (stream: NodeJS.ReadableStream) => Promise<T>;
     }
-  ): T {
+  ): Promise<T> {
     if (typeof data === "string") {
-      return handle.ifBlob(this.stringToBlob(data));
+      return await handle.ifBlob(await this.stringToBlob(data));
     }
     if ((data as Partial<NodeJS.ReadableStream>).on !== undefined) {
-      return handle.ifNodeJsStream(data as NodeJS.ReadableStream);
+      return await handle.ifNodeJsStream(data as NodeJS.ReadableStream);
     }
     if ((data as Partial<Buffer>).subarray !== undefined) {
-      return handle.ifBuffer(data as Buffer);
+      return await handle.ifBuffer(data as Buffer);
     }
     if ((data as Partial<BlobLike>).slice !== undefined) {
-      return handle.ifBlob(data as BlobLike);
+      return await handle.ifBlob(data as BlobLike);
     }
     throw new Error(`Unsupported type for 'data' parameter. Please provide a String, Blob, or Readable (Node.js).`);
   }
 
-  private processUploadSource(data: UploadSource): UploadSourceProcessed {
+  private async processUploadSource(data: UploadSource): Promise<UploadSourceProcessed> {
     if (typeof data === "string") {
-      return this.stringToBlob(data);
+      return await this.stringToBlob(data);
     }
     if ((data as Partial<NodeJS.ReadableStream>).on !== undefined) {
       return new ChunkedStream(data as NodeJS.ReadableStream);
@@ -319,9 +320,25 @@ export class UploadManager {
     throw new Error(`Unsupported type for 'data' parameter. Please provide a String, Blob, or Readable (Node.js).`);
   }
 
-  private stringToBlob(data: string): BlobLike {
-    const B = globalThis.Blob ?? buffer.Blob;
-    return new B([data], { type: "text/plain" });
+  private async stringToBlob(data: string): Promise<BlobLike> {
+    return this.globalBlob(data) ?? (await this.nodeJsBlob(data));
+  }
+
+  // Supported by browsers & newer versions of Node.js.
+  private globalBlob(data: string): BlobLike | undefined {
+    const B = globalThis.Blob;
+    if (B === undefined) {
+      return undefined;
+    }
+
+    return new B([data], { type: this.stringMimeType });
+  }
+
+  // Fallback for Node.js
+  private async nodeJsBlob(data: string): Promise<BlobLike> {
+    // We import "buffer" lazily to support browsers, which don't have this module, but also won't call this method so won't trigger the import.
+    const B = (await import("buffer")).Blob;
+    return new B([data], { type: this.stringMimeType });
   }
 
   private async mapAsync<T>(items: T[], concurrency: number, callback: (item: T) => Promise<void>): Promise<void> {

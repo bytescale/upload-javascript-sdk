@@ -1,5 +1,6 @@
 /* eslint @typescript-eslint/no-var-requires: 0 */
 const config = require("./webpack.config.js");
+const externals = require("./webpack.config.externals.js");
 const version = require("./package.json").version;
 const majorVersion = parseInt(version.split(".")[0]);
 
@@ -18,9 +19,9 @@ module.exports = {
     libraryTarget: "umd",
     library: "Upload" // Causes all exports of "index.ts" to appear as members of a global "Upload" object.
   },
-  // Important: causes all dependencies to be bundled into one JS file (except "stream", which doesn't exist in the
-  // browser, so we still treat as external).
-  externals: ["stream"],
+  // Important: causes all dependencies to be bundled into one JS file (except "stream" and "buffer" which doesn't exist
+  // in the browser, so we still treat as external).
+  externals,
   resolve: {
     ...config.resolve,
     modules: [

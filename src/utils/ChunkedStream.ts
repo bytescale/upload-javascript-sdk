@@ -166,7 +166,7 @@ export class ChunkedStream {
   }
 
   private async createStream(): Promise<Readable> {
-    // We import "stream" lazily to support browsers, which won't have this module available.
+    // We import "stream" lazily to support browsers, which don't have this module, but also won't call this method so won't trigger the import.
     const Readable = (await import("stream")).Readable;
     const readable = new Readable();
     readable._read = () => {}; // _read is required but you can noop it
