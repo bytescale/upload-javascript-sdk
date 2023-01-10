@@ -91,21 +91,21 @@ export class JobApi extends runtime.BaseAPI {
             `{${"accountId"}}`,
             // @ts-ignore
             "accountId" === "filePath"
-              ? String(requestParameters.accountId).substr(1)
+              ? String(requestParameters.accountId)
               : encodeURIComponent(String(requestParameters.accountId))
           )
           .replace(
             `{${"jobId"}}`,
             // @ts-ignore
             "jobId" === "filePath"
-              ? String(requestParameters.jobId).substr(1)
+              ? String(requestParameters.jobId)
               : encodeURIComponent(String(requestParameters.jobId))
           )
           .replace(
             `{${"jobType"}}`,
             // @ts-ignore
             "jobType" === "filePath"
-              ? String(requestParameters.jobType).substr(1)
+              ? String(requestParameters.jobType)
               : encodeURIComponent(String(requestParameters.jobType))
           ),
         method: "DELETE",
@@ -174,21 +174,21 @@ export class JobApi extends runtime.BaseAPI {
             `{${"accountId"}}`,
             // @ts-ignore
             "accountId" === "filePath"
-              ? String(requestParameters.accountId).substr(1)
+              ? String(requestParameters.accountId)
               : encodeURIComponent(String(requestParameters.accountId))
           )
           .replace(
             `{${"jobId"}}`,
             // @ts-ignore
             "jobId" === "filePath"
-              ? String(requestParameters.jobId).substr(1)
+              ? String(requestParameters.jobId)
               : encodeURIComponent(String(requestParameters.jobId))
           )
           .replace(
             `{${"jobType"}}`,
             // @ts-ignore
             "jobType" === "filePath"
-              ? String(requestParameters.jobType).substr(1)
+              ? String(requestParameters.jobType)
               : encodeURIComponent(String(requestParameters.jobType))
           ),
         method: "GET",
@@ -254,7 +254,7 @@ export class JobApi extends runtime.BaseAPI {
           `{${"accountId"}}`,
           // @ts-ignore
           "accountId" === "filePath"
-            ? String(requestParameters.accountId).substr(1)
+            ? String(requestParameters.accountId)
             : encodeURIComponent(String(requestParameters.accountId))
         ),
         method: "GET",

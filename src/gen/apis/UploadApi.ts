@@ -98,7 +98,7 @@ export class UploadApi extends runtime.BaseAPI {
           `{${"accountId"}}`,
           // @ts-ignore
           "accountId" === "filePath"
-            ? String(requestParameters.accountId).substr(1)
+            ? String(requestParameters.accountId)
             : encodeURIComponent(String(requestParameters.accountId))
         ),
         method: "POST",
@@ -181,21 +181,21 @@ export class UploadApi extends runtime.BaseAPI {
             `{${"accountId"}}`,
             // @ts-ignore
             "accountId" === "filePath"
-              ? String(requestParameters.accountId).substr(1)
+              ? String(requestParameters.accountId)
               : encodeURIComponent(String(requestParameters.accountId))
           )
           .replace(
             `{${"uploadId"}}`,
             // @ts-ignore
             "uploadId" === "filePath"
-              ? String(requestParameters.uploadId).substr(1)
+              ? String(requestParameters.uploadId)
               : encodeURIComponent(String(requestParameters.uploadId))
           )
           .replace(
             `{${"uploadPartIndex"}}`,
             // @ts-ignore
             "uploadPartIndex" === "filePath"
-              ? String(requestParameters.uploadPartIndex).substr(1)
+              ? String(requestParameters.uploadPartIndex)
               : encodeURIComponent(String(requestParameters.uploadPartIndex))
           ),
         method: "PUT",
@@ -265,21 +265,21 @@ export class UploadApi extends runtime.BaseAPI {
             `{${"accountId"}}`,
             // @ts-ignore
             "accountId" === "filePath"
-              ? String(requestParameters.accountId).substr(1)
+              ? String(requestParameters.accountId)
               : encodeURIComponent(String(requestParameters.accountId))
           )
           .replace(
             `{${"uploadId"}}`,
             // @ts-ignore
             "uploadId" === "filePath"
-              ? String(requestParameters.uploadId).substr(1)
+              ? String(requestParameters.uploadId)
               : encodeURIComponent(String(requestParameters.uploadId))
           )
           .replace(
             `{${"uploadPartIndex"}}`,
             // @ts-ignore
             "uploadPartIndex" === "filePath"
-              ? String(requestParameters.uploadPartIndex).substr(1)
+              ? String(requestParameters.uploadPartIndex)
               : encodeURIComponent(String(requestParameters.uploadPartIndex))
           ),
         method: "GET",
@@ -342,14 +342,14 @@ export class UploadApi extends runtime.BaseAPI {
             `{${"accountId"}}`,
             // @ts-ignore
             "accountId" === "filePath"
-              ? String(requestParameters.accountId).substr(1)
+              ? String(requestParameters.accountId)
               : encodeURIComponent(String(requestParameters.accountId))
           )
           .replace(
             `{${"uploadId"}}`,
             // @ts-ignore
             "uploadId" === "filePath"
-              ? String(requestParameters.uploadId).substr(1)
+              ? String(requestParameters.uploadId)
               : encodeURIComponent(String(requestParameters.uploadId))
           ),
         method: "GET",

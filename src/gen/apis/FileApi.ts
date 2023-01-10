@@ -101,7 +101,7 @@ export class FileApi extends runtime.BaseAPI {
           `{${"accountId"}}`,
           // @ts-ignore
           "accountId" === "filePath"
-            ? String(requestParameters.accountId).substr(1)
+            ? String(requestParameters.accountId)
             : encodeURIComponent(String(requestParameters.accountId))
         ),
         method: "DELETE",
@@ -164,7 +164,7 @@ export class FileApi extends runtime.BaseAPI {
           `{${"accountId"}}`,
           // @ts-ignore
           "accountId" === "filePath"
-            ? String(requestParameters.accountId).substr(1)
+            ? String(requestParameters.accountId)
             : encodeURIComponent(String(requestParameters.accountId))
         ),
         method: "DELETE",
@@ -231,19 +231,19 @@ export class FileApi extends runtime.BaseAPI {
 
     const response = await this.request(
       {
-        path: `/{accountId}/raw/{filePath}`
+        path: `/{accountId}/raw{filePath}`
           .replace(
             `{${"accountId"}}`,
             // @ts-ignore
             "accountId" === "filePath"
-              ? String(requestParameters.accountId).substr(1)
+              ? String(requestParameters.accountId)
               : encodeURIComponent(String(requestParameters.accountId))
           )
           .replace(
             `{${"filePath"}}`,
             // @ts-ignore
             "filePath" === "filePath"
-              ? String(requestParameters.filePath).substr(1)
+              ? String(requestParameters.filePath)
               : encodeURIComponent(String(requestParameters.filePath))
           ),
         method: "GET",
@@ -309,7 +309,7 @@ export class FileApi extends runtime.BaseAPI {
           `{${"accountId"}}`,
           // @ts-ignore
           "accountId" === "filePath"
-            ? String(requestParameters.accountId).substr(1)
+            ? String(requestParameters.accountId)
             : encodeURIComponent(String(requestParameters.accountId))
         ),
         method: "GET",
@@ -386,26 +386,26 @@ export class FileApi extends runtime.BaseAPI {
 
     const response = await this.request(
       {
-        path: `/{accountId}/{transformation}/{filePath}`
+        path: `/{accountId}/{transformation}{filePath}`
           .replace(
             `{${"accountId"}}`,
             // @ts-ignore
             "accountId" === "filePath"
-              ? String(requestParameters.accountId).substr(1)
+              ? String(requestParameters.accountId)
               : encodeURIComponent(String(requestParameters.accountId))
           )
           .replace(
             `{${"filePath"}}`,
             // @ts-ignore
             "filePath" === "filePath"
-              ? String(requestParameters.filePath).substr(1)
+              ? String(requestParameters.filePath)
               : encodeURIComponent(String(requestParameters.filePath))
           )
           .replace(
             `{${"transformation"}}`,
             // @ts-ignore
             "transformation" === "filePath"
-              ? String(requestParameters.transformation).substr(1)
+              ? String(requestParameters.transformation)
               : encodeURIComponent(String(requestParameters.transformation))
           ),
         method: "GET",

@@ -104,7 +104,7 @@ export class FolderApi extends runtime.BaseAPI {
           `{${"accountId"}}`,
           // @ts-ignore
           "accountId" === "filePath"
-            ? String(requestParameters.accountId).substr(1)
+            ? String(requestParameters.accountId)
             : encodeURIComponent(String(requestParameters.accountId))
         ),
         method: "DELETE",
@@ -172,7 +172,7 @@ export class FolderApi extends runtime.BaseAPI {
           `{${"accountId"}}`,
           // @ts-ignore
           "accountId" === "filePath"
-            ? String(requestParameters.accountId).substr(1)
+            ? String(requestParameters.accountId)
             : encodeURIComponent(String(requestParameters.accountId))
         ),
         method: "DELETE",
@@ -239,7 +239,7 @@ export class FolderApi extends runtime.BaseAPI {
           `{${"accountId"}}`,
           // @ts-ignore
           "accountId" === "filePath"
-            ? String(requestParameters.accountId).substr(1)
+            ? String(requestParameters.accountId)
             : encodeURIComponent(String(requestParameters.accountId))
         ),
         method: "GET",
@@ -325,7 +325,7 @@ export class FolderApi extends runtime.BaseAPI {
           `{${"accountId"}}`,
           // @ts-ignore
           "accountId" === "filePath"
-            ? String(requestParameters.accountId).substr(1)
+            ? String(requestParameters.accountId)
             : encodeURIComponent(String(requestParameters.accountId))
         ),
         method: "GET",
@@ -389,7 +389,7 @@ export class FolderApi extends runtime.BaseAPI {
           `{${"accountId"}}`,
           // @ts-ignore
           "accountId" === "filePath"
-            ? String(requestParameters.accountId).substr(1)
+            ? String(requestParameters.accountId)
             : encodeURIComponent(String(requestParameters.accountId))
         ),
         method: "PUT",
