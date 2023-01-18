@@ -15,7 +15,8 @@
     "url": "https://github.com/upload-io/upload-javascript-sdk/issues"
   },
   "files": [
-    "*"
+    "*",
+    "/dist/*"
   ],
   "scripts": {
     "clean": "rm -rf dist && rm -f upload-js-full.tgz",
