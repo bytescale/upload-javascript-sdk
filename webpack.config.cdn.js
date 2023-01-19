@@ -19,6 +19,7 @@ module.exports = {
     libraryTarget: "umd",
     library: "Upload" // Causes all exports of "index.ts" to appear as members of a global "Upload" object.
   },
+  optimization: {}, // Re-enable optimizations (i.e. minification) for CDN bundle. (See base config.)
   // Important: causes all dependencies to be bundled into one JS file (except "stream" and "buffer" which doesn't exist
   // in the browser, so we still treat as external).
   externals,
