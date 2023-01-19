@@ -1,4 +1,4 @@
-import { BeginMultipartUploadResponse, DefaultConfig, FileDetails, UploadApi, UploadPart } from "../../src";
+import { BeginMultipartUploadResponse, DefaultConfig, FileDetails, UploadApi, UploadPart } from "../gen";
 import { Readable } from "stream";
 import type * as buffer from "buffer";
 import { ChunkedStream } from "./ChunkedStream";

@@ -4,7 +4,7 @@
  * - Browser 'Blob', e.g. 'new Blob([JSON.stringify({someValue: 42})], {type: "application/json"})'
  * - Browser 'File', e.g. from a <input type="file" onchange="...">
  */
-import { BeginMultipartUploadRequest } from "../../src";
+import { BeginMultipartUploadRequest } from "../gen";
 import { ChunkedStream } from "./ChunkedStream";
 
 export interface BlobLike {
