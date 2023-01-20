@@ -101,6 +101,12 @@ export interface BeginMultipartUploadRequest {
    */
   path?: FilePathDefinition;
   /**
+   *
+   * @type {MultipartUploadProtocol}
+   * @memberof BeginMultipartUploadRequest
+   */
+  protocol?: MultipartUploadProtocol;
+  /**
    * Size in bytes.
    * @type {number}
    * @memberof BeginMultipartUploadRequest
@@ -918,6 +924,21 @@ export interface ListRecentJobsResponse {
    */
   items: Array<JobSummary>;
 }
+
+/**
+ * Multipart file upload protocol version.
+ *
+ * - `1.0`: this protocol version automatically downgrades to single part uploads when files are below a certain size. When this protocol is used for small files, the file exists immediately after the `PUT` request to the `uploadUrl` completes. This protocol requires more client-side code to implement, and has a known issue whereby file TTLs are ignored if the client code fails to call CompleteUploadPart.
+ *
+ * - `1.1`: this protocol version uses multipart uploads for all files. When this protocol is used, files only exist after the last CompleteUploadPart request is made. This protocol simplifies client code, and fixes a known issue in the `2.0` protocol for file TTLs (described above).
+ * @export
+ */
+export const MultipartUploadProtocol = {
+  _0: "1.0",
+  _1: "1.1"
+} as const;
+export type MultipartUploadProtocol = typeof MultipartUploadProtocol[keyof typeof MultipartUploadProtocol];
+
 /**
  * Summary information about a file or folder.
  * @export
