@@ -45,7 +45,7 @@
       "eslint"
     ],
     "*.{js,jsx,ts,tsx,json,css,html,md,yaml,yml}": [
-      "prettier -c"
+      "prettier -w"
     ]
   },
   "devDependencies": {

@@ -54,6 +54,7 @@ export class UploadManager {
         mime,
         originalFileName,
         path: request.path,
+        protocol: "1.1",
         size,
         tags: request.tags
       }
@@ -69,7 +70,7 @@ export class UploadManager {
     this.checkIfCancelled(request);
     const part = await this.getUploadPart(request, partIndex, uploadInfo);
     this.checkIfCancelled(request);
-    const etag = await this.putUploadPart(part, data, uploadInfo);
+    const etag = await this.putUploadPart(part, data);
     this.checkIfCancelled(request);
     await this.uploadApi.completeUploadPart({
       accountId: request.accountId,
@@ -84,34 +85,13 @@ export class UploadManager {
   /**
    * Returns etag for the part.
    */
-  private async putUploadPart(
-    part: UploadPart,
-    data: UploadSourceProcessed,
-    uploadInfo: BeginMultipartUploadResponse
-  ): Promise<string> {
+  private async putUploadPart(part: UploadPart, data: UploadSourceProcessed): Promise<string> {
     const fetchApi = this.configuration.fetchApi ?? fetch;
-    const isMultipart = uploadInfo.uploadParts.count > 1;
 
-    let headers: HeadersInit = {
+    const headers: HeadersInit = {
       // Required to prevent fetch using "Transfer-Encoding: Chunked" when body is a stream.
       "content-length": (part.range.inclusiveEnd + 1 - part.range.inclusiveStart).toString()
     };
-
-    if (!isMultipart) {
-      headers = {
-        ...headers,
-        "content-type": uploadInfo.file.mime
-      };
-
-      if (uploadInfo.file.originalFileName !== null) {
-        headers = {
-          ...headers,
-          "content-disposition": `inline; filename="${encodeURIComponent(
-            uploadInfo.file.originalFileName
-          )}"; filename*=UTF-8''${encodeURIComponent(uploadInfo.file.originalFileName)}`
-        };
-      }
-    }
 
     const response = await fetchApi(part.uploadUrl, {
       method: "PUT",
