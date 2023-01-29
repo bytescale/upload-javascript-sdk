@@ -73,7 +73,7 @@ uploadManager
 ### Download a File
 
 ```javascript
-import Upload from "upload-js-full";
+import * as Upload from "upload-js-full";
 import fetch from "node-fetch"; // Node.js only.
 
 const fileApi = new Upload.FileApi(
@@ -100,7 +100,7 @@ fileApi
 ### Process a File
 
 ```javascript
-import Upload from "upload-js-full";
+import * as Upload from "upload-js-full";
 import fetch from "node-fetch"; // Node.js only.
 
 const fileApi = new Upload.FileApi(
@@ -137,7 +137,7 @@ fileApi
 ### Get File Details
 
 ```javascript
-import Upload from "upload-js-full";
+import * as Upload from "upload-js-full";
 import fetch from "node-fetch"; // Node.js only.
 
 const fileApi = new Upload.FileApi(
@@ -161,7 +161,7 @@ fileApi
 ### List Folder Children
 
 ```javascript
-import Upload from "upload-js-full";
+import * as Upload from "upload-js-full";
 import fetch from "node-fetch"; // Node.js only.
 
 const folderApi = new Upload.FolderApi(
