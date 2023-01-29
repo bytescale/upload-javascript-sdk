@@ -43,7 +43,7 @@ npm install node-fetch
 ### Upload a File
 
 ```javascript
-import Upload from "upload-js-full";
+import * as Upload from "upload-js-full";
 import fetch from "node-fetch"; // Node.js only.
 
 const uploadManager = new Upload.UploadManager(
