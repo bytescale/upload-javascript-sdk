@@ -2,10 +2,10 @@
   "compilerOptions": {
     "lib": ["dom", "es2015", "es2016", "es2017"],
     "target": "es2017",
-    "module": "commonJs",
+    "module": "es2020",
     "moduleResolution": "node",
     "strict": true,
-    "esModuleInterop": true,
+    "esModuleInterop": false,
     "forceConsistentCasingInFileNames": true,
     "declaration": true,
     "noImplicitAny": true,

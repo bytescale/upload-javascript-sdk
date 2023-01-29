@@ -4,6 +4,10 @@ const externals = require("./webpack.config.externals.js");
 const path = require("path");
 const nodeExternals = require("webpack-node-externals");
 
+/**
+ * 'esModuleInterop' in 'tsconfig.json' must be set to FALSE, else it injects this janky '__importStar' wrapper around
+ * our 'buffer' and 'stream' imports.
+ */
 module.exports = [
   {
     ...config,
@@ -19,6 +23,7 @@ module.exports = [
     output: {
       path: path.join(__dirname, "dist/esm"),
       library: { type: "module" },
+      module: true,
       environment: {
         module: true,
         dynamicImport: true // Required if using "import" as an external type.
