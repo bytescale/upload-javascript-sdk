@@ -1,48 +1,34 @@
 /* eslint @typescript-eslint/no-var-requires: 0 */
-const nodeExternals = require("webpack-node-externals");
+const config = require("./webpack.config.base.js");
 const externals = require("./webpack.config.externals.js");
 const path = require("path");
+const nodeExternals = require("webpack-node-externals");
 
-module.exports = {
-  output: {
-    libraryTarget: "commonjs2",
-    path: path.resolve(__dirname, "dist"),
-    filename: "main.js"
+module.exports = [
+  {
+    ...config,
+    output: {
+      path: path.join(__dirname, "dist/cjs"),
+      libraryTarget: "commonjs2"
+    },
+    externalsType: "commonjs",
+    externals: [nodeExternals({ importType: "commonjs" }), ...externals]
   },
-  cache: false,
-  mode: "production",
-  optimization: {
-    // Packages on NPM shouldn't be minimized.
-    minimize: false,
-    // Several options to make the generated code a little easier to read (for debugging).
-    chunkIds: "named",
-    moduleIds: "named",
-    mangleExports: false
-  },
-  target: "browserslist",
-  entry: "./src/index.ts",
-  plugins: [],
-  resolve: {
-    extensions: [".ts"]
-  },
-  externals: [nodeExternals(), ...externals],
-  module: {
-    rules: [
-      {
-        test: /\.ts$/,
-        use: [
-          {
-            loader: "babel-loader" // Options are in 'babel.config.js'
-          },
-          {
-            loader: "ts-loader",
-            options: {
-              configFile: "tsconfig.build.json"
-            }
-          }
-        ],
-        include: [path.resolve(__dirname, "src")]
+  {
+    ...config,
+    output: {
+      path: path.join(__dirname, "dist/esm"),
+      library: { type: "module" },
+      environment: {
+        module: true,
+        dynamicImport: true // Required if using "import" as an external type.
       }
-    ]
+    },
+    // Applies to the 'externals' spread only -- i.e. uses "import" instead of "module" for those imports only. This is
+    // because "import" is a lazy/dynamic ESM import, whereas "module" is an eager/static ESM import, and the for
+    // modules listed in the "externals" array, we want them to be loaded lazily, as the browsr does not have them.
+    externalsType: "import",
+    externals: [nodeExternals({ importType: "module" }), ...externals],
+    experiments: { outputModule: true }
   }
-};
+];

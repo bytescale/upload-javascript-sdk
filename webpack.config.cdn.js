@@ -1,8 +1,9 @@
 /* eslint @typescript-eslint/no-var-requires: 0 */
-const config = require("./webpack.config.js");
+const config = require("./webpack.config.base.js");
 const externals = require("./webpack.config.externals.js");
 const version = require("./package.json").version;
 const majorVersion = parseInt(version.split(".")[0]);
+const path = require("path");
 
 if (isNaN(majorVersion)) {
   throw new Error("Unable to parse version number in package.json");
@@ -14,7 +15,7 @@ if (isNaN(majorVersion)) {
 module.exports = {
   ...config,
   output: {
-    ...config.output,
+    path: path.resolve(__dirname, "dist"),
     filename: `v${majorVersion}.js`,
     libraryTarget: "umd",
     library: "Upload" // Causes all exports of "index.ts" to appear as members of a global "Upload" object.
