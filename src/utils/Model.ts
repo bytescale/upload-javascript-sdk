@@ -29,7 +29,7 @@ export class CancelledError extends Error {
 
 export type UploadSource = NodeJS.ReadableStream | BlobLike | Buffer | string;
 
-export interface UploadManagerParams extends Omit<BeginMultipartUploadRequest, "size"> {
+export interface UploadManagerParams extends Omit<BeginMultipartUploadRequest, "size" | "protocol"> {
   accountId: string;
   cancellationToken?: CancellationToken;
   data: UploadSource;
