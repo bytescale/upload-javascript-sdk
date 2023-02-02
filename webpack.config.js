@@ -3,10 +3,34 @@ const config = require("./webpack.config.base.js");
 const externals = require("./webpack.config.externals.js");
 const path = require("path");
 const nodeExternals = require("webpack-node-externals");
+const WrapperPlugin = require("wrapper-webpack-plugin");
+
+const header = `// ----------------------------------------
+// POLYFILL GUIDE:
+// ----------------------------------------
+//
+// "buffer" & "stream" are not required for browser environments.
+//
+// They are only used when the code detects it's running in Node.js (at runtime).
+//
+// You may polyfill them with empty objects (for browser environments):
+//
+// ----------------------------------------
+// Webpack:
+// {
+//   resolve: {
+//     fallback: {
+//       buffer: false,
+//       stream: false
+//     }
+//   }
+// }
+// ----------------------------------------
+//
+`; // Last new line is required!
 
 /**
- * 'esModuleInterop' in 'tsconfig.json' must be set to FALSE, else it injects this janky '__importStar' wrapper around
- * our 'buffer' and 'stream' imports.
+ * 'esModuleInterop' in 'tsconfig.json' must be set to FALSE, else it injects '__importStar' around the 'buffer' and 'stream' imports.
  */
 module.exports = [
   {
@@ -15,6 +39,7 @@ module.exports = [
       path: path.join(__dirname, "dist/cjs"),
       libraryTarget: "commonjs2"
     },
+    plugins: [...config.plugins, new WrapperPlugin({ header: () => header })],
     externalsType: "commonjs",
     externals: [nodeExternals({ importType: "commonjs" }), ...externals]
   },
@@ -25,14 +50,12 @@ module.exports = [
       library: { type: "module" },
       module: true,
       environment: {
-        module: true,
-        dynamicImport: true // Required if using "import" as an external type.
+        module: true
+        // dynamicImport: true // Required if using "import" as an external type. However, also causes root-level awaits, which many build tools don't support.
       }
     },
-    // Applies to the 'externals' spread only -- i.e. uses "import" instead of "module" for those imports only. This is
-    // because "import" is a lazy/dynamic ESM import, whereas "module" is an eager/static ESM import, and the for
-    // modules listed in the "externals" array, we want them to be loaded lazily, as the browsr does not have them.
-    externalsType: "import",
+    plugins: [...config.plugins, new WrapperPlugin({ header: () => header })],
+    externalsType: "module",
     externals: [nodeExternals({ importType: "module" }), ...externals],
     experiments: { outputModule: true }
   }
