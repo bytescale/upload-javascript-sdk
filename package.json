@@ -5,12 +5,20 @@
   "author": "Upload <hello@upload.io> (https://upload.io)",
   "license": "MIT",
   "types": "dist/types/index.d.ts",
-  "main": "dist/cjs/main.js",
-  "module": "dist/esm/main.mjs",
+  "main": "dist/node/cjs/main.js",
+  "module": "dist/node/esm/main.mjs",
+  "browser": "dist/browser/esm/main.mjs",
   "exports": {
     ".": {
-      "require": "./dist/cjs/main.js",
-      "import": "./dist/esm/main.mjs"
+      "node": {
+        "require": "./dist/node/cjs/main.js",
+        "import": "./dist/node/esm/main.mjs"
+      },
+      "browser": {
+        "require": "./dist/browser/cjs/main.js",
+        "import": "./dist/browser/esm/main.mjs"
+      },
+      "default": "./dist/node/esm/main.mjs"
     }
   },
   "homepage": "https://github.com/upload-io/upload-javascript-sdk",
