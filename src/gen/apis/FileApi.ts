@@ -39,6 +39,7 @@ export interface DownloadFileParams {
   accountId: string;
   filePath: string;
   cache?: boolean;
+  cacheTtl?: number;
   version?: string;
 }
 
@@ -53,6 +54,9 @@ export interface ProcessFileParams {
   transformation: string;
   artifact?: string;
   cache?: boolean;
+  cachePerm?: ProcessFileCachePermEnum;
+  cacheTtl?: number;
+  large?: boolean;
   version?: string;
 }
 
@@ -214,11 +218,15 @@ export class FileApi extends runtime.BaseAPI {
     const queryParameters: any = {};
 
     if (requestParameters.cache !== undefined) {
-      queryParameters["_cache"] = requestParameters.cache;
+      queryParameters["cache"] = requestParameters.cache;
+    }
+
+    if (requestParameters.cacheTtl !== undefined) {
+      queryParameters["cache_ttl"] = requestParameters.cacheTtl;
     }
 
     if (requestParameters.version !== undefined) {
-      queryParameters["_version"] = requestParameters.version;
+      queryParameters["version"] = requestParameters.version;
     }
 
     const headerParameters: runtime.HTTPHeaders = {};
@@ -269,7 +277,7 @@ export class FileApi extends runtime.BaseAPI {
   }
 
   /**
-   * Retrieves the full details for a file.
+   * Gets the full details (e.g. metadata, tags, etc.) for a file.
    */
   private async getFileDetailsWithHttpInfo(
     requestParameters: GetFileDetailsParams,
@@ -324,7 +332,7 @@ export class FileApi extends runtime.BaseAPI {
   }
 
   /**
-   * Retrieves the full details for a file.
+   * Gets the full details (e.g. metadata, tags, etc.) for a file.
    */
   async getFileDetails(
     requestParameters: GetFileDetailsParams,
@@ -365,15 +373,27 @@ export class FileApi extends runtime.BaseAPI {
     const queryParameters: any = {};
 
     if (requestParameters.artifact !== undefined) {
-      queryParameters["_artifact"] = requestParameters.artifact;
+      queryParameters["artifact"] = requestParameters.artifact;
     }
 
     if (requestParameters.cache !== undefined) {
-      queryParameters["_cache"] = requestParameters.cache;
+      queryParameters["cache"] = requestParameters.cache;
+    }
+
+    if (requestParameters.cachePerm !== undefined) {
+      queryParameters["cache_perm"] = requestParameters.cachePerm;
+    }
+
+    if (requestParameters.cacheTtl !== undefined) {
+      queryParameters["cache_ttl"] = requestParameters.cacheTtl;
+    }
+
+    if (requestParameters.large !== undefined) {
+      queryParameters["large"] = requestParameters.large;
     }
 
     if (requestParameters.version !== undefined) {
-      queryParameters["_version"] = requestParameters.version;
+      queryParameters["version"] = requestParameters.version;
     }
 
     const headerParameters: runtime.HTTPHeaders = {};
@@ -430,3 +450,13 @@ export class FileApi extends runtime.BaseAPI {
     return response;
   }
 }
+
+/**
+ * @export
+ */
+export const ProcessFileCachePermEnum = {
+  Auto: "auto",
+  False: "false",
+  True: "true"
+} as const;
+export type ProcessFileCachePermEnum = typeof ProcessFileCachePermEnum[keyof typeof ProcessFileCachePermEnum];

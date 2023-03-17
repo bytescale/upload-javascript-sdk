@@ -22,7 +22,8 @@ export type AccountJobStatus = typeof AccountJobStatus[keyof typeof AccountJobSt
  */
 export const AccountJobType = {
   BatchFolderDeletionJob: "BatchFolderDeletionJob",
-  BatchFileDeletionJob: "BatchFileDeletionJob"
+  BatchFileDeletionJob: "BatchFileDeletionJob",
+  CopyFolderJob: "CopyFolderJob"
 } as const;
 export type AccountJobType = typeof AccountJobType[keyof typeof AccountJobType];
 
@@ -270,6 +271,12 @@ export interface DynamicFilePath {
    */
   fileName?: string;
   /**
+   * File name. May be empty string `""`. Cannot contain `/`.
+   * @type {string}
+   * @memberof DynamicFilePath
+   */
+  fileNameFallback?: string;
+  /**
    * If `true` then path variables like `{DATE_UTC}` in the `fileName` will be replaced. You can escape `{` characters with a `\`.
    *
    * If `false` then path variables like `{DATE_UTC}` in the `fileName` will be taken literally.
@@ -436,6 +443,12 @@ export interface FilePathDefinition {
    * @memberof FilePathDefinition
    */
   fileName?: string;
+  /**
+   * File name. May be empty string `""`. Cannot contain `/`.
+   * @type {string}
+   * @memberof FilePathDefinition
+   */
+  fileNameFallback?: string;
   /**
    * If `true` then path variables like `{DATE_UTC}` in the `fileName` will be replaced. You can escape `{` characters with a `\`.
    *
@@ -887,29 +900,31 @@ export interface JobSummaryError {
   code: string;
 }
 /**
- * Response body for ListFolderChildren.
+ * Response body for ListFolderDescendants.
  * @export
- * @interface ListFolderChildrenResponse
+ * @interface ListFolderResponse
  */
-export interface ListFolderChildrenResponse {
+export interface ListFolderResponse {
   /**
-   * Summary information about each of the folder's children (files and folders).
-   * @type {Array<ObjectSummary>}
-   * @memberof ListFolderChildrenResponse
-   */
-  children: Array<ObjectSummary>;
-  /**
-   * Cursor (aka continuation token) for listing folder children.
+   * Cursor that must be provided to the next request (to continue reading the next page of results).
+   *
+   * If `null` is returned or the response cursor equals the request cursor, then paging has completed.
    * @type {string}
-   * @memberof ListFolderChildrenResponse
+   * @memberof ListFolderResponse
    */
-  cursor: string;
+  cursor: string | null;
   /**
    *
    * @type {FolderSummary}
-   * @memberof ListFolderChildrenResponse
+   * @memberof ListFolderResponse
    */
-  parent: FolderSummary;
+  folder: FolderSummary;
+  /**
+   * Summary information about each of the folder's descendants (files and folders).
+   * @type {Array<ObjectSummary>}
+   * @memberof ListFolderResponse
+   */
+  items: Array<ObjectSummary>;
 }
 /**
  * Response body for ListRecentJobs.
@@ -1040,9 +1055,9 @@ export interface PatchFolderSettings {
  * @export
  */
 export const PathPermissionScope = {
-  This: "This",
   Children: "Children",
-  Grandchildren: "Grandchildren+"
+  Grandchildren: "Grandchildren+",
+  This: "This"
 } as const;
 export type PathPermissionScope = typeof PathPermissionScope[keyof typeof PathPermissionScope];
 

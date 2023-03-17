@@ -26,7 +26,7 @@ import type {
   // @ts-ignore
   FolderDetails,
   // @ts-ignore
-  ListFolderChildrenResponse,
+  ListFolderResponse,
   // @ts-ignore
   PutFolderRequest
 } from "../models";
@@ -46,14 +46,16 @@ export interface GetFolderDetailsParams {
   folderPath: string;
 }
 
-export interface ListFolderChildrenParams {
+export interface ListFolderParams {
   accountId: string;
   folderPath: string;
   cursor?: string;
+  includeExternal?: boolean;
   includeFiles?: boolean;
-  includeFolders?: boolean;
+  includePhysicalFolders?: boolean;
+  includeVirtualFolders?: boolean;
   limit?: number;
-  traverseVirtualFolders?: boolean;
+  recursive?: boolean;
 }
 
 export interface PutFolderOperationParams {
@@ -199,7 +201,7 @@ export class FolderApi extends runtime.BaseAPI {
   }
 
   /**
-   * Gets the settings for this folder.  Returns an empty object if none exist.
+   * Gets the full details (e.g. permission, storage layer, etc.) for a folder.  Returns an empty object if no settings have been configured for this folder.
    */
   private async getFolderDetailsWithHttpInfo(
     requestParameters: GetFolderDetailsParams,
@@ -254,7 +256,7 @@ export class FolderApi extends runtime.BaseAPI {
   }
 
   /**
-   * Gets the settings for this folder.  Returns an empty object if none exist.
+   * Gets the full details (e.g. permission, storage layer, etc.) for a folder.  Returns an empty object if no settings have been configured for this folder.
    */
   async getFolderDetails(
     requestParameters: GetFolderDetailsParams,
@@ -265,23 +267,23 @@ export class FolderApi extends runtime.BaseAPI {
   }
 
   /**
-   * Lists the children (files and sub-folders) of a folder.  Pagination is complete when the response `cursor` matches the request `cursor`.
+   * Lists the folder\'s contents.  Pagination is complete when the response `cursor` is `null` or matches the request `cursor`.
    */
-  private async listFolderChildrenWithHttpInfo(
-    requestParameters: ListFolderChildrenParams,
+  private async listFolderWithHttpInfo(
+    requestParameters: ListFolderParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<ListFolderChildrenResponse>> {
+  ): Promise<runtime.ApiResponse<ListFolderResponse>> {
     if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
       throw new runtime.RequiredError(
         "accountId",
-        "Required parameter requestParameters.accountId was null or undefined when calling listFolderChildren."
+        "Required parameter requestParameters.accountId was null or undefined when calling listFolder."
       );
     }
 
     if (requestParameters.folderPath === null || requestParameters.folderPath === undefined) {
       throw new runtime.RequiredError(
         "folderPath",
-        "Required parameter requestParameters.folderPath was null or undefined when calling listFolderChildren."
+        "Required parameter requestParameters.folderPath was null or undefined when calling listFolder."
       );
     }
 
@@ -295,20 +297,28 @@ export class FolderApi extends runtime.BaseAPI {
       queryParameters["folderPath"] = requestParameters.folderPath;
     }
 
+    if (requestParameters.includeExternal !== undefined) {
+      queryParameters["includeExternal"] = requestParameters.includeExternal;
+    }
+
     if (requestParameters.includeFiles !== undefined) {
       queryParameters["includeFiles"] = requestParameters.includeFiles;
     }
 
-    if (requestParameters.includeFolders !== undefined) {
-      queryParameters["includeFolders"] = requestParameters.includeFolders;
+    if (requestParameters.includePhysicalFolders !== undefined) {
+      queryParameters["includePhysicalFolders"] = requestParameters.includePhysicalFolders;
+    }
+
+    if (requestParameters.includeVirtualFolders !== undefined) {
+      queryParameters["includeVirtualFolders"] = requestParameters.includeVirtualFolders;
     }
 
     if (requestParameters.limit !== undefined) {
       queryParameters["limit"] = requestParameters.limit;
     }
 
-    if (requestParameters.traverseVirtualFolders !== undefined) {
-      queryParameters["traverseVirtualFolders"] = requestParameters.traverseVirtualFolders;
+    if (requestParameters.recursive !== undefined) {
+      queryParameters["recursive"] = requestParameters.recursive;
     }
 
     const headerParameters: runtime.HTTPHeaders = {};
@@ -321,7 +331,7 @@ export class FolderApi extends runtime.BaseAPI {
 
     const response = await this.request(
       {
-        path: `/v2/accounts/{accountId}/folders/children`.replace(
+        path: `/v2/accounts/{accountId}/folders/list`.replace(
           `{${"accountId"}}`,
           // @ts-ignore
           "accountId" === "filePath"
@@ -340,13 +350,13 @@ export class FolderApi extends runtime.BaseAPI {
   }
 
   /**
-   * Lists the children (files and sub-folders) of a folder.  Pagination is complete when the response `cursor` matches the request `cursor`.
+   * Lists the folder\'s contents.  Pagination is complete when the response `cursor` is `null` or matches the request `cursor`.
    */
-  async listFolderChildren(
-    requestParameters: ListFolderChildrenParams,
+  async listFolder(
+    requestParameters: ListFolderParams,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<ListFolderChildrenResponse> {
-    const response = await this.listFolderChildrenWithHttpInfo(requestParameters, initOverrides);
+  ): Promise<ListFolderResponse> {
+    const response = await this.listFolderWithHttpInfo(requestParameters, initOverrides);
     return await response.value();
   }
 
