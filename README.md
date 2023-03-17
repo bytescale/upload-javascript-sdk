@@ -179,7 +179,7 @@ folderApi
   })
   .then(
     // Note: operation is paginated, see 'result.cursor' and 'params.cursor'.
-    result => console.log(`Items in folder: ${result.children.length}`),
+    result => console.log(`Items in folder: ${result.items.length}`),
     error => console.error(error)
   );
 ```
