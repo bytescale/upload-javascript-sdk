@@ -37,7 +37,7 @@ npm install node-fetch
 - [Download a File](#download-a-file)
 - [Process a File](#process-a-file)
 - [Get File Details](#get-file-details)
-- [List Folder Children](#list-folder-children)
+- [List Folder](#list-folder)
 - **[See All Methods »](https://upload.io/docs/upload-sdk/javascript)**
 
 ### Upload a File
@@ -158,7 +158,7 @@ fileApi
   );
 ```
 
-### List Folder Children
+### List Folder
 
 ```javascript
 import * as Upload from "upload-js-full";
@@ -172,9 +172,10 @@ const folderApi = new Upload.FolderApi(
 );
 
 folderApi
-  .listFolderChildren({
+  .listFolder({
     accountId: "YOUR_UPLOAD_ACCOUNT_ID", // e.g. "W142hJk"
-    folderPath: "/"
+    folderPath: "/",
+    recursive: false
   })
   .then(
     // Note: operation is paginated, see 'result.cursor' and 'params.cursor'.
