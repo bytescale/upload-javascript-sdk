@@ -50,7 +50,7 @@ export interface ListFolderParams {
   accountId: string;
   folderPath: string;
   cursor?: string;
-  includeExternal?: boolean;
+  includeExternalItems?: boolean;
   includeFiles?: boolean;
   includePhysicalFolders?: boolean;
   includeVirtualFolders?: boolean;
@@ -297,8 +297,8 @@ export class FolderApi extends runtime.BaseAPI {
       queryParameters["folderPath"] = requestParameters.folderPath;
     }
 
-    if (requestParameters.includeExternal !== undefined) {
-      queryParameters["includeExternal"] = requestParameters.includeExternal;
+    if (requestParameters.includeExternalItems !== undefined) {
+      queryParameters["includeExternalItems"] = requestParameters.includeExternalItems;
     }
 
     if (requestParameters.includeFiles !== undefined) {
