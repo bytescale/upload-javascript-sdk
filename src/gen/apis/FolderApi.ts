@@ -18,6 +18,8 @@ import type {
   // @ts-ignore
   AsyncResponse,
   // @ts-ignore
+  CopyFolderRequest,
+  // @ts-ignore
   DeleteFolderBatchRequest,
   // @ts-ignore
   DeleteFolderRequest,
@@ -30,6 +32,11 @@ import type {
   // @ts-ignore
   PutFolderRequest
 } from "../models";
+
+export interface CopyFolderOperationParams {
+  accountId: string;
+  copyFolderRequest: CopyFolderRequest;
+}
 
 export interface DeleteFolderOperationParams {
   accountId: string;
@@ -50,8 +57,9 @@ export interface ListFolderParams {
   accountId: string;
   folderPath: string;
   cursor?: string;
-  includeExternalItems?: boolean;
+  dryRun?: boolean;
   includeFiles?: boolean;
+  includeOverriddenStorage?: boolean;
   includePhysicalFolders?: boolean;
   includeVirtualFolders?: boolean;
   limit?: number;
@@ -68,7 +76,72 @@ export interface PutFolderOperationParams {
  */
 export class FolderApi extends runtime.BaseAPI {
   /**
-   * Asynchronously deletes a folder.
+   * Copies a folder asynchronously.  You can use the ListFolder operation to preview which files will be copied. To do this:  - Set `dryRun=true` on the ListFolder operation.  - Use the same values for ```folderPath```, ```recursive```, and ```include*``` for the ListFolder operation as used here.  - Note that the ListFolder operation does not support the `condition` parameter.
+   */
+  private async copyFolderWithHttpInfo(
+    requestParameters: CopyFolderOperationParams,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<AsyncResponse>> {
+    if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
+      throw new runtime.RequiredError(
+        "accountId",
+        "Required parameter requestParameters.accountId was null or undefined when calling copyFolder."
+      );
+    }
+
+    if (requestParameters.copyFolderRequest === null || requestParameters.copyFolderRequest === undefined) {
+      throw new runtime.RequiredError(
+        "copyFolderRequest",
+        "Required parameter requestParameters.copyFolderRequest was null or undefined when calling copyFolder."
+      );
+    }
+
+    const queryParameters: any = {};
+
+    const headerParameters: runtime.HTTPHeaders = {};
+
+    headerParameters["Content-Type"] = "application/json";
+
+    if (this.configuration && this.configuration.apiKey) {
+      headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // authorization-header authentication
+    }
+
+    const operationBasePathOverride = [][0];
+
+    const response = await this.request(
+      {
+        path: `/v2/accounts/{accountId}/folders/copy`.replace(
+          `{${"accountId"}}`,
+          // @ts-ignore
+          "accountId" === "filePath"
+            ? String(requestParameters.accountId)
+            : encodeURIComponent(String(requestParameters.accountId))
+        ),
+        method: "POST",
+        headers: headerParameters,
+        query: queryParameters,
+        body: requestParameters.copyFolderRequest
+      },
+      initOverrides,
+      operationBasePathOverride
+    );
+
+    return new runtime.JSONApiResponse(response);
+  }
+
+  /**
+   * Copies a folder asynchronously.  You can use the ListFolder operation to preview which files will be copied. To do this:  - Set `dryRun=true` on the ListFolder operation.  - Use the same values for ```folderPath```, ```recursive```, and ```include*``` for the ListFolder operation as used here.  - Note that the ListFolder operation does not support the `condition` parameter.
+   */
+  async copyFolder(
+    requestParameters: CopyFolderOperationParams,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<AsyncResponse> {
+    const response = await this.copyFolderWithHttpInfo(requestParameters, initOverrides);
+    return await response.value();
+  }
+
+  /**
+   * Deletes a folder asynchronously.
    */
   private async deleteFolderWithHttpInfo(
     requestParameters: DeleteFolderOperationParams,
@@ -122,7 +195,7 @@ export class FolderApi extends runtime.BaseAPI {
   }
 
   /**
-   * Asynchronously deletes a folder.
+   * Deletes a folder asynchronously.
    */
   async deleteFolder(
     requestParameters: DeleteFolderOperationParams,
@@ -133,7 +206,7 @@ export class FolderApi extends runtime.BaseAPI {
   }
 
   /**
-   * Asynchronously deletes multiple folders.
+   * Deletes multiple folders asynchronously.
    */
   private async deleteFolderBatchWithHttpInfo(
     requestParameters: DeleteFolderBatchOperationParams,
@@ -190,7 +263,7 @@ export class FolderApi extends runtime.BaseAPI {
   }
 
   /**
-   * Asynchronously deletes multiple folders.
+   * Deletes multiple folders asynchronously.
    */
   async deleteFolderBatch(
     requestParameters: DeleteFolderBatchOperationParams,
@@ -267,7 +340,7 @@ export class FolderApi extends runtime.BaseAPI {
   }
 
   /**
-   * Lists the folder\'s contents.  Pagination is complete when the response `cursor` is `null` or matches the request `cursor`.
+   * Lists the folder\'s contents.  The result may be paginated: subsequent pages can be requested by passing the ```cursor``` from the response into the ```cursor``` request parameter.  Pagination is complete when the response includes `isPaginationComplete=true`.
    */
   private async listFolderWithHttpInfo(
     requestParameters: ListFolderParams,
@@ -293,16 +366,20 @@ export class FolderApi extends runtime.BaseAPI {
       queryParameters["cursor"] = requestParameters.cursor;
     }
 
+    if (requestParameters.dryRun !== undefined) {
+      queryParameters["dryRun"] = requestParameters.dryRun;
+    }
+
     if (requestParameters.folderPath !== undefined) {
       queryParameters["folderPath"] = requestParameters.folderPath;
     }
 
-    if (requestParameters.includeExternalItems !== undefined) {
-      queryParameters["includeExternalItems"] = requestParameters.includeExternalItems;
-    }
-
     if (requestParameters.includeFiles !== undefined) {
       queryParameters["includeFiles"] = requestParameters.includeFiles;
+    }
+
+    if (requestParameters.includeOverriddenStorage !== undefined) {
+      queryParameters["includeOverriddenStorage"] = requestParameters.includeOverriddenStorage;
     }
 
     if (requestParameters.includePhysicalFolders !== undefined) {
@@ -350,7 +427,7 @@ export class FolderApi extends runtime.BaseAPI {
   }
 
   /**
-   * Lists the folder\'s contents.  Pagination is complete when the response `cursor` is `null` or matches the request `cursor`.
+   * Lists the folder\'s contents.  The result may be paginated: subsequent pages can be requested by passing the ```cursor``` from the response into the ```cursor``` request parameter.  Pagination is complete when the response includes `isPaginationComplete=true`.
    */
   async listFolder(
     requestParameters: ListFolderParams,

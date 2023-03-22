@@ -17,12 +17,12 @@ export const AccountJobStatus = {
 export type AccountJobStatus = typeof AccountJobStatus[keyof typeof AccountJobStatus];
 
 /**
- * The type of the job.
+ * Job type.
  * @export
  */
 export const AccountJobType = {
-  BatchFolderDeletionJob: "BatchFolderDeletionJob",
-  BatchFileDeletionJob: "BatchFileDeletionJob",
+  DeleteFolderBatchJob: "DeleteFolderBatchJob",
+  DeleteFileBatchJob: "DeleteFileBatchJob",
   CopyFolderJob: "CopyFolderJob"
 } as const;
 export type AccountJobType = typeof AccountJobType[keyof typeof AccountJobType];
@@ -34,12 +34,42 @@ export type AccountJobType = typeof AccountJobType[keyof typeof AccountJobType];
  */
 export interface AsyncResponse {
   /**
+   * Link to the documentation that describes how to get a job's status from its job ID.
+   * @type {string}
+   * @memberof AsyncResponse
+   */
+  jobDocs: AsyncResponseJobDocsEnum;
+  /**
    * Job ID.
    * @type {string}
    * @memberof AsyncResponse
    */
   jobId: string;
+  /**
+   *
+   * @type {AccountJobType}
+   * @memberof AsyncResponse
+   */
+  jobType: AccountJobType;
+  /**
+   * URL for the job's status.
+   *
+   * You can `GET` this URL to retrieve the job's status.
+   *
+   * You must authorize your `GET` request with a ```secret_*``` API key when accessing the URL.
+   * @type {string}
+   * @memberof AsyncResponse
+   */
+  jobUrl: string;
 }
+
+/**
+ * @export
+ */
+export const AsyncResponseJobDocsEnum = {
+  HttpsUploadIoDocsUploadApiJobsGetJob: "https://upload.io/docs/upload-api/jobs/GetJob"
+} as const;
+export type AsyncResponseJobDocsEnum = typeof AsyncResponseJobDocsEnum[keyof typeof AsyncResponseJobDocsEnum];
 
 /**
  * AWS Region.
@@ -180,6 +210,129 @@ export interface CompleteUploadPartRequest {
    * @memberof CompleteUploadPartRequest
    */
   etag: string;
+}
+/**
+ * Request body for CopyFile.
+ * @export
+ * @interface CopyFileRequest
+ */
+export interface CopyFileRequest {
+  /**
+   *
+   * @type {TagCondition}
+   * @memberof CopyFileRequest
+   */
+  condition?: TagCondition;
+  /**
+   * Absolute path to a file. Must begin with a `/`.
+   * @type {string}
+   * @memberof CopyFileRequest
+   */
+  destination: string;
+  /**
+   * Absolute path to a file. Must begin with a `/`.
+   * @type {string}
+   * @memberof CopyFileRequest
+   */
+  source: string;
+}
+/**
+ * Response body for CopyFile.
+ * @export
+ * @interface CopyFileResponse
+ */
+export interface CopyFileResponse {
+  /**
+   *
+   * @type {FileCopyStatus}
+   * @memberof CopyFileResponse
+   */
+  status: FileCopyStatus;
+}
+/**
+ * Request body for CopyFolder.
+ *
+ * You can use the ListFolder operation to preview which files will be copied. To do this:
+ *
+ * - Set `dryRun=true` on the ListFolder operation.
+ *
+ * - Use the same values for ```folderPath```, ```recursive```, and ```include*``` for the ListFolder operation as used here.
+ *
+ * - Note that the ListFolder operation does not support the `condition` parameter.
+ * @export
+ * @interface CopyFolderRequest
+ */
+export interface CopyFolderRequest {
+  /**
+   * If `true` then files will be included.
+   *
+   * Default: true
+   * @type {boolean}
+   * @memberof CopyFolderRequest
+   */
+  includeFiles: boolean;
+  /**
+   * If `true` then traverses folders with overridden storage settings at this level and below, else skips files from these folders.
+   *
+   * If the current folder inherits its storage settings from an ancestor folder that has overridden storage settings, then files from the current folder will be included in this operation, regardless of this flag.
+   *
+   * If your account does not include folders with overridden storage settings (i.e. you are not using AWS S3 buckets) then this flag has no effect, regardless of its value.
+   *
+   * Default: true
+   * @type {boolean}
+   * @memberof CopyFolderRequest
+   */
+  includeOverriddenStorage: boolean;
+  /**
+   * If `true` then physical folders will be included.
+   *
+   * Physical folders are created automatically when files are uploaded under their path, and are automatically deleted when their files are deleted.
+   *
+   * Physical folders have never had the PutFolder operation called on them.
+   *
+   * This field will be interpreted as `false` if `recursive=true`.
+   *
+   * Default: true
+   * @type {boolean}
+   * @memberof CopyFolderRequest
+   */
+  includePhysicalFolders: boolean;
+  /**
+   * If `true` then virtual folders will be included.
+   *
+   * Virtual folders are folders that have been created with the PutFolder operation, and may remain empty.
+   *
+   * Default: true
+   * @type {boolean}
+   * @memberof CopyFolderRequest
+   */
+  includeVirtualFolders: boolean;
+  /**
+   * If `true` then iterates sub-folders recursively.
+   *
+   * Default: true
+   * @type {boolean}
+   * @memberof CopyFolderRequest
+   */
+  recursive: boolean;
+  /**
+   *
+   * @type {TagCondition}
+   * @memberof CopyFolderRequest
+   */
+  condition?: TagCondition;
+  /**
+   * Absolute path to a folder. Must begin with a `/`. Should not end with a `/`.
+   * @type {string}
+   * @memberof CopyFolderRequest
+   */
+  destination: string;
+  /**
+   * Absolute path to a folder. Must begin with a `/`. Should not end with a `/`.
+   * @type {string}
+   * @memberof CopyFolderRequest
+   */
+  source: string;
 }
 /**
  * Request body for DeleteFileBatch.
@@ -341,6 +494,18 @@ export interface ErrorResponseError {
    */
   code: string;
 }
+
+/**
+ * The result of the file copy operation.
+ * @export
+ */
+export const FileCopyStatus = {
+  Copied: "Copied",
+  FileNotFound: "FileNotFound",
+  SkippedDueToCondition: "SkippedDueToCondition"
+} as const;
+export type FileCopyStatus = typeof FileCopyStatus[keyof typeof FileCopyStatus];
+
 /**
  * Contains full information about a file, including its file metadata, file tags, original file name, and MIME type.
  * @export
@@ -554,6 +719,12 @@ export interface FolderDetails {
   type: FolderDetailsTypeEnum;
   /**
    *
+   * @type {boolean}
+   * @memberof FolderDetails
+   */
+  virtual: boolean;
+  /**
+   *
    * @type {FolderSettingsInherited}
    * @memberof FolderDetails
    */
@@ -751,6 +922,12 @@ export interface FolderSummary {
    * @memberof FolderSummary
    */
   type: FolderSummaryTypeEnum;
+  /**
+   *
+   * @type {boolean}
+   * @memberof FolderSummary
+   */
+  virtual: boolean;
 }
 
 /**
@@ -826,7 +1003,7 @@ export interface JobSummary {
    */
   accountId: string;
   /**
-   * The number of times the job has been executed. Once the job has been successfully executed, no further attempts will be made.
+   * The total number of completed attempts at running the job, both failed and successful.
    * @type {number}
    * @memberof JobSummary
    */
@@ -906,19 +1083,23 @@ export interface JobSummaryError {
  */
 export interface ListFolderResponse {
   /**
-   * Cursor that must be provided to the next request (to continue reading the next page of results).
-   *
-   * If `null` is returned or the response cursor equals the request cursor, then paging has completed.
+   * Absolute path to a file or folder. Must begin with a `/`.
    * @type {string}
    * @memberof ListFolderResponse
    */
-  cursor: string | null;
+  cursor: string;
   /**
    *
    * @type {FolderSummary}
    * @memberof ListFolderResponse
    */
   folder: FolderSummary;
+  /**
+   * If `true` then paging has completed.
+   * @type {boolean}
+   * @memberof ListFolderResponse
+   */
+  isPaginationComplete: boolean;
   /**
    * Summary information about each of the folder's descendants (files and folders).
    * @type {Array<ObjectSummary>}
@@ -984,6 +1165,12 @@ export interface ObjectSummary {
    * @memberof ObjectSummary
    */
   type: ObjectSummaryTypeEnum;
+  /**
+   *
+   * @type {boolean}
+   * @memberof ObjectSummary
+   */
+  virtual: boolean;
   /**
    * Absolute path to a file. Must begin with a `/`.
    * @type {string}
@@ -1680,6 +1867,244 @@ export const StorageLayerUpdateTypeEnum = {
 export type StorageLayerUpdateTypeEnum = typeof StorageLayerUpdateTypeEnum[keyof typeof StorageLayerUpdateTypeEnum];
 
 /**
+ * Expresses a condition that matches files by their tags.
+ * @export
+ * @interface TagCondition
+ */
+export interface TagCondition {
+  /**
+   *
+   * @type {TagCondition}
+   * @memberof TagCondition
+   */
+  left: TagCondition;
+  /**
+   *
+   * @type {TagCondition}
+   * @memberof TagCondition
+   */
+  right: TagCondition;
+  /**
+   *
+   * @type {string}
+   * @memberof TagCondition
+   */
+  type: TagConditionTypeEnum;
+  /**
+   * File tag scope, e.g. for a transformation definition, a CDN download access token, or an API key's tag whitelist.
+   * @type {string}
+   * @memberof TagCondition
+   */
+  equals: string;
+  /**
+   *
+   * @type {TagCondition}
+   * @memberof TagCondition
+   */
+  condition: TagCondition;
+  /**
+   *
+   * @type {Array<string>}
+   * @memberof TagCondition
+   */
+  any: Array<string>;
+  /**
+   *
+   * @type {Array<string>}
+   * @memberof TagCondition
+   */
+  all: Array<string>;
+}
+
+/**
+ * @export
+ */
+export const TagConditionTypeEnum = {
+  All: "All"
+} as const;
+export type TagConditionTypeEnum = typeof TagConditionTypeEnum[keyof typeof TagConditionTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface TagConditionAll
+ */
+export interface TagConditionAll {
+  /**
+   *
+   * @type {Array<string>}
+   * @memberof TagConditionAll
+   */
+  all: Array<string>;
+  /**
+   *
+   * @type {string}
+   * @memberof TagConditionAll
+   */
+  type: TagConditionAllTypeEnum;
+}
+
+/**
+ * @export
+ */
+export const TagConditionAllTypeEnum = {
+  All: "All"
+} as const;
+export type TagConditionAllTypeEnum = typeof TagConditionAllTypeEnum[keyof typeof TagConditionAllTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface TagConditionAnd
+ */
+export interface TagConditionAnd {
+  /**
+   *
+   * @type {TagCondition}
+   * @memberof TagConditionAnd
+   */
+  left: TagCondition;
+  /**
+   *
+   * @type {TagCondition}
+   * @memberof TagConditionAnd
+   */
+  right: TagCondition;
+  /**
+   *
+   * @type {string}
+   * @memberof TagConditionAnd
+   */
+  type: TagConditionAndTypeEnum;
+}
+
+/**
+ * @export
+ */
+export const TagConditionAndTypeEnum = {
+  And: "And"
+} as const;
+export type TagConditionAndTypeEnum = typeof TagConditionAndTypeEnum[keyof typeof TagConditionAndTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface TagConditionAny
+ */
+export interface TagConditionAny {
+  /**
+   *
+   * @type {Array<string>}
+   * @memberof TagConditionAny
+   */
+  any: Array<string>;
+  /**
+   *
+   * @type {string}
+   * @memberof TagConditionAny
+   */
+  type: TagConditionAnyTypeEnum;
+}
+
+/**
+ * @export
+ */
+export const TagConditionAnyTypeEnum = {
+  Any: "Any"
+} as const;
+export type TagConditionAnyTypeEnum = typeof TagConditionAnyTypeEnum[keyof typeof TagConditionAnyTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface TagConditionEquals
+ */
+export interface TagConditionEquals {
+  /**
+   * File tag scope, e.g. for a transformation definition, a CDN download access token, or an API key's tag whitelist.
+   * @type {string}
+   * @memberof TagConditionEquals
+   */
+  equals: string;
+  /**
+   *
+   * @type {string}
+   * @memberof TagConditionEquals
+   */
+  type: TagConditionEqualsTypeEnum;
+}
+
+/**
+ * @export
+ */
+export const TagConditionEqualsTypeEnum = {
+  Equals: "Equals"
+} as const;
+export type TagConditionEqualsTypeEnum = typeof TagConditionEqualsTypeEnum[keyof typeof TagConditionEqualsTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface TagConditionNot
+ */
+export interface TagConditionNot {
+  /**
+   *
+   * @type {TagCondition}
+   * @memberof TagConditionNot
+   */
+  condition: TagCondition;
+  /**
+   *
+   * @type {string}
+   * @memberof TagConditionNot
+   */
+  type: TagConditionNotTypeEnum;
+}
+
+/**
+ * @export
+ */
+export const TagConditionNotTypeEnum = {
+  Not: "Not"
+} as const;
+export type TagConditionNotTypeEnum = typeof TagConditionNotTypeEnum[keyof typeof TagConditionNotTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface TagConditionOr
+ */
+export interface TagConditionOr {
+  /**
+   *
+   * @type {TagCondition}
+   * @memberof TagConditionOr
+   */
+  left: TagCondition;
+  /**
+   *
+   * @type {TagCondition}
+   * @memberof TagConditionOr
+   */
+  right: TagCondition;
+  /**
+   *
+   * @type {string}
+   * @memberof TagConditionOr
+   */
+  type: TagConditionOrTypeEnum;
+}
+
+/**
+ * @export
+ */
+export const TagConditionOrTypeEnum = {
+  Or: "Or"
+} as const;
+export type TagConditionOrTypeEnum = typeof TagConditionOrTypeEnum[keyof typeof TagConditionOrTypeEnum];
+
+/**
  * This data type specifies no update is to be performed.
  * @export
  * @interface UnspecifiedFieldValue
@@ -1816,7 +2241,7 @@ export interface UploadPart {
   /**
    * Index of an uploadable file part.
    *
-   * Can be used as the `uploadPartIndex` parameter in the GetUploadPart and CompleteUploadPart endpoints.
+   * Can be used as the `uploadPartIndex` parameter in the GetUploadPart and CompleteUploadPart operations.
    * @type {number}
    * @memberof UploadPart
    */

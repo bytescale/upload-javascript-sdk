@@ -18,12 +18,21 @@ import type {
   // @ts-ignore
   AsyncResponse,
   // @ts-ignore
+  CopyFileRequest,
+  // @ts-ignore
+  CopyFileResponse,
+  // @ts-ignore
   DeleteFileBatchRequest,
   // @ts-ignore
   ErrorResponse,
   // @ts-ignore
   FileDetails
 } from "../models";
+
+export interface CopyFileOperationParams {
+  accountId: string;
+  copyFileRequest: CopyFileRequest;
+}
 
 export interface DeleteFileParams {
   accountId: string;
@@ -65,7 +74,72 @@ export interface ProcessFileParams {
  */
 export class FileApi extends runtime.BaseAPI {
   /**
-   * Synchronously deletes a single file.
+   * Copies a single file synchronously.
+   */
+  private async copyFileWithHttpInfo(
+    requestParameters: CopyFileOperationParams,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<CopyFileResponse>> {
+    if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
+      throw new runtime.RequiredError(
+        "accountId",
+        "Required parameter requestParameters.accountId was null or undefined when calling copyFile."
+      );
+    }
+
+    if (requestParameters.copyFileRequest === null || requestParameters.copyFileRequest === undefined) {
+      throw new runtime.RequiredError(
+        "copyFileRequest",
+        "Required parameter requestParameters.copyFileRequest was null or undefined when calling copyFile."
+      );
+    }
+
+    const queryParameters: any = {};
+
+    const headerParameters: runtime.HTTPHeaders = {};
+
+    headerParameters["Content-Type"] = "application/json";
+
+    if (this.configuration && this.configuration.apiKey) {
+      headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // authorization-header authentication
+    }
+
+    const operationBasePathOverride = [][0];
+
+    const response = await this.request(
+      {
+        path: `/v2/accounts/{accountId}/files/copy`.replace(
+          `{${"accountId"}}`,
+          // @ts-ignore
+          "accountId" === "filePath"
+            ? String(requestParameters.accountId)
+            : encodeURIComponent(String(requestParameters.accountId))
+        ),
+        method: "POST",
+        headers: headerParameters,
+        query: queryParameters,
+        body: requestParameters.copyFileRequest
+      },
+      initOverrides,
+      operationBasePathOverride
+    );
+
+    return new runtime.JSONApiResponse(response);
+  }
+
+  /**
+   * Copies a single file synchronously.
+   */
+  async copyFile(
+    requestParameters: CopyFileOperationParams,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<CopyFileResponse> {
+    const response = await this.copyFileWithHttpInfo(requestParameters, initOverrides);
+    return await response.value();
+  }
+
+  /**
+   * Deletes a single file synchronously.
    */
   private async deleteFileWithHttpInfo(
     requestParameters: DeleteFileParams,
@@ -120,7 +194,7 @@ export class FileApi extends runtime.BaseAPI {
   }
 
   /**
-   * Synchronously deletes a single file.
+   * Deletes a single file synchronously.
    */
   async deleteFile(
     requestParameters: DeleteFileParams,
@@ -130,7 +204,7 @@ export class FileApi extends runtime.BaseAPI {
   }
 
   /**
-   * Asynchronously deletes multiple files.
+   * Deletes multiple files asynchronously.
    */
   private async deleteFileBatchWithHttpInfo(
     requestParameters: DeleteFileBatchOperationParams,
@@ -184,7 +258,7 @@ export class FileApi extends runtime.BaseAPI {
   }
 
   /**
-   * Asynchronously deletes multiple files.
+   * Deletes multiple files asynchronously.
    */
   async deleteFileBatch(
     requestParameters: DeleteFileBatchOperationParams,
