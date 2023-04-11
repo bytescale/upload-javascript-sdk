@@ -277,6 +277,8 @@ export interface CopyFolderRequest {
   destination: string;
   /**
    * If `true` then files will be included.
+   *
+   * Default: true
    * @type {boolean}
    * @memberof CopyFolderRequest
    */
@@ -287,6 +289,8 @@ export interface CopyFolderRequest {
    * If the current folder inherits its storage settings from an ancestor folder that has overridden storage settings, then files from the current folder will be included in this operation, regardless of this flag.
    *
    * You can ignore this setting if your account does not use folders with overridden storage settings (e.g. custom AWS S3 buckets).
+   *
+   * Default: true
    * @type {boolean}
    * @memberof CopyFolderRequest
    */
@@ -295,12 +299,16 @@ export interface CopyFolderRequest {
    * If `true` then virtual folders will be included.
    *
    * Virtual folders are folders that have been created with the PutFolder operation, and may be empty.
+   *
+   * Default: true
    * @type {boolean}
    * @memberof CopyFolderRequest
    */
   includeVirtualFolders?: boolean;
   /**
    * If `true` then iterates sub-folders recursively.
+   *
+   * Default: false
    * @type {boolean}
    * @memberof CopyFolderRequest
    */
