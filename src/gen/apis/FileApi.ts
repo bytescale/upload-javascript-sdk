@@ -74,7 +74,7 @@ export interface ProcessFileParams {
  */
 export class FileApi extends runtime.BaseAPI {
   /**
-   * Copies a single file synchronously.
+   * Copies a file synchronously.
    */
   private async copyFileWithHttpInfo(
     requestParameters: CopyFileOperationParams,
@@ -128,7 +128,7 @@ export class FileApi extends runtime.BaseAPI {
   }
 
   /**
-   * Copies a single file synchronously.
+   * Copies a file synchronously.
    */
   async copyFile(
     requestParameters: CopyFileOperationParams,
@@ -139,7 +139,7 @@ export class FileApi extends runtime.BaseAPI {
   }
 
   /**
-   * Deletes a single file synchronously.
+   * Deletes a file synchronously.
    */
   private async deleteFileWithHttpInfo(
     requestParameters: DeleteFileParams,
@@ -194,7 +194,7 @@ export class FileApi extends runtime.BaseAPI {
   }
 
   /**
-   * Deletes a single file synchronously.
+   * Deletes a file synchronously.
    */
   async deleteFile(
     requestParameters: DeleteFileParams,

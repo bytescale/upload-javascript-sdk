@@ -256,65 +256,13 @@ export interface CopyFileResponse {
  *
  * - Set `dryRun=true` on the ListFolder operation.
  *
- * - Use the same values for ```folderPath```, ```recursive```, and ```include*``` for the ListFolder operation as used here.
+ * - Use the same values for ```folderPath```, ```recursive```, and ```include*``` for the ListFolder operation.
  *
  * - Note that the ListFolder operation does not support the `condition` parameter.
  * @export
  * @interface CopyFolderRequest
  */
 export interface CopyFolderRequest {
-  /**
-   * If `true` then files will be included.
-   *
-   * Default: true
-   * @type {boolean}
-   * @memberof CopyFolderRequest
-   */
-  includeFiles: boolean;
-  /**
-   * If `true` then traverses folders with overridden storage settings at this level and below, else skips files from these folders.
-   *
-   * If the current folder inherits its storage settings from an ancestor folder that has overridden storage settings, then files from the current folder will be included in this operation, regardless of this flag.
-   *
-   * If your account does not include folders with overridden storage settings (i.e. you are not using AWS S3 buckets) then this flag has no effect, regardless of its value.
-   *
-   * Default: true
-   * @type {boolean}
-   * @memberof CopyFolderRequest
-   */
-  includeOverriddenStorage: boolean;
-  /**
-   * If `true` then physical folders will be included.
-   *
-   * Physical folders are created automatically when files are uploaded under their path, and are automatically deleted when their files are deleted.
-   *
-   * Physical folders have never had the PutFolder operation called on them.
-   *
-   * This field will be interpreted as `false` if `recursive=true`.
-   *
-   * Default: true
-   * @type {boolean}
-   * @memberof CopyFolderRequest
-   */
-  includePhysicalFolders: boolean;
-  /**
-   * If `true` then virtual folders will be included.
-   *
-   * Virtual folders are folders that have been created with the PutFolder operation, and may remain empty.
-   *
-   * Default: true
-   * @type {boolean}
-   * @memberof CopyFolderRequest
-   */
-  includeVirtualFolders: boolean;
-  /**
-   * If `true` then iterates sub-folders recursively.
-   *
-   * Default: true
-   * @type {boolean}
-   * @memberof CopyFolderRequest
-   */
-  recursive: boolean;
   /**
    *
    * @type {TagCondition}
@@ -327,6 +275,36 @@ export interface CopyFolderRequest {
    * @memberof CopyFolderRequest
    */
   destination: string;
+  /**
+   * If `true` then files will be included.
+   * @type {boolean}
+   * @memberof CopyFolderRequest
+   */
+  includeFiles?: boolean;
+  /**
+   * If `true` then traverses folders with overridden storage settings at this level and below, else skips files from these folders.
+   *
+   * If the current folder inherits its storage settings from an ancestor folder that has overridden storage settings, then files from the current folder will be included in this operation, regardless of this flag.
+   *
+   * You can ignore this setting if your account does not use folders with overridden storage settings (e.g. custom AWS S3 buckets).
+   * @type {boolean}
+   * @memberof CopyFolderRequest
+   */
+  includeOverriddenStorage?: boolean;
+  /**
+   * If `true` then virtual folders will be included.
+   *
+   * Virtual folders are folders that have been created with the PutFolder operation, and may be empty.
+   * @type {boolean}
+   * @memberof CopyFolderRequest
+   */
+  includeVirtualFolders?: boolean;
+  /**
+   * If `true` then iterates sub-folders recursively.
+   * @type {boolean}
+   * @memberof CopyFolderRequest
+   */
+  recursive?: boolean;
   /**
    * Absolute path to a folder. Must begin with a `/`. Should not end with a `/`.
    * @type {string}
@@ -410,29 +388,37 @@ export type DeleteFolderScope = typeof DeleteFolderScope[keyof typeof DeleteFold
 /**
  * An object containing a `fileName` and/or `folderPath`.
  *
- * Both fields are optional and support path variables.
+ * Both fields are optional: omitted fields will use the API key's default values, which are configured per API key via the Upload Dashboard.
  *
- * If a field is omitted, the API key's default value is used for that field. Default values are configured per API key via the Upload Dashboard.
+ * Supports path variables.
  * @export
  * @interface DynamicFilePath
  */
 export interface DynamicFilePath {
   /**
-   * File name. May be empty string `""`. Cannot contain `/`.
+   * The file name to upload the file with.
+   *
+   * Must not contain `/`.
+   *
+   * Supports path variables.
    * @type {string}
    * @memberof DynamicFilePath
    */
   fileName?: string;
   /**
-   * File name. May be empty string `""`. Cannot contain `/`.
+   * The file name to upload the file with.
+   *
+   * Must not contain `/`.
+   *
+   * Supports path variables.
    * @type {string}
    * @memberof DynamicFilePath
    */
   fileNameFallback?: string;
   /**
-   * If `true` then path variables like `{DATE_UTC}` in the `fileName` will be replaced. You can escape `{` characters with a `\`.
+   * If `true` then path variables like `{UTC_DATE}` in the `fileName` will be replaced. You can escape `{` characters with a `\`.
    *
-   * If `false` then path variables like `{DATE_UTC}` in the `fileName` will be taken literally.
+   * If `false` then path variables like `{UTC_DATE}` in the `fileName` will be taken literally.
    *
    * Default: true
    * @type {boolean}
@@ -440,15 +426,19 @@ export interface DynamicFilePath {
    */
   fileNameVariablesEnabled?: boolean;
   /**
-   * Absolute or relative path to a location in your Upload account's storage.
+   * The path to upload the file to (excluding the file's name).
+   *
+   * Must begin with `/` but should not end with `/`.
+   *
+   * Supports path variables.
    * @type {string}
    * @memberof DynamicFilePath
    */
   folderPath?: string;
   /**
-   * If `true` then path variables like `{DATE_UTC}` in the `folderPath` will be replaced. You can escape `{` characters with a `\`.
+   * If `true` then path variables like `{UTC_DATE}` in the `folderPath` will be replaced. You can escape `{` characters with a `\`.
    *
-   * If `false` then path variables like `{DATE_UTC}` in the `folderPath` will be taken literally.
+   * If `false` then path variables like `{UTC_DATE}` in the `folderPath` will be taken literally.
    *
    * Default: true
    * @type {boolean}
@@ -496,7 +486,7 @@ export interface ErrorResponseError {
 }
 
 /**
- * The result of the file copy operation.
+ * The result of the CopyFile operation.
  * @export
  */
 export const FileCopyStatus = {
@@ -603,21 +593,29 @@ export interface FileDownloadGrants {
  */
 export interface FilePathDefinition {
   /**
-   * File name. May be empty string `""`. Cannot contain `/`.
+   * The file name to upload the file with.
+   *
+   * Must not contain `/`.
+   *
+   * Supports path variables.
    * @type {string}
    * @memberof FilePathDefinition
    */
   fileName?: string;
   /**
-   * File name. May be empty string `""`. Cannot contain `/`.
+   * The file name to upload the file with.
+   *
+   * Must not contain `/`.
+   *
+   * Supports path variables.
    * @type {string}
    * @memberof FilePathDefinition
    */
   fileNameFallback?: string;
   /**
-   * If `true` then path variables like `{DATE_UTC}` in the `fileName` will be replaced. You can escape `{` characters with a `\`.
+   * If `true` then path variables like `{UTC_DATE}` in the `fileName` will be replaced. You can escape `{` characters with a `\`.
    *
-   * If `false` then path variables like `{DATE_UTC}` in the `fileName` will be taken literally.
+   * If `false` then path variables like `{UTC_DATE}` in the `fileName` will be taken literally.
    *
    * Default: true
    * @type {boolean}
@@ -625,15 +623,19 @@ export interface FilePathDefinition {
    */
   fileNameVariablesEnabled?: boolean;
   /**
-   * Absolute or relative path to a location in your Upload account's storage.
+   * The path to upload the file to (excluding the file's name).
+   *
+   * Must begin with `/` but should not end with `/`.
+   *
+   * Supports path variables.
    * @type {string}
    * @memberof FilePathDefinition
    */
   folderPath?: string;
   /**
-   * If `true` then path variables like `{DATE_UTC}` in the `folderPath` will be replaced. You can escape `{` characters with a `\`.
+   * If `true` then path variables like `{UTC_DATE}` in the `folderPath` will be replaced. You can escape `{` characters with a `\`.
    *
-   * If `false` then path variables like `{DATE_UTC}` in the `folderPath` will be taken literally.
+   * If `false` then path variables like `{UTC_DATE}` in the `folderPath` will be taken literally.
    *
    * Default: true
    * @type {boolean}
@@ -705,12 +707,6 @@ export interface FolderDetails {
    * @memberof FolderDetails
    */
   settings: FolderSettingsStorageLayerSummary;
-  /**
-   *
-   * @type {FolderStatus}
-   * @memberof FolderDetails
-   */
-  status: FolderStatus;
   /**
    *
    * @type {string}
@@ -883,16 +879,6 @@ export type FolderSettingsStorageLayerSummaryStorageLayerTypeEnum =
   typeof FolderSettingsStorageLayerSummaryStorageLayerTypeEnum[keyof typeof FolderSettingsStorageLayerSummaryStorageLayerTypeEnum];
 
 /**
- * The folder's status.
- * @export
- */
-export const FolderStatus = {
-  Ok: "Ok",
-  Deleting: "Deleting"
-} as const;
-export type FolderStatus = typeof FolderStatus[keyof typeof FolderStatus];
-
-/**
  * Summary information about a folder (a subset of the FolderDetails type).
  * @export
  * @interface FolderSummary
@@ -910,12 +896,6 @@ export interface FolderSummary {
    * @memberof FolderSummary
    */
   settings: FolderSettingsStorageLayerSummary;
-  /**
-   *
-   * @type {FolderStatus}
-   * @memberof FolderSummary
-   */
-  status: FolderStatus;
   /**
    *
    * @type {string}
@@ -1153,12 +1133,6 @@ export interface ObjectSummary {
    * @memberof ObjectSummary
    */
   settings: FolderSettingsStorageLayerSummary;
-  /**
-   *
-   * @type {FolderStatus}
-   * @memberof ObjectSummary
-   */
-  status: FolderStatus;
   /**
    *
    * @type {string}

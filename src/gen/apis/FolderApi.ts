@@ -76,7 +76,7 @@ export interface PutFolderOperationParams {
  */
 export class FolderApi extends runtime.BaseAPI {
   /**
-   * Copies a folder asynchronously.  You can use the ListFolder operation to preview which files will be copied. To do this:  - Set `dryRun=true` on the ListFolder operation.  - Use the same values for ```folderPath```, ```recursive```, and ```include*``` for the ListFolder operation as used here.  - Note that the ListFolder operation does not support the `condition` parameter.
+   * Copies a folder asynchronously.  You can use the ListFolder operation to preview which files will be copied. To do this:  - Set `dryRun=true` on the ListFolder operation.  - Use the same values for ```folderPath```, ```recursive```, and ```include*``` for the ListFolder operation.  - Note that the ListFolder operation does not support the `condition` parameter.
    */
   private async copyFolderWithHttpInfo(
     requestParameters: CopyFolderOperationParams,
@@ -130,7 +130,7 @@ export class FolderApi extends runtime.BaseAPI {
   }
 
   /**
-   * Copies a folder asynchronously.  You can use the ListFolder operation to preview which files will be copied. To do this:  - Set `dryRun=true` on the ListFolder operation.  - Use the same values for ```folderPath```, ```recursive```, and ```include*``` for the ListFolder operation as used here.  - Note that the ListFolder operation does not support the `condition` parameter.
+   * Copies a folder asynchronously.  You can use the ListFolder operation to preview which files will be copied. To do this:  - Set `dryRun=true` on the ListFolder operation.  - Use the same values for ```folderPath```, ```recursive```, and ```include*``` for the ListFolder operation.  - Note that the ListFolder operation does not support the `condition` parameter.
    */
   async copyFolder(
     requestParameters: CopyFolderOperationParams,
