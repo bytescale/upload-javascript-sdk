@@ -252,13 +252,7 @@ export interface CopyFileResponse {
 /**
  * Request body for CopyFolder.
  *
- * You can use the ListFolder operation to preview which files will be copied. To do this:
- *
- * - Set `dryRun=true` on the ListFolder operation.
- *
- * - Use the same values for ```folderPath```, ```recursive```, and ```include*``` for the ListFolder operation.
- *
- * - Note that the ListFolder operation does not support the `condition` parameter.
+ * You can use ListFolder to preview the operation: set `dryRun=true` with ```recursive```, ```includeFiles```, ```includeOverriddenStorage``` and ```includeVirtualFolders``` set to match the values you're using here. Leave all other flags unset.
  * @export
  * @interface CopyFolderRequest
  */
@@ -270,19 +264,13 @@ export interface CopyFolderRequest {
    */
   condition?: TagCondition;
   /**
-   * Absolute path to a folder. Must begin with a `/`. Should not end with a `/`.
-   * @type {string}
-   * @memberof CopyFolderRequest
-   */
-  destination: string;
-  /**
    * If `true` then files will be included.
    *
    * Default: true
    * @type {boolean}
    * @memberof CopyFolderRequest
    */
-  includeFiles?: boolean;
+  copyFiles?: boolean;
   /**
    * If `true` then traverses folders with overridden storage settings at this level and below, else skips files from these folders.
    *
@@ -294,7 +282,7 @@ export interface CopyFolderRequest {
    * @type {boolean}
    * @memberof CopyFolderRequest
    */
-  includeOverriddenStorage?: boolean;
+  copyOverriddenStorage?: boolean;
   /**
    * If `true` then virtual folders will be included.
    *
@@ -304,7 +292,13 @@ export interface CopyFolderRequest {
    * @type {boolean}
    * @memberof CopyFolderRequest
    */
-  includeVirtualFolders?: boolean;
+  copyVirtualFolders?: boolean;
+  /**
+   * Absolute path to a folder. Must begin with a `/`. Should not end with a `/`.
+   * @type {string}
+   * @memberof CopyFolderRequest
+   */
+  destination: string;
   /**
    * If `true` then iterates sub-folders recursively.
    *
@@ -348,10 +342,38 @@ export interface DeleteFolderBatchRequest {
 }
 /**
  * Request body for DeleteFolder.
+ *
+ * Please note:
+ *
+ * - If the folder has overridden storage settings, then no files will be deleted.
+ *
+ * - If the folder has inherited storage settings, then its files will be deleted if `deleteFiles` is `true`.
+ *
+ * - If the folder contains sub-folders that have overridden storage settings, then their files will not be deleted, regardless of `deleteFiles`.
+ *
+ * You can use ListFolder to preview the operation: set `dryRun=true` with ```recursive```, ```includeFiles``` and ```includeVirtualFolders``` set to match the values you're using here. Leave all other flags unset.
  * @export
  * @interface DeleteFolderRequest
  */
 export interface DeleteFolderRequest {
+  /**
+   * If `true` then files will be included.
+   *
+   * Default: true
+   * @type {boolean}
+   * @memberof DeleteFolderRequest
+   */
+  deleteFiles?: boolean;
+  /**
+   * If `true` then virtual folders will be included.
+   *
+   * Virtual folders are folders that have been created with the PutFolder operation, and may be empty.
+   *
+   * Default: true
+   * @type {boolean}
+   * @memberof DeleteFolderRequest
+   */
+  deleteVirtualFolders?: boolean;
   /**
    * Absolute path to a folder. Must begin with a `/`. Should not end with a `/`.
    * @type {string}
@@ -359,40 +381,14 @@ export interface DeleteFolderRequest {
    */
   folderPath: string;
   /**
-   * If true, does not delete folder settings at the 'folderPath' or its descendants.
+   * If `true` then iterates sub-folders recursively.
    *
    * Default: false
    * @type {boolean}
    * @memberof DeleteFolderRequest
    */
-  retainFolderSettings?: boolean;
-  /**
-   *
-   * @type {DeleteFolderScope}
-   * @memberof DeleteFolderRequest
-   */
-  scope?: DeleteFolderScope;
+  recursive?: boolean;
 }
-
-/**
- * Specifies which files and folders relative to the `folderPath` to delete.
- *
- * - `"All"`: deletes the files and folders that match or descend the path specified by 'folderPath'.
- *
- * - `"Descendants"`: deletes the files and folders contained within 'folderPath' and below, but not the folder itself.
- *
- * - `"ThisFolder"`: deletes the folder specified by 'folderPath' if it contains no files and no sub-folders. Fails otherwise.
- *
- * Default: `"ThisFolder"`
- * @export
- */
-export const DeleteFolderScope = {
-  ThisFolder: "ThisFolder",
-  Descendants: "Descendants",
-  All: "All"
-} as const;
-export type DeleteFolderScope = typeof DeleteFolderScope[keyof typeof DeleteFolderScope];
-
 /**
  * An object containing a `fileName` and/or `folderPath`.
  *

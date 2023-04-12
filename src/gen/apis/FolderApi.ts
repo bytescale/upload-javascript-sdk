@@ -76,7 +76,7 @@ export interface PutFolderOperationParams {
  */
 export class FolderApi extends runtime.BaseAPI {
   /**
-   * Copies a folder asynchronously.  You can use the ListFolder operation to preview which files will be copied. To do this:  - Set `dryRun=true` on the ListFolder operation.  - Use the same values for ```folderPath```, ```recursive```, and ```include*``` for the ListFolder operation.  - Note that the ListFolder operation does not support the `condition` parameter.
+   * Copies a folder asynchronously.  You can use ListFolder to preview the operation: set `dryRun=true` with ```recursive```, ```includeFiles```, ```includeOverriddenStorage``` and ```includeVirtualFolders``` set to match the values you\'re using here. Leave all other flags unset.
    */
   private async copyFolderWithHttpInfo(
     requestParameters: CopyFolderOperationParams,
@@ -130,7 +130,7 @@ export class FolderApi extends runtime.BaseAPI {
   }
 
   /**
-   * Copies a folder asynchronously.  You can use the ListFolder operation to preview which files will be copied. To do this:  - Set `dryRun=true` on the ListFolder operation.  - Use the same values for ```folderPath```, ```recursive```, and ```include*``` for the ListFolder operation.  - Note that the ListFolder operation does not support the `condition` parameter.
+   * Copies a folder asynchronously.  You can use ListFolder to preview the operation: set `dryRun=true` with ```recursive```, ```includeFiles```, ```includeOverriddenStorage``` and ```includeVirtualFolders``` set to match the values you\'re using here. Leave all other flags unset.
    */
   async copyFolder(
     requestParameters: CopyFolderOperationParams,
@@ -141,7 +141,7 @@ export class FolderApi extends runtime.BaseAPI {
   }
 
   /**
-   * Deletes a folder asynchronously.
+   * Deletes a folder asynchronously.  Please note:  - If the folder has overridden storage settings, then no files will be deleted.  - If the folder has inherited storage settings, then its files will be deleted if `deleteFiles` is `true`.  - If the folder contains sub-folders that have overridden storage settings, then their files will not be deleted, regardless of `deleteFiles`.  You can use ListFolder to preview the operation: set `dryRun=true` with ```recursive```, ```includeFiles``` and ```includeVirtualFolders``` set to match the values you\'re using here. Leave all other flags unset.
    */
   private async deleteFolderWithHttpInfo(
     requestParameters: DeleteFolderOperationParams,
@@ -195,7 +195,7 @@ export class FolderApi extends runtime.BaseAPI {
   }
 
   /**
-   * Deletes a folder asynchronously.
+   * Deletes a folder asynchronously.  Please note:  - If the folder has overridden storage settings, then no files will be deleted.  - If the folder has inherited storage settings, then its files will be deleted if `deleteFiles` is `true`.  - If the folder contains sub-folders that have overridden storage settings, then their files will not be deleted, regardless of `deleteFiles`.  You can use ListFolder to preview the operation: set `dryRun=true` with ```recursive```, ```includeFiles``` and ```includeVirtualFolders``` set to match the values you\'re using here. Leave all other flags unset.
    */
   async deleteFolder(
     requestParameters: DeleteFolderOperationParams,
@@ -206,7 +206,7 @@ export class FolderApi extends runtime.BaseAPI {
   }
 
   /**
-   * Deletes multiple folders asynchronously.
+   * Deletes multiple folders asynchronously.  Please note:  - If the folder has overridden storage settings, then no files will be deleted.  - If the folder has inherited storage settings, then its files will be deleted if `deleteFiles` is `true`.  - If the folder contains sub-folders that have overridden storage settings, then their files will not be deleted, regardless of `deleteFiles`.  You can use ListFolder to preview the operation: set `dryRun=true` with ```recursive```, ```includeFiles``` and ```includeVirtualFolders``` set to match the values you\'re using here. Leave all other flags unset.
    */
   private async deleteFolderBatchWithHttpInfo(
     requestParameters: DeleteFolderBatchOperationParams,
@@ -263,7 +263,7 @@ export class FolderApi extends runtime.BaseAPI {
   }
 
   /**
-   * Deletes multiple folders asynchronously.
+   * Deletes multiple folders asynchronously.  Please note:  - If the folder has overridden storage settings, then no files will be deleted.  - If the folder has inherited storage settings, then its files will be deleted if `deleteFiles` is `true`.  - If the folder contains sub-folders that have overridden storage settings, then their files will not be deleted, regardless of `deleteFiles`.  You can use ListFolder to preview the operation: set `dryRun=true` with ```recursive```, ```includeFiles``` and ```includeVirtualFolders``` set to match the values you\'re using here. Leave all other flags unset.
    */
   async deleteFolderBatch(
     requestParameters: DeleteFolderBatchOperationParams,
