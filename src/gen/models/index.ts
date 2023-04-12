@@ -264,7 +264,7 @@ export interface CopyFolderRequest {
    */
   condition?: TagCondition;
   /**
-   * If `true` then files will be included.
+   * If `true` then copies files.
    *
    * Default: true
    * @type {boolean}
@@ -272,21 +272,25 @@ export interface CopyFolderRequest {
    */
   copyFiles?: boolean;
   /**
-   * If `true` then traverses folders with overridden storage settings at this level and below, else skips files from these folders.
+   * If `true` then copies files from folders that have overridden storage settings, else skips them.
    *
-   * If the current folder inherits its storage settings from an ancestor folder that has overridden storage settings, then files from the current folder will be included in this operation, regardless of this flag.
+   * If the current folder inherits its storage settings, then the current folder's files will be copied, assuming `copyFiles=true`.
    *
-   * You can ignore this setting if your account does not use folders with overridden storage settings (e.g. custom AWS S3 buckets).
+   * You can ignore this setting if your account does not use folders with overridden storage settings, such as custom AWS S3 buckets.
    *
-   * Default: true
+   * Conditional: `copyVirtualFolders` and `copyOverriddenStorage` cannot both be `true`.
+   *
+   * Default: false
    * @type {boolean}
    * @memberof CopyFolderRequest
    */
   copyOverriddenStorage?: boolean;
   /**
-   * If `true` then virtual folders will be included.
+   * If `true` then copies virtual folder settings at the current path and below, else only files will be copied.
    *
-   * Virtual folders are folders that have been created with the PutFolder operation, and may be empty.
+   * Virtual folders are folders that have been created using the PutFolder operation.
+   *
+   * Conditional: `copyVirtualFolders` and `copyOverriddenStorage` cannot both be `true`.
    *
    * Default: true
    * @type {boolean}
@@ -300,9 +304,11 @@ export interface CopyFolderRequest {
    */
   destination: string;
   /**
-   * If `true` then iterates sub-folders recursively.
+   * If `true` then copies files and virtual folders that are descendants of the `source` folder.
    *
-   * Default: false
+   * If `false` then only copies files that are direct children of the `source` folder, and does not copy descendant virtual folders (children or otherwise).
+   *
+   * Default: true
    * @type {boolean}
    * @memberof CopyFolderRequest
    */
@@ -357,7 +363,7 @@ export interface DeleteFolderBatchRequest {
  */
 export interface DeleteFolderRequest {
   /**
-   * If `true` then files will be included.
+   * If `true` then deletes files.
    *
    * Default: true
    * @type {boolean}
@@ -365,9 +371,9 @@ export interface DeleteFolderRequest {
    */
   deleteFiles?: boolean;
   /**
-   * If `true` then virtual folders will be included.
+   * If `true` then deletes all virtual folder settings at the current path and below.
    *
-   * Virtual folders are folders that have been created with the PutFolder operation, and may be empty.
+   * Virtual folders are folders that have been created using the PutFolder operation.
    *
    * Default: true
    * @type {boolean}
@@ -381,9 +387,11 @@ export interface DeleteFolderRequest {
    */
   folderPath: string;
   /**
-   * If `true` then iterates sub-folders recursively.
+   * If `true` then deletes files and virtual folders that are descendants of `folderPath`.
    *
-   * Default: false
+   * If `false` then only deletes files that are direct children of `folderPath`, and does not delete descendant virtual folders (children or otherwise).
+   *
+   * Default: true
    * @type {boolean}
    * @memberof DeleteFolderRequest
    */
