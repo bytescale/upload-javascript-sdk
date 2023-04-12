@@ -23,7 +23,7 @@ export type AccountJobStatus = typeof AccountJobStatus[keyof typeof AccountJobSt
 export const AccountJobType = {
   DeleteFolderBatchJob: "DeleteFolderBatchJob",
   DeleteFileBatchJob: "DeleteFileBatchJob",
-  CopyFolderJob: "CopyFolderJob"
+  CopyFolderBatchJob: "CopyFolderBatchJob"
 } as const;
 export type AccountJobType = typeof AccountJobType[keyof typeof AccountJobType];
 
@@ -250,6 +250,19 @@ export interface CopyFileResponse {
   status: FileCopyStatus;
 }
 /**
+ * Request body for CopyFolderBatch.
+ * @export
+ * @interface CopyFolderBatchRequest
+ */
+export interface CopyFolderBatchRequest {
+  /**
+   * Folders to copy.
+   * @type {Array<CopyFolderRequest>}
+   * @memberof CopyFolderBatchRequest
+   */
+  folders: Array<CopyFolderRequest>;
+}
+/**
  * Request body for CopyFolder.
  *
  * You can use ListFolder to preview the operation: set `dryRun=true` with ```recursive```, ```includeFiles```, ```includeOverriddenStorage``` and ```includeVirtualFolders``` set to match the values you're using here. Leave all other flags unset.
@@ -349,13 +362,7 @@ export interface DeleteFolderBatchRequest {
 /**
  * Request body for DeleteFolder.
  *
- * Please note:
- *
- * - If the folder has overridden storage settings, then no files will be deleted.
- *
- * - If the folder has inherited storage settings, then its files will be deleted if `deleteFiles` is `true`.
- *
- * - If the folder contains sub-folders that have overridden storage settings, then their files will not be deleted, regardless of `deleteFiles`.
+ * If the folder has overridden storage settings, then no files will be deleted.
  *
  * You can use ListFolder to preview the operation: set `dryRun=true` with ```recursive```, ```includeFiles``` and ```includeVirtualFolders``` set to match the values you're using here. Leave all other flags unset.
  * @export
