@@ -18,6 +18,8 @@ import type {
   // @ts-ignore
   AsyncResponse,
   // @ts-ignore
+  CopyFileBatchRequest,
+  // @ts-ignore
   CopyFileRequest,
   // @ts-ignore
   CopyFileResponse,
@@ -32,6 +34,11 @@ import type {
 export interface CopyFileOperationParams {
   accountId: string;
   copyFileRequest: CopyFileRequest;
+}
+
+export interface CopyFileBatchOperationParams {
+  accountId: string;
+  copyFileBatchRequest: CopyFileBatchRequest;
 }
 
 export interface DeleteFileParams {
@@ -135,6 +142,71 @@ export class FileApi extends runtime.BaseAPI {
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<CopyFileResponse> {
     const response = await this.copyFileWithHttpInfo(requestParameters, initOverrides);
+    return await response.value();
+  }
+
+  /**
+   * Copies multiple files asynchronously.
+   */
+  private async copyFileBatchWithHttpInfo(
+    requestParameters: CopyFileBatchOperationParams,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<AsyncResponse>> {
+    if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
+      throw new runtime.RequiredError(
+        "accountId",
+        "Required parameter requestParameters.accountId was null or undefined when calling copyFileBatch."
+      );
+    }
+
+    if (requestParameters.copyFileBatchRequest === null || requestParameters.copyFileBatchRequest === undefined) {
+      throw new runtime.RequiredError(
+        "copyFileBatchRequest",
+        "Required parameter requestParameters.copyFileBatchRequest was null or undefined when calling copyFileBatch."
+      );
+    }
+
+    const queryParameters: any = {};
+
+    const headerParameters: runtime.HTTPHeaders = {};
+
+    headerParameters["Content-Type"] = "application/json";
+
+    if (this.configuration && this.configuration.apiKey) {
+      headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // authorization-header authentication
+    }
+
+    const operationBasePathOverride = [][0];
+
+    const response = await this.request(
+      {
+        path: `/v2/accounts/{accountId}/files/copy/batch`.replace(
+          `{${"accountId"}}`,
+          // @ts-ignore
+          "accountId" === "filePath"
+            ? String(requestParameters.accountId)
+            : encodeURIComponent(String(requestParameters.accountId))
+        ),
+        method: "POST",
+        headers: headerParameters,
+        query: queryParameters,
+        body: requestParameters.copyFileBatchRequest
+      },
+      initOverrides,
+      operationBasePathOverride
+    );
+
+    return new runtime.JSONApiResponse(response);
+  }
+
+  /**
+   * Copies multiple files asynchronously.
+   */
+  async copyFileBatch(
+    requestParameters: CopyFileBatchOperationParams,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<AsyncResponse> {
+    const response = await this.copyFileBatchWithHttpInfo(requestParameters, initOverrides);
     return await response.value();
   }
 

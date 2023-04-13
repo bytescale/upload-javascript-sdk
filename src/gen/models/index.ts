@@ -23,7 +23,8 @@ export type AccountJobStatus = typeof AccountJobStatus[keyof typeof AccountJobSt
 export const AccountJobType = {
   DeleteFolderBatchJob: "DeleteFolderBatchJob",
   DeleteFileBatchJob: "DeleteFileBatchJob",
-  CopyFolderBatchJob: "CopyFolderBatchJob"
+  CopyFolderBatchJob: "CopyFolderBatchJob",
+  CopyFileBatchJob: "CopyFileBatchJob"
 } as const;
 export type AccountJobType = typeof AccountJobType[keyof typeof AccountJobType];
 
@@ -210,6 +211,19 @@ export interface CompleteUploadPartRequest {
    * @memberof CompleteUploadPartRequest
    */
   etag: string;
+}
+/**
+ * Request body for CopyFileBatch.
+ * @export
+ * @interface CopyFileBatchRequest
+ */
+export interface CopyFileBatchRequest {
+  /**
+   * Files to copy.
+   * @type {Array<CopyFileRequest>}
+   * @memberof CopyFileBatchRequest
+   */
+  files: Array<CopyFileRequest>;
 }
 /**
  * Request body for CopyFile.
