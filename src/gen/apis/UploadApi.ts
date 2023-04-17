@@ -16,6 +16,8 @@
 import * as runtime from "../runtime";
 import type {
   // @ts-ignore
+  BasicUploadResponse,
+  // @ts-ignore
   BeginMultipartUploadRequest,
   // @ts-ignore
   BeginMultipartUploadResponse,
@@ -23,6 +25,8 @@ import type {
   CompleteUploadPartRequest,
   // @ts-ignore
   ErrorResponse,
+  // @ts-ignore
+  UploadFromUrlRequest,
   // @ts-ignore
   UploadPart,
   // @ts-ignore
@@ -50,6 +54,11 @@ export interface GetUploadPartParams {
 export interface ListUploadPartsParams {
   accountId: string;
   uploadId: string;
+}
+
+export interface UploadFromUrlOperationParams {
+  accountId: string;
+  uploadFromUrlRequest: UploadFromUrlRequest;
 }
 
 /**
@@ -371,6 +380,71 @@ export class UploadApi extends runtime.BaseAPI {
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<UploadPartList> {
     const response = await this.listUploadPartsWithHttpInfo(requestParameters, initOverrides);
+    return await response.value();
+  }
+
+  /**
+   * Upload a file from a URL, with a single HTTP request:
+   */
+  private async uploadFromUrlWithHttpInfo(
+    requestParameters: UploadFromUrlOperationParams,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<BasicUploadResponse>> {
+    if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
+      throw new runtime.RequiredError(
+        "accountId",
+        "Required parameter requestParameters.accountId was null or undefined when calling uploadFromUrl."
+      );
+    }
+
+    if (requestParameters.uploadFromUrlRequest === null || requestParameters.uploadFromUrlRequest === undefined) {
+      throw new runtime.RequiredError(
+        "uploadFromUrlRequest",
+        "Required parameter requestParameters.uploadFromUrlRequest was null or undefined when calling uploadFromUrl."
+      );
+    }
+
+    const queryParameters: any = {};
+
+    const headerParameters: runtime.HTTPHeaders = {};
+
+    headerParameters["Content-Type"] = "application/json";
+
+    if (this.configuration && this.configuration.apiKey) {
+      headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // authorization-header authentication
+    }
+
+    const operationBasePathOverride = [][0];
+
+    const response = await this.request(
+      {
+        path: `/v2/accounts/{accountId}/uploads/url`.replace(
+          `{${"accountId"}}`,
+          // @ts-ignore
+          "accountId" === "filePath"
+            ? String(requestParameters.accountId)
+            : encodeURIComponent(String(requestParameters.accountId))
+        ),
+        method: "POST",
+        headers: headerParameters,
+        query: queryParameters,
+        body: requestParameters.uploadFromUrlRequest
+      },
+      initOverrides,
+      operationBasePathOverride
+    );
+
+    return new runtime.JSONApiResponse(response);
+  }
+
+  /**
+   * Upload a file from a URL, with a single HTTP request:
+   */
+  async uploadFromUrl(
+    requestParameters: UploadFromUrlOperationParams,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<BasicUploadResponse> {
+    const response = await this.uploadFromUrlWithHttpInfo(requestParameters, initOverrides);
     return await response.value();
   }
 }

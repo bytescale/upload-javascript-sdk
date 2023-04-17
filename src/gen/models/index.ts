@@ -2,10 +2,21 @@
 /* eslint-disable */
 
 /**
+ * "Created" is only used when issuing jobs non-transactionally (which we do if we want the job to be picked up sooner).
+ * In this case, a two-phase transaction is performed.
  *
+ * T=0) "Created" job tracker created.
+ * T=1) SQS job enqueued.
+ * T=2) "Pending" is set into job tracker.
+ * T=3) Response returned to use
+ * T=4) SQS picks up job. If status is "Created" it fails the job attempt. This keeps going until eventually the job perm-fails, or it sees "Pending". It should typically (always?) see "Pending" on the first attempt, if T=2 succeeded.
+ * T=5) SQS processes the job as normal.
+ *
+ * As such, the "Created" state is an internal detail, and we never expose jobs in this state to the user.
  * @export
  */
 export const AccountJobStatus = {
+  Created: "Created",
   Pending: "Pending",
   Running: "Running",
   Rollback: "Rollback",
@@ -102,6 +113,35 @@ export const AwsRegion = {
 } as const;
 export type AwsRegion = typeof AwsRegion[keyof typeof AwsRegion];
 
+/**
+ * Response body for BasicUpload.
+ * @export
+ * @interface BasicUploadResponse
+ */
+export interface BasicUploadResponse {
+  /**
+   * Your account ID.
+   *
+   * This is visible on the settings page:
+   *
+   * https://upload.io/dashboard/settings
+   * @type {string}
+   * @memberof BasicUploadResponse
+   */
+  accountId: string;
+  /**
+   * Absolute path to a file. Must begin with a `/`.
+   * @type {string}
+   * @memberof BasicUploadResponse
+   */
+  filePath: string;
+  /**
+   * URL for a raw file hosted on the Upload CDN.
+   * @type {string}
+   * @memberof BasicUploadResponse
+   */
+  fileUrl: string;
+}
 /**
  * Request body for BeginMultipartUpload.
  * @export
@@ -2221,6 +2261,53 @@ export const UpdatableFieldStorageLayerUpdateOrNullSetEnum = {
 export type UpdatableFieldStorageLayerUpdateOrNullSetEnum =
   typeof UpdatableFieldStorageLayerUpdateOrNullSetEnum[keyof typeof UpdatableFieldStorageLayerUpdateOrNullSetEnum];
 
+/**
+ * Request body for BeginMultipartUpload.
+ * @export
+ * @interface UploadFromUrlRequest
+ */
+export interface UploadFromUrlRequest {
+  /**
+   * The file metadata specified in the original upload request as a JSON object.
+   * @type {{ [key: string]: any; }}
+   * @memberof UploadFromUrlRequest
+   */
+  metadata?: { [key: string]: any };
+  /**
+   * File MIME type.
+   * @type {string}
+   * @memberof UploadFromUrlRequest
+   */
+  mime?: string;
+  /**
+   * The file's original name on the user's device.
+   * @type {string}
+   * @memberof UploadFromUrlRequest
+   */
+  originalFileName?: string;
+  /**
+   *
+   * @type {FilePathDefinition}
+   * @memberof UploadFromUrlRequest
+   */
+  path?: FilePathDefinition;
+  /**
+   * The file tags to store against the file.
+   *
+   * When you associate file tags with a file, Upload checks which rules match the tags (if any) and applies those rules to the upload request:
+   *
+   * Rules can include max file size checks, traffic limit checks, rate limit checks, and so forth. These are configured in the Upload Dashboard.
+   * @type {Array<string>}
+   * @memberof UploadFromUrlRequest
+   */
+  tags?: Array<string>;
+  /**
+   * Source URL to upload.
+   * @type {string}
+   * @memberof UploadFromUrlRequest
+   */
+  url: string;
+}
 /**
  * Represents a part of a file to be uploaded as part of a multipart file upload.
  *
