@@ -917,22 +917,6 @@ export interface FolderSettingsStorageLayerSummaryStorageLayer {
    */
   useAbsolutePaths: boolean;
   /**
-   * If `true` then raw file downloads are routed directly via the Upload CDN's edge nodes to the custom S3 bucket.
-   *
-   * If `false` then raw file downloads are routes via Upload's transformation pipelines, adding some latency to raw file downloads only.
-   *
-   * Note: if set to `true` then you must configure a "AWS::S3::BucketPolicy" for your S3 bucket, permitting access to Upload's CloudFront distribution. Alternatively, your S3 bucket must allow public file downloads.
-   * @type {boolean}
-   * @memberof FolderSettingsStorageLayerSummaryStorageLayer
-   */
-  useDirectRawFileDelivery: boolean;
-  /**
-   * Only applicable if `useDirectRawFileDelivery` is set to `true`.
-   * @type {boolean}
-   * @memberof FolderSettingsStorageLayerSummaryStorageLayer
-   */
-  useOriginAccessIdentity: boolean;
-  /**
    * Enables S3 transfer acceleration, providing improved file upload speeds for larger files.
    *
    * Note: this setting must also be enabled on the S3 bucket.
@@ -1322,22 +1306,6 @@ export interface PickS3StorageExcludeKeyofS3StorageCredentials {
    */
   useAbsolutePaths: boolean;
   /**
-   * If `true` then raw file downloads are routed directly via the Upload CDN's edge nodes to the custom S3 bucket.
-   *
-   * If `false` then raw file downloads are routes via Upload's transformation pipelines, adding some latency to raw file downloads only.
-   *
-   * Note: if set to `true` then you must configure a "AWS::S3::BucketPolicy" for your S3 bucket, permitting access to Upload's CloudFront distribution. Alternatively, your S3 bucket must allow public file downloads.
-   * @type {boolean}
-   * @memberof PickS3StorageExcludeKeyofS3StorageCredentials
-   */
-  useDirectRawFileDelivery: boolean;
-  /**
-   * Only applicable if `useDirectRawFileDelivery` is set to `true`.
-   * @type {boolean}
-   * @memberof PickS3StorageExcludeKeyofS3StorageCredentials
-   */
-  useOriginAccessIdentity: boolean;
-  /**
    * Enables S3 transfer acceleration, providing improved file upload speeds for larger files.
    *
    * Note: this setting must also be enabled on the S3 bucket.
@@ -1480,22 +1448,6 @@ export interface S3Storage {
    * @memberof S3Storage
    */
   useAbsolutePaths: boolean;
-  /**
-   * If `true` then raw file downloads are routed directly via the Upload CDN's edge nodes to the custom S3 bucket.
-   *
-   * If `false` then raw file downloads are routes via Upload's transformation pipelines, adding some latency to raw file downloads only.
-   *
-   * Note: if set to `true` then you must configure a "AWS::S3::BucketPolicy" for your S3 bucket, permitting access to Upload's CloudFront distribution. Alternatively, your S3 bucket must allow public file downloads.
-   * @type {boolean}
-   * @memberof S3Storage
-   */
-  useDirectRawFileDelivery: boolean;
-  /**
-   * Only applicable if `useDirectRawFileDelivery` is set to `true`.
-   * @type {boolean}
-   * @memberof S3Storage
-   */
-  useOriginAccessIdentity: boolean;
   /**
    * Enables S3 transfer acceleration, providing improved file upload speeds for larger files.
    *
@@ -1685,22 +1637,6 @@ export interface SpecifiedFieldValueStorageLayerUpdateOrNullValue {
    */
   useAbsolutePaths: boolean;
   /**
-   * If `true` then raw file downloads are routed directly via the Upload CDN's edge nodes to the custom S3 bucket.
-   *
-   * If `false` then raw file downloads are routes via Upload's transformation pipelines, adding some latency to raw file downloads only.
-   *
-   * Note: if set to `true` then you must configure a "AWS::S3::BucketPolicy" for your S3 bucket, permitting access to Upload's CloudFront distribution. Alternatively, your S3 bucket must allow public file downloads.
-   * @type {boolean}
-   * @memberof SpecifiedFieldValueStorageLayerUpdateOrNullValue
-   */
-  useDirectRawFileDelivery: boolean;
-  /**
-   * Only applicable if `useDirectRawFileDelivery` is set to `true`.
-   * @type {boolean}
-   * @memberof SpecifiedFieldValueStorageLayerUpdateOrNullValue
-   */
-  useOriginAccessIdentity: boolean;
-  /**
    * Enables S3 transfer acceleration, providing improved file upload speeds for larger files.
    *
    * Note: this setting must also be enabled on the S3 bucket.
@@ -1779,22 +1715,6 @@ export interface StorageLayerSummary {
    * @memberof StorageLayerSummary
    */
   useAbsolutePaths: boolean;
-  /**
-   * If `true` then raw file downloads are routed directly via the Upload CDN's edge nodes to the custom S3 bucket.
-   *
-   * If `false` then raw file downloads are routes via Upload's transformation pipelines, adding some latency to raw file downloads only.
-   *
-   * Note: if set to `true` then you must configure a "AWS::S3::BucketPolicy" for your S3 bucket, permitting access to Upload's CloudFront distribution. Alternatively, your S3 bucket must allow public file downloads.
-   * @type {boolean}
-   * @memberof StorageLayerSummary
-   */
-  useDirectRawFileDelivery: boolean;
-  /**
-   * Only applicable if `useDirectRawFileDelivery` is set to `true`.
-   * @type {boolean}
-   * @memberof StorageLayerSummary
-   */
-  useOriginAccessIdentity: boolean;
   /**
    * Enables S3 transfer acceleration, providing improved file upload speeds for larger files.
    *
@@ -1879,22 +1799,6 @@ export interface StorageLayerUpdate {
    * @memberof StorageLayerUpdate
    */
   useAbsolutePaths: boolean;
-  /**
-   * If `true` then raw file downloads are routed directly via the Upload CDN's edge nodes to the custom S3 bucket.
-   *
-   * If `false` then raw file downloads are routes via Upload's transformation pipelines, adding some latency to raw file downloads only.
-   *
-   * Note: if set to `true` then you must configure a "AWS::S3::BucketPolicy" for your S3 bucket, permitting access to Upload's CloudFront distribution. Alternatively, your S3 bucket must allow public file downloads.
-   * @type {boolean}
-   * @memberof StorageLayerUpdate
-   */
-  useDirectRawFileDelivery: boolean;
-  /**
-   * Only applicable if `useDirectRawFileDelivery` is set to `true`.
-   * @type {boolean}
-   * @memberof StorageLayerUpdate
-   */
-  useOriginAccessIdentity: boolean;
   /**
    * Enables S3 transfer acceleration, providing improved file upload speeds for larger files.
    *
@@ -2262,7 +2166,7 @@ export type UpdatableFieldStorageLayerUpdateOrNullSetEnum =
   typeof UpdatableFieldStorageLayerUpdateOrNullSetEnum[keyof typeof UpdatableFieldStorageLayerUpdateOrNullSetEnum];
 
 /**
- * Request body for BeginMultipartUpload.
+ * Request body for UploadFromUrl.
  * @export
  * @interface UploadFromUrlRequest
  */

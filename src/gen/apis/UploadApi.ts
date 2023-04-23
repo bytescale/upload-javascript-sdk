@@ -384,7 +384,7 @@ export class UploadApi extends runtime.BaseAPI {
   }
 
   /**
-   * Upload a file from a URL, with a single HTTP request:
+   * Upload from a URL with a single HTTP request:
    */
   private async uploadFromUrlWithHttpInfo(
     requestParameters: UploadFromUrlOperationParams,
@@ -438,7 +438,7 @@ export class UploadApi extends runtime.BaseAPI {
   }
 
   /**
-   * Upload a file from a URL, with a single HTTP request:
+   * Upload from a URL with a single HTTP request:
    */
   async uploadFromUrl(
     requestParameters: UploadFromUrlOperationParams,
