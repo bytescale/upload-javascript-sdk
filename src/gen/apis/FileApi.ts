@@ -28,7 +28,11 @@ import type {
   // @ts-ignore
   ErrorResponse,
   // @ts-ignore
-  FileDetails
+  FileDetails,
+  // @ts-ignore
+  ProcessFileAndSaveRequest,
+  // @ts-ignore
+  ProcessFileAndSaveResponse
 } from "../models";
 
 export interface CopyFileOperationParams {
@@ -74,6 +78,13 @@ export interface ProcessFileParams {
   cacheTtl?: number;
   large?: boolean;
   version?: string;
+}
+
+export interface ProcessFileAndSaveOperationParams {
+  accountId: string;
+  filePath: string;
+  transformation: string;
+  processFileAndSaveRequest: ProcessFileAndSaveRequest;
 }
 
 /**
@@ -489,7 +500,7 @@ export class FileApi extends runtime.BaseAPI {
   }
 
   /**
-   * Processes a file and downloads the result.
+   * Processes a file and returns the result.
    */
   private async processFileWithHttpInfo(
     requestParameters: ProcessFileParams,
@@ -586,7 +597,7 @@ export class FileApi extends runtime.BaseAPI {
   }
 
   /**
-   * Processes a file and downloads the result.
+   * Processes a file and returns the result.
    */
   async processFile(
     requestParameters: ProcessFileParams,
@@ -594,6 +605,103 @@ export class FileApi extends runtime.BaseAPI {
   ): Promise<runtime.BinaryResult> {
     const response = await this.processFileWithHttpInfo(requestParameters, initOverrides);
     return response;
+  }
+
+  /**
+   * Processes a file and saves the result.
+   */
+  private async processFileAndSaveWithHttpInfo(
+    requestParameters: ProcessFileAndSaveOperationParams,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<ProcessFileAndSaveResponse>> {
+    if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
+      throw new runtime.RequiredError(
+        "accountId",
+        "Required parameter requestParameters.accountId was null or undefined when calling processFileAndSave."
+      );
+    }
+
+    if (requestParameters.filePath === null || requestParameters.filePath === undefined) {
+      throw new runtime.RequiredError(
+        "filePath",
+        "Required parameter requestParameters.filePath was null or undefined when calling processFileAndSave."
+      );
+    }
+
+    if (requestParameters.transformation === null || requestParameters.transformation === undefined) {
+      throw new runtime.RequiredError(
+        "transformation",
+        "Required parameter requestParameters.transformation was null or undefined when calling processFileAndSave."
+      );
+    }
+
+    if (
+      requestParameters.processFileAndSaveRequest === null ||
+      requestParameters.processFileAndSaveRequest === undefined
+    ) {
+      throw new runtime.RequiredError(
+        "processFileAndSaveRequest",
+        "Required parameter requestParameters.processFileAndSaveRequest was null or undefined when calling processFileAndSave."
+      );
+    }
+
+    const queryParameters: any = {};
+
+    const headerParameters: runtime.HTTPHeaders = {};
+
+    headerParameters["Content-Type"] = "application/json";
+
+    if (this.configuration && this.configuration.apiKey) {
+      headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // authorization-header authentication
+    }
+
+    const operationBasePathOverride = ["https://upcdn.io"][0];
+
+    const response = await this.request(
+      {
+        path: `/{accountId}/save/{transformation}{filePath}`
+          .replace(
+            `{${"accountId"}}`,
+            // @ts-ignore
+            "accountId" === "filePath"
+              ? String(requestParameters.accountId)
+              : encodeURIComponent(String(requestParameters.accountId))
+          )
+          .replace(
+            `{${"filePath"}}`,
+            // @ts-ignore
+            "filePath" === "filePath"
+              ? String(requestParameters.filePath)
+              : encodeURIComponent(String(requestParameters.filePath))
+          )
+          .replace(
+            `{${"transformation"}}`,
+            // @ts-ignore
+            "transformation" === "filePath"
+              ? String(requestParameters.transformation)
+              : encodeURIComponent(String(requestParameters.transformation))
+          ),
+        method: "POST",
+        headers: headerParameters,
+        query: queryParameters,
+        body: requestParameters.processFileAndSaveRequest
+      },
+      initOverrides,
+      operationBasePathOverride
+    );
+
+    return new runtime.JSONApiResponse(response);
+  }
+
+  /**
+   * Processes a file and saves the result.
+   */
+  async processFileAndSave(
+    requestParameters: ProcessFileAndSaveOperationParams,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<ProcessFileAndSaveResponse> {
+    const response = await this.processFileAndSaveWithHttpInfo(requestParameters, initOverrides);
+    return await response.value();
   }
 }
 
