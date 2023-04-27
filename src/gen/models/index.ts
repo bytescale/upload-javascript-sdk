@@ -1475,12 +1475,6 @@ export interface ProcessFileAndSaveResponse {
    */
   baseUrl: string;
   /**
-   *
-   * @type {AsyncResponse}
-   * @memberof ProcessFileAndSaveResponse
-   */
-  job?: AsyncResponse;
-  /**
    * JSON response returned by certain transformation APIs.
    *
    * Structure varies between transformation APIs (please consult the documentation of the individual transformation APIs).
