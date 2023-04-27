@@ -559,9 +559,13 @@ export interface DynamicFilePath {
    */
   fileNameVariablesEnabled?: boolean;
   /**
-   * The path to upload the file to (excluding the file's name).
+   * Absolute or relative path to a folder in your Upload account's storage.
    *
-   * Must begin with `/` but should not end with `/`.
+   * Relative paths are relative to the API key's default folder (configured per API key in the Upload Dashboard).
+   *
+   * Should not end with `/`.
+   *
+   * Does not support path traversals (e.g. `..`).
    *
    * Supports path variables.
    * @type {string}
@@ -756,9 +760,13 @@ export interface FilePathDefinition {
    */
   fileNameVariablesEnabled?: boolean;
   /**
-   * The path to upload the file to (excluding the file's name).
+   * Absolute or relative path to a folder in your Upload account's storage.
    *
-   * Must begin with `/` but should not end with `/`.
+   * Relative paths are relative to the API key's default folder (configured per API key in the Upload Dashboard).
+   *
+   * Should not end with `/`.
+   *
+   * Does not support path traversals (e.g. `..`).
    *
    * Supports path variables.
    * @type {string}
@@ -1136,17 +1144,17 @@ export interface JobSummary {
    */
   lastUpdated: number;
   /**
-   * An arbitrary JSON object.
-   * @type {{ [key: string]: any; }}
-   * @memberof JobSummary
-   */
-  payload: { [key: string]: any };
-  /**
    *
    * @type {AccountJobStatus}
    * @memberof JobSummary
    */
   status: AccountJobStatus;
+  /**
+   * An arbitrary JSON object.
+   * @type {{ [key: string]: any; }}
+   * @memberof JobSummary
+   */
+  summary: { [key: string]: any };
 }
 /**
  *
@@ -1479,7 +1487,7 @@ export interface ProcessFileAndSaveResponse {
    * @type {{ [key: string]: any; }}
    * @memberof ProcessFileAndSaveResponse
    */
-  result?: { [key: string]: any };
+  summary?: { [key: string]: any };
 }
 /**
  * Permissions applied to anonymous users who attempt to download files from a folder.
