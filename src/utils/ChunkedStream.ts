@@ -1,8 +1,8 @@
-import type { Readable } from "stream";
+import type * as stream from "stream";
 
 interface Consumer {
   bytesRemaining: number;
-  stream: Readable;
+  stream: stream.Readable;
 }
 
 export class ChunkedStream {
@@ -165,9 +165,10 @@ export class ChunkedStream {
     return [consumed, remaining];
   }
 
-  private async createStream(): Promise<Readable> {
+  private async createStream(): Promise<stream.Readable> {
     // We import "stream" lazily to support browsers, which don't have this module, but also won't call this method so won't trigger the import.
-    const Readable = (await import("stream")).default.Readable;
+    const streamModule = ((await import("stream")) as any).default as typeof stream;
+    const Readable = streamModule.Readable;
     const readable = new Readable();
     readable._read = () => {}; // _read is required but you can noop it
     return readable;
@@ -179,7 +180,7 @@ export class ChunkedStream {
     return readable;
   }
 
-  private finishStream(readable: Readable): void {
+  private finishStream(readable: stream.Readable): void {
     readable.push(null);
   }
 }
