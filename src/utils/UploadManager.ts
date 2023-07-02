@@ -317,7 +317,7 @@ export class UploadManager {
   // Fallback for Node.js
   private async nodeJsBlob(data: string): Promise<BlobLike> {
     // We import "buffer" lazily to support browsers, which don't have this module, but also won't call this method so won't trigger the import.
-    const B = (await import("buffer")).Blob;
+    const B = (await import("buffer")).default.Blob;
     return new B([data], { type: this.stringMimeType });
   }
 
