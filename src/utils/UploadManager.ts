@@ -1,5 +1,5 @@
 import { BeginMultipartUploadResponse, DefaultConfig, FileDetails, UploadApi, UploadPart } from "../gen";
-import { Readable } from "stream";
+import stream from "stream";
 import type * as buffer from "buffer";
 import { ChunkedStream } from "./ChunkedStream";
 import { BlobLike, CancelledError, UploadManagerParams, UploadSource, UploadSourceProcessed } from "./Model";
@@ -133,7 +133,7 @@ export class UploadManager {
   }
 
   private bufferToStream(buffer: ArrayBuffer): NodeJS.ReadableStream {
-    const readable = new Readable();
+    const readable = new stream.Readable();
     readable._read = () => {}; // _read is required but you can noop it
     readable.push(buffer);
     readable.push(null);
