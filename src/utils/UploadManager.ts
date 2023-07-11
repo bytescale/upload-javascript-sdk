@@ -3,7 +3,7 @@ import type * as buffer from "buffer";
 import type * as stream from "stream";
 import { ChunkedStream } from "./ChunkedStream";
 import { BlobLike, CancelledError, UploadManagerParams, UploadSource, UploadSourceProcessed } from "./Model";
-import { InteropUtils } from "./InteropUtils";
+import { NodeUtils } from "./NodeUtils";
 
 export class UploadManager {
   private readonly stringMimeType = "text/plain";
@@ -134,7 +134,7 @@ export class UploadManager {
   }
 
   private async bufferToStream(buffer: ArrayBuffer): Promise<stream.Readable> {
-    const readable = await InteropUtils.createStream();
+    const readable = await NodeUtils.createStream();
     readable.push(buffer);
     readable.push(null);
     return readable;
@@ -316,11 +316,7 @@ export class UploadManager {
 
   // Fallback for Node.js
   private async nodeJsBlob(data: string): Promise<BlobLike> {
-    // We import "buffer" lazily to support browsers, which don't have this module, but also won't call this method so won't trigger the import.
-    const bufferModule = ((await import("buffer")) as any).default as typeof buffer;
-
-    const B = bufferModule.Blob;
-    return new B([data], { type: this.stringMimeType });
+    return await NodeUtils.createBlob([data], { type: this.stringMimeType });
   }
 
   private async mapAsync<T>(items: T[], concurrency: number, callback: (item: T) => Promise<void>): Promise<void> {

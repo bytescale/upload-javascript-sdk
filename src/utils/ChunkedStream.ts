@@ -1,5 +1,5 @@
 import type * as stream from "stream";
-import { InteropUtils } from "./InteropUtils";
+import { NodeUtils } from "./NodeUtils";
 
 interface Consumer {
   bytesRemaining: number;
@@ -112,7 +112,7 @@ export class ChunkedStream {
       return await this.emptyStream();
     }
 
-    const readable = await InteropUtils.createStream();
+    const readable = await NodeUtils.createStream();
     const consumedFromBuffer = this.consumeFromBuffer(bytes);
     const consumedFromBufferLength = consumedFromBuffer?.length ?? 0;
     const bytesToConsumeFromStream = bytes - consumedFromBufferLength;
@@ -167,7 +167,7 @@ export class ChunkedStream {
   }
 
   private async emptyStream(): Promise<NodeJS.ReadableStream> {
-    const readable = await InteropUtils.createStream();
+    const readable = await NodeUtils.createStream();
     this.finishStream(readable);
     return readable;
   }
