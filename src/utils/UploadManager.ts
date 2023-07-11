@@ -1,8 +1,9 @@
 import { BeginMultipartUploadResponse, DefaultConfig, FileDetails, UploadApi, UploadPart } from "../gen";
-import stream from "stream";
-import type * as buffer from "buffer";
+import type buffer from "buffer";
+import type stream from "stream";
 import { ChunkedStream } from "./ChunkedStream";
 import { BlobLike, CancelledError, UploadManagerParams, UploadSource, UploadSourceProcessed } from "./Model";
+import { InteropUtils } from "./InteropUtils";
 
 export class UploadManager {
   private readonly stringMimeType = "text/plain";
@@ -126,15 +127,14 @@ export class UploadManager {
     // node-fetch requires 'NodeJS.ReadableStream' for the body.
     // browser fetch supports blobs and buffers.
     return await this.foldDataRaw<NodeJS.ReadableStream | Buffer | BlobLike>(slicedData, {
-      ifBuffer: async buffer => (isNodeJs ? this.bufferToStream(buffer) : buffer),
-      ifBlob: async blob => (isNodeJs ? this.bufferToStream(await this.blobToBuffer(blob)) : blob),
+      ifBuffer: async buffer => (isNodeJs ? await this.bufferToStream(buffer) : buffer),
+      ifBlob: async blob => (isNodeJs ? await this.bufferToStream(await this.blobToBuffer(blob)) : blob),
       ifNodeJsStream: async stream => stream
     });
   }
 
-  private bufferToStream(buffer: ArrayBuffer): NodeJS.ReadableStream {
-    const readable = new stream.Readable();
-    readable._read = () => {}; // _read is required but you can noop it
+  private async bufferToStream(buffer: ArrayBuffer): Promise<stream.Readable> {
+    const readable = await InteropUtils.createStream();
     readable.push(buffer);
     readable.push(null);
     return readable;

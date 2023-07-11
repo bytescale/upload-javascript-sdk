@@ -1,4 +1,5 @@
-import type * as stream from "stream";
+import type stream from "stream";
+import { InteropUtils } from "./InteropUtils";
 
 interface Consumer {
   bytesRemaining: number;
@@ -111,7 +112,7 @@ export class ChunkedStream {
       return await this.emptyStream();
     }
 
-    const readable = await this.createStream();
+    const readable = await InteropUtils.createStream();
     const consumedFromBuffer = this.consumeFromBuffer(bytes);
     const consumedFromBufferLength = consumedFromBuffer?.length ?? 0;
     const bytesToConsumeFromStream = bytes - consumedFromBufferLength;
@@ -165,17 +166,8 @@ export class ChunkedStream {
     return [consumed, remaining];
   }
 
-  private async createStream(): Promise<stream.Readable> {
-    // We import "stream" lazily to support browsers, which don't have this module, but also won't call this method so won't trigger the import.
-    const streamModule = ((await import("stream")) as any).default as typeof stream;
-    const Readable = streamModule.Readable;
-    const readable = new Readable();
-    readable._read = () => {}; // _read is required but you can noop it
-    return readable;
-  }
-
   private async emptyStream(): Promise<NodeJS.ReadableStream> {
-    const readable = await this.createStream();
+    const readable = await InteropUtils.createStream();
     this.finishStream(readable);
     return readable;
   }
