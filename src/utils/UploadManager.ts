@@ -1,6 +1,6 @@
 import { BeginMultipartUploadResponse, DefaultConfig, FileDetails, UploadApi, UploadPart } from "../gen";
-import type buffer from "buffer";
-import type stream from "stream";
+import type * as buffer from "buffer";
+import type * as stream from "stream";
 import { ChunkedStream } from "./ChunkedStream";
 import { BlobLike, CancelledError, UploadManagerParams, UploadSource, UploadSourceProcessed } from "./Model";
 import { InteropUtils } from "./InteropUtils";

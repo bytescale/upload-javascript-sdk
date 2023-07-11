@@ -1,4 +1,4 @@
-import type stream from "stream";
+import type * as stream from "stream";
 import { InteropUtils } from "./InteropUtils";
 
 interface Consumer {

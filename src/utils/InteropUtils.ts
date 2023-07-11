@@ -1,4 +1,4 @@
-import type stream from "stream";
+import type * as stream from "stream";
 
 export class InteropUtils {
   static async createStream(): Promise<stream.Readable> {
