@@ -48,7 +48,7 @@ import fetch from "node-fetch"; // Node.js only.
 
 const uploadManager = new Upload.UploadManager(
   new Upload.Configuration({
-    fetchApi: fetch,
+    fetchApi: fetch, // 'fetch as any' for TypeScript
     apiKey: "YOUR_UPLOAD_API_KEY" // e.g. "secret_xxxxx"
   })
 );
@@ -78,7 +78,7 @@ import fetch from "node-fetch"; // Node.js only.
 
 const fileApi = new Upload.FileApi(
   new Upload.Configuration({
-    fetchApi: fetch,
+    fetchApi: fetch, // 'fetch as any' for TypeScript
     apiKey: "YOUR_UPLOAD_API_KEY" // e.g. "secret_xxxxx"
   })
 );
@@ -105,7 +105,7 @@ import fetch from "node-fetch"; // Node.js only.
 
 const fileApi = new Upload.FileApi(
   new Upload.Configuration({
-    fetchApi: fetch,
+    fetchApi: fetch, // 'fetch as any' for TypeScript
     apiKey: "YOUR_UPLOAD_API_KEY" // e.g. "secret_xxxxx"
   })
 );
@@ -142,7 +142,7 @@ import fetch from "node-fetch"; // Node.js only.
 
 const fileApi = new Upload.FileApi(
   new Upload.Configuration({
-    fetchApi: fetch,
+    fetchApi: fetch, // 'fetch as any' for TypeScript
     apiKey: "YOUR_UPLOAD_API_KEY" // e.g. "secret_xxxxx"
   })
 );
@@ -166,7 +166,7 @@ import fetch from "node-fetch"; // Node.js only.
 
 const folderApi = new Upload.FolderApi(
   new Upload.Configuration({
-    fetchApi: fetch,
+    fetchApi: fetch, // 'fetch as any' for TypeScript
     apiKey: "YOUR_UPLOAD_API_KEY" // e.g. "secret_xxxxx"
   })
 );
