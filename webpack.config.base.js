@@ -1,7 +1,6 @@
 /* eslint @typescript-eslint/no-var-requires: 0 */
 const path = require("path");
 const WebpackShellPluginNext = require("webpack-shell-plugin-next");
-const { promises: fsAsync } = require("fs");
 
 module.exports = {
   // Added by extending config.
