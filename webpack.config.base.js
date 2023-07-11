@@ -1,5 +1,7 @@
 /* eslint @typescript-eslint/no-var-requires: 0 */
 const path = require("path");
+const WebpackShellPluginNext = require("webpack-shell-plugin-next");
+const { promises: fsAsync } = require("fs");
 
 module.exports = {
   // Added by extending config.
@@ -21,7 +23,19 @@ module.exports = {
   },
   target: "browserslist",
   entry: "./src/index.ts",
-  plugins: [],
+  plugins: [
+    new WebpackShellPluginNext({
+      safe: true, // Required to make Webpack fail on script failure (else string-style scripts, as opposed to function scripts, silently fail when blocking && !parallel)
+      // Next.js has a bug which causes it to break with Webpack-compiled libraries:
+      // https://github.com/vercel/next.js/issues/52542
+      // The following is a (bad) workaround that fixes the issue by find/replacing the webpack-specific variable names that clash with Next.js's build system.
+      onBuildEnd: {
+        scripts: [`(cd build && ./RemoveWebpackArtifacts.sh)`],
+        blocking: true,
+        parallel: false
+      }
+    })
+  ],
   resolve: {
     extensions: [".ts"]
   },
