@@ -16,4 +16,6 @@ replaceInFiles() {
 # https://github.com/vercel/next.js/issues/52542
 # The following is a (bad) workaround that fixes the issue by find/replacing the webpack-specific variable names that clash with Next.js's build system.
 replaceInFiles dist/ "*js" "s|__webpack_|__lib_|g"
-replaceInFiles dist/ "*js" "s|module|lib|g"
+
+# We only want to rename 'module' to 'lib' for ESM modules.
+replaceInFiles dist/ "*.mjs" "s|module|lib|g"
