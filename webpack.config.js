@@ -103,16 +103,22 @@ const browserCJS = {
   }
 };
 
-const browserESM = {
-  ...baseESM,
-  output: {
-    ...baseESM.output,
-    path: path.join(__dirname, "dist/browser/esm")
-  },
-  resolve: {
-    ...baseESM.resolve,
-    ...browserResolveExtensions
-  }
-};
+// ---------
+// Next.js gives 'ReferenceError: exports is not defined' from API routes when `export const config = { runtime: 'edge' }`
+// is used, due to it loading browser ESM modules, but for some reason for the browser modules specifically, it gives
+// 'exports is not defined', whereas the Node ESM module it's OK with. Anyhow, since Next.js is so popular, we disable
+// browser ESM modules, as Next.js is OK with the CommonJS module we export.
+// ---------
+// const browserESM = {
+//   ...baseESM,
+//   output: {
+//     ...baseESM.output,
+//     path: path.join(__dirname, "dist/browser/esm")
+//   },
+//   resolve: {
+//     ...baseESM.resolve,
+//     ...browserResolveExtensions
+//   }
+// };
 
-module.exports = [nodeCJS, nodeESM, browserCJS, browserESM];
+module.exports = [nodeCJS, nodeESM, browserCJS];

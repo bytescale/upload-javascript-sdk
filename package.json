@@ -7,7 +7,7 @@
   "types": "dist/types/index.d.ts",
   "main": "dist/node/cjs/main.js",
   "module": "dist/node/esm/main.mjs",
-  "browser": "dist/browser/esm/main.mjs",
+  "browser": "dist/browser/cjs/main.js",
   "exports": {
     ".": {
       "node": {
@@ -15,8 +15,7 @@
         "import": "./dist/node/esm/main.mjs"
       },
       "browser": {
-        "require": "./dist/browser/cjs/main.js",
-        "import": "./dist/browser/esm/main.mjs"
+        "require": "./dist/browser/cjs/main.js"
       },
       "default": "./dist/node/esm/main.mjs"
     }
