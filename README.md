@@ -1,7 +1,7 @@
 
 ---
 
-**DEPRECATED:** Please use the [Bytescale JavaScript SDK](https://github.com/bytescale/bytescale-javascript-sdk) instead.
+**DEPRECATED:** Please use the [Bytescale JavaScript SDK](https://github.com/bytescale/bytescale-javascript-sdk) instead. ([Migration guide](https://github.com/bytescale/bytescale-javascript-sdk/blob/main/MIGRATE.md#from-upload-javascript-sdk-upload-js-full))
 
 ---
 
