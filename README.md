@@ -1,19 +1,11 @@
-# Upload JavaScript SDK
+
+---
+
+**DEPRECATED:** Please use the [Bytescale JavaScript SDK](https://github.com/bytescale/bytescale-javascript-sdk) instead.
+
+---
 
 The Upload JavaScript SDK allows you to quickly integrate your application with [Upload.io](https://upload.io).
-
-Effortlessly upload, optimize, transform, and host your digital media assets.
-
-## Versions
-
-There are two actively maintained JavaScript SDKs:
-
-| Package          | Repository                                                    | Browsers | Node.js | File Uploads | [All Endpoints](https://upload.io/docs/upload-api) | Size |
-| ---------------- | ------------------------------------------------------------- | -------- | ------- | ------------ | -------------------------------------------------- | ---- |
-| `upload-js-full` | (this repository)                                             | ✅       | ✅      | ✅           | ✅                                                 | 13KB |
-| `upload-js`      | [upload-io/upload-js](https://github.com/upload-io/upload-js) | ✅       | ❌      | ✅           | ❌                                                 | 6KB  |
-
-(Pick the version that best suits your feature and package size requirements.)
 
 ## Installation
 
@@ -26,10 +18,6 @@ Additional step for Node.js:
 ```bash
 npm install node-fetch
 ```
-
-## Full Documentation
-
-**[Upload JavaScript SDK Full Documentation »](https://upload.io/docs/upload-sdk/javascript/full)**
 
 ## Quick Guide
 
