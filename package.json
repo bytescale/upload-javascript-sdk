@@ -1,6 +1,6 @@
 {
   "name": "upload-js-full",
-  "version": "2.21.0",
+  "version": "2.22.0",
   "description": "Upload JavaScript SDK",
   "author": "Upload <hello@upload.io> (https://upload.io)",
   "license": "MIT",
@@ -20,13 +20,13 @@
       "default": "./dist/node/esm/main.mjs"
     }
   },
-  "homepage": "https://github.com/upload-io/upload-javascript-sdk",
+  "homepage": "https://bytescale.com/upload-js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/upload-io/upload-javascript-sdk.git"
+    "url": "git+https://github.com/bytescale/upload-javascript-sdk.git"
   },
   "bugs": {
-    "url": "https://github.com/upload-io/upload-javascript-sdk/issues"
+    "url": "https://github.com/bytescale/upload-javascript-sdk/issues"
   },
   "files": [
     "/dist/**/*",
